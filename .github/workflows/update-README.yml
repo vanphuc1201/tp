@@ -1,4 +1,4 @@
-name: update-README.yml
+name: Update Readme
 
 on:
   push:
@@ -8,10 +8,9 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout
+        uses: actions/checkout@v4
 
       - name: Copy index.md to README.md
         run: cp docs/index.md README.md
@@ -25,4 +24,4 @@ jobs:
         run: |
           git add README.md
           git commit -m "Update README.md from docs/index.md" || echo "No changes to commit"
-          git push
+          git push origin ${{ github.ref }}
