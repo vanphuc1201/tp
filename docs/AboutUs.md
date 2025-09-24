@@ -40,15 +40,15 @@ You can reach us at the email `e1399155@u.nus.edu`
 * Role: Developer
 * Responsibilities: UI (main), Code Quality
 
-### Jean Doe
+### Tze Yan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/tze088.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/tze088)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Role: Team Lead
+* Responsibilities: Integration
 
 ### Neko Nguyen
 
