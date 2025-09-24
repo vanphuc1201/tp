@@ -21,15 +21,15 @@ You can reach us at the email `e1399155@u.nus.edu`
 * Role: Developer
 * Responsibilities: Deliverables and deadlines, UI Assistance
 
-### Jane Doe
+### Van Phuc
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/vanphuc1201.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/vanphuc1201)]
+[[portfolio](team/vanphuc1201.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
+* Responsibilities: Dev Ops + Threading
 
 ### Kenta Lim
 
