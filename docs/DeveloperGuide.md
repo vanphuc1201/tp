@@ -274,13 +274,15 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* University students who have multiple group projects across different modules
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
+* It is hard to manage the members of each specific group
+The app allow Creation of groups and subgroups
+
+* With many groups at the same time, it can become difficult to know when each one needs your attention.
+The app helps you manage your deadlines and meeting times and venues for each group
+
 
 
 ### User stories
