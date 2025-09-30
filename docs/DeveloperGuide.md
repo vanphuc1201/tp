@@ -272,16 +272,16 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**:  
+**Target user profile**:
 
 * University students who have multiple group projects across different modules
 
-**Value proposition**:  
-* It is hard to manage the members of each specific group  
-The app allow Creation of groups and subgroups  
+**Value proposition**:
+* It is hard to manage the members of each specific group
+The app allow Creation of groups and subgroups
 
-* With many groups at the same time, it can become difficult to know when each one needs your attention.  
-The app helps you manage your deadlines and meeting times and venues for each group  
+* With many groups at the same time, it can become difficult to know when each one needs your attention.
+The app helps you manage your deadlines and meeting times and venues for each group
 
 
 
