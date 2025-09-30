@@ -289,16 +289,43 @@ The app helps you manage your deadlines and meeting times and venues for each gr
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​                                                 | I want to …​                                                                            | So that I can…​                                                                                     |
+|----------|---------------------------------------------------------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `* * *`  | user                                                    | add contacts from my school projects with their phone numbers and email into the system | I can manage the contact information of all the relevant people for the semester                    |
+| `* * *`  | user                                                    | delete contacts from the contact list when I no longer need a person's contact          | my contact list is not too cluttered.                                                               |
+| `* * *`  | university student currently doing many group projects  | create groups within my list of contacts                                                | I am able to navigate to each group based on which module I am working on.                          |
+| `* * *`  | university student managing deadlines                   | attach project/submission deadlines to each group                                       | I can manage each deadline and I know when I should contact my various groupmates.                  |
+| `* * *`  | user                                                    | delete just a group, not the contacts                                                   | I can remove a group without losing my contacts                                                     |
+| `* * *`  | user                                                    | add member to a group                                                                   | I can easily manage my group                                                                        |
+| `* * *`  | user                                                    | list contacts                                                                           | I can see all the contacts I have                                                                   |
+| `* * *`  | user                                                    | list groups                                                                             | I can see all the groups I have                                                                     |
+| `* *`    | new user                                                | view a guide                                                                            | I can easily find out what the app can do for me                                                    |
+| `* *`    | new user                                                | see a prompt telling how to execute a “help” command                                    | I can find out all the various commands that I can use in the app.                                  |
+| `* *`    | user                                                    | delete old contacts by group                                                            | I do not need to spend too much time deleting users one by one                                      |
+| `* *`    | user                                                    | see a confirmation of the data I added                                                  | I can catch and fix mistakes quickly                                                                |
+| `* *`    | user                                                    | edit the details of a particular contact through an intuitive interface                 | I can easily tweak the information of a contact if needed.                                          |
+| `* *`    | user                                                    | look for a specific contact by their name by typing it into the search bar              | I do not have to sort through the entire list of contacts to find one person.                       |
+| `* *`    | user                                                    | add a number of contacts in a group at once                                             | I do not need to spend too much time adding members of a new group one by one                       |
+| `* *`    | university student currently doing many group projects  | add a label to the contacts of people in my various groups                              | I can easily look up people based on their label.                                                   |
+| `* *`    | member of a group project                               | set a meeting time/place for each of my groups                                          | I can easily know if I have a meeting for the day with my group and where to go for it.             |
+| `* *`    | user                                                    | check the dashboard for nearby group assignment deadlines                               | I know which tasks to prioritize                                                                    |
+| `* *`    | university student                                      | set a reminder for all my project/submission deadlines and group meetings               | I know when all my deadlines are without having to check them.                                      |
+| `* *`    | university student                                      | press one button to reset and clear my entire contact list when the semester is over    | I do not have to delete those contacts one by one when I am preparing for a new semester.           |
+| `* *`    | user                                                    | set profile photo for each contact                                                      | I can quickly identify the person through face, if there are similar names                          |
+| `* *`    | user                                                    | Make a contact a member of multiple groups                                              | I don't have to add the same contact multiple times if I am in multiple groups with the same person |
+| `* *`    | user                                                    | search my groups                                                                        | I can easily find the group I am looking for                                                        |
+| `* *`    | user                                                    | set a profile picture for each of my groups                                             | I can easily find and recognize the group that I am looking for without having to look at the names |
+| `*`      | potential new user                                      | experiment with sample data                                                             | I can see how the app looks and behaves                                                             |
+| `*`      | new user                                                | see various tooltips within the app                                                     | I am able to orientate myself with the app and its uses                                             |
+| `*`      | user                                                    | access important links for my group project                                             | I can easily access my group project materials from one place                                       |
+| `*`      | university student managing project groups              | hide contacts from group projects which have already been completed                     | I do not have to see people in my contacts when I do not have to contact them anymore.              |
+| `*`      | expert user                                             | create shortcuts for tasks                                                              | I can save time on frequently performed tasks.                                                      |
+| `*`      | user who is trying to contact a group of people at once | press one button and copy all the email addresses of people in a group to my clipboard  | I can easily paste it when trying to send an email to all of these members.                         |
+| `*`      | experienced user                                        | turn off the integrated tooltips                                                        | I can declutter my screen                                                                           |
+| `*`      | user                                                    | receive daily/weekly summaries about the deadlines, events and tasks                    | I can plan my workload accordingly                                                                  |
+| `*`      | user                                                    | Set a colour for each group which will show up on a contacts profile                    | I can easily tell what group someone belongs to visually                                            |
+| `*`      | user                                                    | Find which times I am free                                                              | I can easily schedule new meetings with a group                                                     |
 
-*{More to be added}*
 
 ### Use cases
 
@@ -333,7 +360,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+3.  Should be able to hold up to 1000 groups without a noticeable sluggishness in performance for typical usage
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  Should work on any _mainstream OS_ without requiring an installer
+5.  Should work without use of any third-party libraries/services
+6.  GUI should work well for standard screen resolutions of 1920x1080 and higher
+7.  File size of jar file for product should not exceed 100mb
 
 *{More to be added}*
 
