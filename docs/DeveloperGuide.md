@@ -361,11 +361,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  Should be able to hold up to 1000 groups without a noticeable sluggishness in performance for typical usage
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  Should work on any _mainstream OS_ without requiring an installer
-5.  Should work without use of any third-party libraries/services
-6.  GUI should work well for standard screen resolutions of 1920x1080 and higher
-7.  File size of jar file for product should not exceed 100mb
+4.  user with above average typing speed for regular English text (i.e. not code, not system admin commands) should 
+    be able to accomplish most of the tasks faster using commands than using the mouse.
+5.  Should work on any _mainstream OS_ without requiring an installer.
+6.  Should work without use of any third-party libraries/services.
+7.  GUI should work well for standard screen resolutions of 1920x1080 and higher.
+8.  Product should be packaged into a single jar file and file size of jar file for product should not exceed 100mb.
+9.  Product should work without the need for a remote server.
+10. Data for a specific user should not be able to be accessed by other users even on the same device.
+11. The data should be stored locally and in a human editable text file
 
 *{More to be added}*
 
