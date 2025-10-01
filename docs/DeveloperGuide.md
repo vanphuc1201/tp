@@ -329,32 +329,323 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
-
-**Use case: Delete a person**
+**System: StudyCircle (SC)**  
+**Use Case: UC1 - Create a Group**  
+**Actor: User**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to create a new group by inputting new group details.
+2.  SC creates the new group and displays it.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. SC detects an error in the input.
+
+  * 1a1. SC specifies the error(s) and requests new input.
+  * 1a2. User enters new input.
+
+      Steps 1a1-1a2 are repeated until the input is valid.\
+      Use case resumes from step 2.
+
+* *a. At any point the User decides not to add the Group.
+
+    Use case ends.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC2 - Create a Contact**  
+**Actor: User**
+
+**MSS**
+
+1.  User requests to create a new contact by inputting new contact details.
+2.  SC creates the new contact and displays it.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. SC detects an error in the input.
+
+    * 1a1. SC specifies the error(s) and requests new input.
+    * 1a2. User enters new input.
+
+        Steps 1a1-1a2 are repeated until the input is valid.\
+        Use case resumes from step 2.
+
+* *a. At any point the User decides not to add the Contact.
+
+    Use case ends.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC3 - Attach a Contact to a Group**  
+**Actor: User**  
+**Precondition: The specified Group already exists within SC**
+
+**MSS**
+
+1.  User requests to <u>list all contacts (UC6)</u>.
+2.  User requests to <u>list all groups (UC7)</u>.
+3.  User request to add specific contacts in the list to a specific group in the list.
+4.  SC adds the contact to the group and notifies user of success of the task.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The list of Contacts is empty.
+
+  * 1a1. User requests to <u>create a new contact (UC2)</u>.
+
+    Use case resumes from step 2.
+
+* 1b. The Contact the User wishes to add is not in the list.
+
+  * 1b1. User requests to <u>create a new contact (UC2)</u>.
+
+    Use case resumes from step 2.
+
+* 3a. SC detects that the specified contact does not exist.
+
+  * 3a1. SC shows an error message.
+
+    Use case resumes at step 3.
+
+* 3b. SC detects that the specified group does not exist.
+
+  * 3b1. SC shows an error message.
+  
+    Use case resumes at step 3.
+
+* 3c. SC detects that the contact is already in the group.
+
+  * 3c1. SC tells user that the contact is already in the group.
+  
+    Use case ends.
+
+* *a. At any point the User decides to stop the operation.
+
+    Use case ends.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC5 - Delete a Group**  
+**Actor: User**
+
+**MSS**
+
+1.  User requests to <u>list groups (UC7)</u>.
+2.  User chooses to delete a group from the list.
+3.  SC asks the user if they want to keep the member contacts.
+4.  User chooses to keep.
+5.  SC asks for confirmation.
+6.  User confirms the deletion.
+7.  SC deletes the group, keeping the member contacts, and displays the deleted group.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The list is empty.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 1b. The Group the User wishes to delete is not in the list.
 
-    * 3a1. AddressBook shows an error message.
+  Use case ends.
 
-      Use case resumes at step 2.
+* 2b. The specified group does not exist. 
 
-*{More to be added}*
+  * 2b1. SC shows an error message. 
+
+    Use case resumes from step 2.
+
+* 4a. User chooses to not keep. 
+
+  * 4a1. SC asks for confirmation.
+  * 4a3. User confirms. 
+  * 4a2. SC deletes the group and the contacts within the group, and displays the deleted group and contacts.
+  
+    Use case ends.
+
+* a. At any point the user chooses to cancel the operation.
+
+    Use case ends.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC6 - View all Contacts' details**  
+**Actor: User**
+
+**MSS**
+
+1.  User requests to list all contacts.
+2.  SC display a list of all contacts and their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. SC does not have any contacts currently saved into it.
+
+  * 1a1. SC shows an error message.
+  
+    Use case ends.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC7 - View all Groups’ details**  
+**Actor: User**
+
+**MSS**
+
+1.  User requests to list groups.
+2.  SC shows user a list of all groups and their details.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. SC does not have any groups currently saved into it.
+
+  * 1a1. SC shows an error message.
+
+    Use case ends.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC8 - View specific Contact’s details**  
+**Actor: User**  
+**Preconditions: The specified Contact already exists within SC**
+
+**MSS**
+
+1.  User requests to <u>list all contacts (UC6)</u>.
+2.  User requests to view a specific contact’s details in the list. 
+3.  SC shows the user the given contact’s details.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. SC does not have the specified contact. 
+
+  * 2a1. SC prompts user that there is no matching contact.
+  
+    Use case resumes from step 2.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC9 - View specific Group’s details**  
+**Actor: User**  
+**Preconditions: The specified Group already exists within SC**
+
+**MSS**
+
+1.  User requests to <u>list groups (UC7)</u>.
+2.  User requests to view a specific group's details in the list.
+3.  SC shows user the given group’s details.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. SC does not have the specified group.
+
+  * 2a1. SC prompts user that there is no matching group.
+
+    Use case resumes from step 2.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC10 - Create an Event for a Group (task/meeting/assignment)**  
+**Actor: User**  
+**Preconditions: The Group which the Event is to be attached to already exists**
+
+**MSS**
+
+1.  User requests for a <u>list of groups (UC7)</u>.
+2.  User enters Event details and specified Group. 
+3.  SC adds the Event to the Group and displays the new Event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. SC detects an error in the input.
+
+  * 2a1. SC specifies the error(s) and requests new input.
+  * 2a2. User enters valid input.
+
+    Use case resumes from step 3.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC11 - Add notes to a Group**  
+**Actor: User**  
+**Preconditions: The specified Group already exists within SC**
+
+**MSS**
+
+1.  User requests for a <u>list of groups (UC7)</u>.
+2.  User requests to add a note to the specific group in the list.
+3.  SC adds the note to the group and displays a confirmation message.
+
+    Use case ends.
+
+**Extensions**
+
+* 2b. The specified group does not exist.
+
+  * 2b1. SC shows an error message.
+  
+    Use case resumes from step 2.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC15 - Edit details of a specific contact**  
+**Actor: User**  
+**Preconditions: The specified Contact already exists within SC**
+
+**MSS**
+
+1.  User requests for a <u>list of contacts (UC6)</u>.
+2.  User specifies a specific contact and selects which detail they would like to edit.
+3.  User enters new details that they want to edit.
+4.  SC edit the contact and display a confirmation message.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The detail is empty.
+
+  * 2a1. SC shows an error message.
+
+    Use case end.
+
+
+**System: StudyCircle (SC)**  
+**Use Case: UC23 - Start a new project group with a deadline**  
+**Actor: User**
+
+**MSS**
+
+1.  User <u>creates Group (UC1)</u>.
+2.  User <u>adds notes to this Group (UC11)</u>.
+3.  User <u>attaches a Contact to this Group (UC3)</u>.
+
+    Loop step 3 until all needed contacts are added.
+4.  User <u>creates an Event (UC10)</u>.
+
+    Loop step 4 until all Events are added.
+
+    Use case ends.
+
 
 ### Non-Functional Requirements
 
