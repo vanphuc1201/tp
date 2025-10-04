@@ -1,8 +1,9 @@
 package seedu.address.logic.commands.events;
 
-import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,13 +25,15 @@ public class AddEventCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New event: '%1$s' added to group: %2$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This event already exists in the group";
 
+    private final Index groupIndex;
     private final Event toAdd;
 
     /**
      * Creates an AddEvent to add the specified {@code Event}
      */
-    public AddEventCommand(Event event) {
-        requireNonNull(event);
+    public AddEventCommand(Index index, Event event) {
+        requireAllNonNull(index, event);
+        groupIndex = index;
         toAdd = event;
     }
 
