@@ -16,4 +16,9 @@ public record Event(Description description) {
     public Event {
         requireNonNull(description);
     }
+
+    @Override
+    public String toString() {
+        return this.description.toString();
+    }
 }

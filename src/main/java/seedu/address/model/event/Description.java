@@ -26,4 +26,9 @@ public record Description(String description) {
     public static boolean isValidDescription(String test) {
         return !test.isBlank();
     }
+
+    @Override
+    public String toString() {
+        return description;
+    }
 }
