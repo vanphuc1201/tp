@@ -94,11 +94,17 @@ public interface Model {
      */
     boolean hasGroup(Group group);
 
-    // /** Returns an unmodifiable view of the filtered group list */
-    //ObservableList<Group> getFilteredGroupList();
+    /** Returns an unmodifiable view of the filtered group list */
+    ObservableList<Group> getFilteredGroupList();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
+
+    /**
+     * Updates the filter of the filtered group list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredGroupList(Predicate<Group> predicate);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
