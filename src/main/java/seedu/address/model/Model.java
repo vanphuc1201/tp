@@ -94,8 +94,8 @@ public interface Model {
      */
     boolean hasGroup(Group group);
 
-//    /** Returns an unmodifiable view of the filtered group list */
-//    ObservableList<Group> getFilteredGroupList();
+    // /** Returns an unmodifiable view of the filtered group list */
+    //ObservableList<Group> getFilteredGroupList();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

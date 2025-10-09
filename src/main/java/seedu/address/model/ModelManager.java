@@ -23,7 +23,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
-//    private final FilteredList<Group> filteredGroups;
+    //private final FilteredList<Group> filteredGroups;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -115,19 +115,19 @@ public class ModelManager implements Model {
 
     @Override
     public void addGroup(Group group) {
-//        addressBook.addGroup(group);
+        //addressBook.addGroup(group);
     }
 
     @Override
     public void deleteGroup(Group target) {
-//        addressBook.removeGroup(target);
+        //addressBook.removeGroup(target);
     }
 
     @Override
     public boolean hasGroup(Group group) {
         requireNonNull(group);
         return true;
-//        return addressBook.hasGroup(group);
+        //return addressBook.hasGroup(group);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -153,16 +153,16 @@ public class ModelManager implements Model {
      * Returns an unmodifiable view of the list of {@code Group} backed by the internal list of
      * {@code versionedAddressBook}
      */
-//    @Override
-//    public ObservableList<Group> getFilteredGroupList() {
-//        return filteredGroups;
-//    }
-//
-//    @Override
-//    public void updateFilteredGroupList(Predicate<Group> predicate) {
-//        requireNonNull(predicate);
-//        filteredPersons.setPredicate(predicate);
-//    }
+    //@Override
+    //public ObservableList<Group> getFilteredGroupList() {
+    //    return filteredGroups;
+    //}
+
+    //@Override
+    //public void updateFilteredGroupList(Predicate<Group> predicate) {
+    //    requireNonNull(predicate);
+    //    filteredPersons.setPredicate(predicate);
+    //}
 
     @Override
     public boolean equals(Object other) {
