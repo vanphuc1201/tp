@@ -1,6 +1,5 @@
 package seedu.address.model.group;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * Represents a Group in the address book.
@@ -33,7 +31,7 @@ public class Group {
         requireAllNonNull(name, events, persons);
         this.name = name;
         this.events = events;
-        this.persons =  persons;
+        this.persons = persons;
     }
 
     public Name getName() {
@@ -56,12 +54,12 @@ public class Group {
         persons.add(toAdd);
     }
 
-    public void setPersons(Person target, Person editedPerson) {
-        persons.setPerson(target, editedPerson);
-    }
-
     public void removePerson(Person toRemove) {
         persons.remove(toRemove);
+    }
+
+    public void setPersons(Person target, Person editedPerson) {
+        persons.setPerson(target, editedPerson);
     }
 
     public void setPersons(UniquePersonList replacement) {
@@ -71,6 +69,7 @@ public class Group {
     public void setPersons(List<Person> replacement) {
         persons.setPersons(replacement);
     }
+
 
     /**
      * Returns true if both groups have the same name.
