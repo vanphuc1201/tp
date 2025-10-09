@@ -1,12 +1,17 @@
 package seedu.address.model.group;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * Represents a Group in the address book.
@@ -38,6 +43,30 @@ public class Group {
     public UniqueEventList getEvents() {return events;}
 
     public UniquePersonList getPersons() {return persons;}
+
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+    public void addPerson(Person toAdd) {
+        persons.add(toAdd);
+    }
+
+    public void setPersons(Person target, Person editedPerson) {
+        persons.setPerson(target, editedPerson);
+    }
+
+    public void removePerson(Person toRemove) {
+        persons.remove(toRemove);
+    }
+
+    public void setPersons(UniquePersonList replacement) {
+        persons.setPersons(replacement);
+    }
+
+    public void setPersons(List<Person> replacement) {
+        persons.setPersons(replacement);
+    }
 
     /**
      * Returns true if both groups have the same name.
