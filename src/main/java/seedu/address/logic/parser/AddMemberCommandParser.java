@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AddMemberCommand;
+import seedu.address.logic.commands.groups.AddMemberCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
