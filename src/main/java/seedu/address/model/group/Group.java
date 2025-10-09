@@ -13,12 +13,12 @@ import seedu.address.model.person.UniquePersonList;
 
 /**
  * Represents a Group in the address book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Guarantees: details are present and not null, field values are validated.
  */
 public class Group {
 
     // Identity fields
-    private final Name name;
+    private final GroupName name;
 
     // Data fields
     private final UniqueEventList events;
@@ -27,14 +27,14 @@ public class Group {
     /**
      * Every field must be present and not null.
      */
-    public Group(Name name, UniqueEventList events, UniquePersonList persons) {
+    public Group(GroupName name, UniqueEventList events, UniquePersonList persons) {
         requireAllNonNull(name, events, persons);
         this.name = name;
         this.events = events;
         this.persons = persons;
     }
 
-    public Name getName() {
+    public GroupName getName() {
         return name;
     }
 
@@ -58,15 +58,15 @@ public class Group {
         persons.remove(toRemove);
     }
 
-    public void setPersons(Person target, Person editedPerson) {
+    public void updatePersons(Person target, Person editedPerson) {
         persons.setPerson(target, editedPerson);
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void replacePersons(UniquePersonList replacement) {
         persons.setPersons(replacement);
     }
 
-    public void setPersons(List<Person> replacement) {
+    public void replacePersons(List<Person> replacement) {
         persons.setPersons(replacement);
     }
 
@@ -115,7 +115,7 @@ public class Group {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", name)
-                .add("event", events)
+                .add("events", events)
                 .add("persons", persons)
                 .toString();
     }

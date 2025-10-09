@@ -8,15 +8,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.groups.AddMemberCommand;
 import seedu.address.logic.commands.persons.AddCommand;
 import seedu.address.logic.commands.persons.ClearCommand;
-import seedu.address.logic.commands.persons.Command;
 import seedu.address.logic.commands.persons.DeleteCommand;
 import seedu.address.logic.commands.persons.EditCommand;
-import seedu.address.logic.commands.persons.ExitCommand;
 import seedu.address.logic.commands.persons.FindCommand;
-import seedu.address.logic.commands.persons.HelpCommand;
 import seedu.address.logic.commands.persons.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
