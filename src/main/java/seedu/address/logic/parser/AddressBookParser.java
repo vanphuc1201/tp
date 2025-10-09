@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.groups.AddMemberCommand;
 import seedu.address.logic.commands.persons.AddCommand;
 import seedu.address.logic.commands.persons.ClearCommand;
 import seedu.address.logic.commands.persons.Command;
@@ -76,6 +77,9 @@ public class AddressBookParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case AddMemberCommand.COMMAND_WORD:
+            return new AddMemberCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
