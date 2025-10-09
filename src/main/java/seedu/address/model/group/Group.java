@@ -40,9 +40,13 @@ public class Group {
         return name;
     }
 
-    public UniqueEventList getEvents() {return events;}
+    public UniqueEventList getEvents() {
+        return events;
+    }
 
-    public UniquePersonList getPersons() {return persons;}
+    public UniquePersonList getPersons() {
+        return persons;
+    }
 
     public void addEvent(Event event) {
         events.add(event);
