@@ -23,7 +23,7 @@ public class AddGroupCommand extends Command {
             + PREFIX_NAME + "CS2103T ";
 
     public static final String MESSAGE_SUCCESS = "New group has been created: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "Group already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_GROUP = "Group already exists in the address book";
 
     private final Group toAdd;
 
@@ -40,7 +40,7 @@ public class AddGroupCommand extends Command {
         requireNonNull(model);
 
         if (model.hasGroup(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_GROUP);
         }
 
         model.addGroup(toAdd);
