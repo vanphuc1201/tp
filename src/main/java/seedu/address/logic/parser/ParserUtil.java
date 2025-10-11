@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -45,7 +44,7 @@ public class ParserUtil {
      * @throws ParseException if the given {@code name} is invalid.
      */
     public static Name parseName(String name) throws ParseException {
-        return parseField(name, Name::isValidName, Name.MESSAGE_CONSTRAINTS, Name::new);
+        return parseField(name, Name::new);
     }
 
     /**
@@ -55,7 +54,7 @@ public class ParserUtil {
      * @throws ParseException if the given {@code phone} is invalid.
      */
     public static Phone parsePhone(String phone) throws ParseException {
-        return parseField(phone, Phone::isValidPhone, Phone.MESSAGE_CONSTRAINTS, Phone::new);
+        return parseField(phone, Phone::new);
     }
 
     /**
@@ -65,7 +64,7 @@ public class ParserUtil {
      * @throws ParseException if the given {@code email} is invalid.
      */
     public static Email parseEmail(String email) throws ParseException {
-        return parseField(email, Email::isValidEmail, Email.MESSAGE_CONSTRAINTS, Email::new);
+        return parseField(email, Email::new);
     }
 
     /**
@@ -75,7 +74,7 @@ public class ParserUtil {
      * @throws ParseException if the given {@code name} is invalid.
      */
     public static GroupName parseGroupName(String name) throws ParseException {
-        return parseField(name, GroupName::isValidName, GroupName.MESSAGE_CONSTRAINTS, GroupName::new);
+        return parseField(name, GroupName::new);
     }
 
     /**
@@ -85,8 +84,7 @@ public class ParserUtil {
      * @throws ParseException if the given {@code description} is invalid.
      */
     public static Description parseDescription(String description) throws ParseException {
-        return parseField(description, Description::isValidDescription,
-                Description.MESSAGE_CONSTRAINTS, Description::new);
+        return parseField(description, Description::new);
     }
 
     /**
@@ -96,7 +94,7 @@ public class ParserUtil {
      * @throws ParseException if the given {@code tag} is invalid.
      */
     public static Tag parseTag(String tag) throws ParseException {
-        return parseField(tag, Tag::isValidTagName, Tag.MESSAGE_CONSTRAINTS, Tag::new);
+        return parseField(tag, Tag::new);
     }
 
     /**
@@ -114,17 +112,15 @@ public class ParserUtil {
     /**
      * Generic method for parsing validated field types.
      * @param input The String to be parsed.
-     * @param validator T.isValidT.
-     * @param message T.MESSAGE_CONSTRAINTS.
-     * @param constructor The constructor for T.
+     * @param constructor Constructor for T, which checks for valid input and throws {@code IllegalArgumentException.}
      */
-    private static <T> T parseField(String input, Predicate<String> validator, String message,
-            Function<String, T> constructor) throws ParseException {
+    private static <T> T parseField(String input, Function<String, T> constructor) throws ParseException {
         requireNonNull(input);
         String trimmedInput = input.trim();
-        if (!validator.test(trimmedInput)) {
-            throw new ParseException(message);
+        try {
+            return constructor.apply(trimmedInput);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
-        return constructor.apply(trimmedInput);
     }
 }
