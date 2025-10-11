@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 
 class EventTest {
 
-    private static final Event VALID_EVENT = new Event(VALID_DESCRIPTION);
+    public static final Event VALID_EVENT = new Event(VALID_DESCRIPTION);
+    public static final Event VALID_EVENT_2 = new Event(VALID_DESCRIPTION_2);
 
     @Test
     void constructor_validDescription_shouldCreateEvent() {
@@ -45,6 +46,6 @@ class EventTest {
         assertFalse(VALID_EVENT.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(VALID_EVENT.equals(new Event(VALID_DESCRIPTION_2)));
+        assertFalse(VALID_EVENT.equals(VALID_EVENT_2));
     }
 }
