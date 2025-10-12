@@ -7,6 +7,7 @@ import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.group.UniqueGroupList;
 
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
@@ -36,6 +37,14 @@ public class UniqueEventList implements Iterable<Event> {
             throw new DuplicateEventException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Replaces the contents of this list with the contents of {@code replacement}.
+     */
+    public void setEvents(UniqueEventList replacement) {
+        requireNonNull(replacement);
+        internalList.setAll(replacement.internalList);
     }
 
     /**
