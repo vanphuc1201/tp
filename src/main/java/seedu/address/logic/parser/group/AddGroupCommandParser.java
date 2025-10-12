@@ -35,10 +35,8 @@ public class AddGroupCommandParser implements Parser<AddGroupCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
         GroupName name = ParserUtil.parseGroupName(argMultimap.getValue(PREFIX_NAME).get());
-        UniqueEventList events = new UniqueEventList();
-        UniquePersonList persons = new UniquePersonList();
 
-        Group group = new Group(name, events, persons);
+        Group group = new Group(name);
 
         return new AddGroupCommand(group);
     }
