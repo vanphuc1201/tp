@@ -48,7 +48,8 @@ class JsonAdaptedGroup {
      */
     public Group toModelType() throws IllegalValueException {
         if (groupName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, GroupName.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                                            GroupName.class.getSimpleName()));
         }
         if (!GroupName.isValidName(groupName)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
@@ -56,14 +57,16 @@ class JsonAdaptedGroup {
         final GroupName modelName = new GroupName(groupName);
 
         if (persons == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, UniquePersonList.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                                                        UniquePersonList.class.getSimpleName()));
         }
 
         final UniquePersonList modelPersons = new UniquePersonList();
         modelPersons.setPersons(persons);
 
         if (events == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, UniqueEventList.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                                                    UniqueEventList.class.getSimpleName()));
         }
 
         final UniqueEventList modelEvents = new UniqueEventList();
