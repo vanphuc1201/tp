@@ -1,15 +1,21 @@
 package seedu.address.logic.commands.event;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.group.Group;
 
 /**
  * Adds an Event to the specified Group
@@ -40,7 +46,22 @@ public class AddEventCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        return new CommandResult("Hello from AddEventCommand");
+        requireNonNull(model);
+        List<Group> lastShownList = model.getFilteredGroupList();
+
+        if (groupIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        }
+
+        Group group = lastShownList.get(groupIndex.getZeroBased());
+
+        try {
+            group.addEvent(toAdd);
+        } catch (DuplicateEventException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.toString(), Messages.format(group)));
     }
 
     @Override
