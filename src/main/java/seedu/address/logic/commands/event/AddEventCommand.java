@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,7 +24,7 @@ public class AddEventCommand extends Command {
             + PREFIX_DESCRIPTION + "DESCRIPTION";
 
     public static final String MESSAGE_SUCCESS = "New event: '%1$s' added to group: %2$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This event already exists in the group";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the group";
 
     private final Index groupIndex;
     private final Event toAdd;
@@ -40,5 +41,27 @@ public class AddEventCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         return new CommandResult("Hello from AddEventCommand");
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddEventCommand otherAddEventCommand)) {
+            return false;
+        }
+
+        return toAdd.equals(otherAddEventCommand.toAdd);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("groupIndex", groupIndex)
+                .add("toAdd", toAdd)
+                .toString();
     }
 }
