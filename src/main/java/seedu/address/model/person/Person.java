@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.group.UniqueGroupList;
 
 /**
  * Represents a Person in the address book.
@@ -17,14 +18,17 @@ public class Person {
     private final Phone phone;
     private final Email email;
 
+    private final UniqueGroupList groups;
+
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email) {
-        requireAllNonNull(name, phone, email);
+    public Person(Name name, Phone phone, Email email, UniqueGroupList groups) {
+        requireAllNonNull(name, phone, email, groups);
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.groups = groups;
     }
 
     public Name getName() {
