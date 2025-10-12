@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.groups.AddGroupCommand;
+import seedu.address.logic.commands.group.AddGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;

@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.groups;
+package seedu.address.logic.parser.group;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.groups.AddMemberCommand;
+import seedu.address.logic.commands.group.AddMemberCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
