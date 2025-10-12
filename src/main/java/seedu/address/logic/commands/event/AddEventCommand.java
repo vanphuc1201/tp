@@ -75,7 +75,7 @@ public class AddEventCommand extends Command {
             return false;
         }
 
-        return toAdd.equals(otherAddEventCommand.toAdd);
+        return groupIndex.equals(otherAddEventCommand.groupIndex) && toAdd.equals(otherAddEventCommand.toAdd);
     }
 
     @Override
