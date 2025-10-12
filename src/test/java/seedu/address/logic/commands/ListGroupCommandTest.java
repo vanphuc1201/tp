@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showGroupAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalGroups.getTypicalAddressBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for ListGroupCommand.
  */
 public class ListGroupCommandTest {
 
@@ -34,7 +34,7 @@ public class ListGroupCommandTest {
 
     @Test
     public void execute_listGroupIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_GROUP);
+        showGroupAtIndex(model, INDEX_FIRST_GROUP);
         assertCommandSuccess(new ListGroupCommand(), model, ListGroupCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
