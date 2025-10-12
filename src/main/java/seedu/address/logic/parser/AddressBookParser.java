@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -16,7 +17,6 @@ import seedu.address.logic.commands.group.AddMemberCommand;
 import seedu.address.logic.commands.group.DeleteGroupCommand;
 import seedu.address.logic.commands.group.ListGroupCommand;
 import seedu.address.logic.commands.person.AddCommand;
-import seedu.address.logic.commands.person.ClearCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.FindCommand;
