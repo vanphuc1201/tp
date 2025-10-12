@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.events;
+package seedu.address.logic.commands.event;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;

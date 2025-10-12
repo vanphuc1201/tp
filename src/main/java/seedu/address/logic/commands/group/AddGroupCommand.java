@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.groups;
+package seedu.address.logic.commands.group;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
