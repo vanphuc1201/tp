@@ -70,6 +70,10 @@ public class AddMemberCommand extends Command {
         Person personToAdd = lastShownPersonList.get(contactIndex.getZeroBased());
         Group groupToAddTo = lastShownGroupList.get(groupIndex.getZeroBased());
 
+        if (groupToAddTo.containsPerson(personToAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
         model.addPersonToGroup(groupToAddTo, personToAdd);
         model.updateFilteredGroupList(group -> false);
         model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
