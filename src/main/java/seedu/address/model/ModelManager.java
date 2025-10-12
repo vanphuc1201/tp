@@ -117,6 +117,7 @@ public class ModelManager implements Model {
     @Override
     public void addGroup(Group group) {
         addressBook.addGroup(group);
+        updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
     }
 
     @Override
