@@ -79,13 +79,14 @@ public class Person {
         Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
-                && email.equals(otherPerson.email);
+                && email.equals(otherPerson.email)
+                && groups.equals(otherPerson.groups);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email);
+        return Objects.hash(name, phone, email, groups);
     }
 
     @Override
@@ -94,6 +95,7 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
+                .add("groups", groups)
                 .toString();
     }
 
