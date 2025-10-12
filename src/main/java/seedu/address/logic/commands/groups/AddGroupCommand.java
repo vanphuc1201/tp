@@ -18,9 +18,9 @@ public class AddGroupCommand extends Command {
 
     public static final String COMMAND_WORD = "add-group";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Create a group in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Create a group in the address book. \n"
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
+            + PREFIX_NAME + "NAME \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "CS2103T ";
 
