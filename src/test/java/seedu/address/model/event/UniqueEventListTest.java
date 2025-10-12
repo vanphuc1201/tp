@@ -5,8 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.event.EventTest.VALID_EVENT;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.jupiter.api.Test;
+
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 public class UniqueEventListTest {
 
@@ -36,6 +40,7 @@ public class UniqueEventListTest {
     @Test
     public void add_duplicateEvent_throwsDuplicateEventException() {
         uniqueEventList.add(VALID_EVENT);
+        assertThrows(DuplicateEventException.class, () -> uniqueEventList.add(VALID_EVENT));
     }
 
     @Test
