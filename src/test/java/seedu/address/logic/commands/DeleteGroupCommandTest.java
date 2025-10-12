@@ -98,7 +98,7 @@ public class DeleteGroupCommandTest {
         // null -> returns false
         assertFalse(deleteGroupFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different group -> returns false
         assertFalse(deleteGroupFirstCommand.equals(deleteGroupSecondCommand));
     }
 
