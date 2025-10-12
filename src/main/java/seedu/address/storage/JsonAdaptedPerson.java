@@ -1,9 +1,16 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -19,16 +26,21 @@ class JsonAdaptedPerson {
     private final String name;
     private final String phone;
     private final String email;
+    private final List<JsonAdaptedGroupName> groups = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email) {
+                             @JsonProperty("email") String email,
+                             @JsonProperty("groups") List<JsonAdaptedGroupName> groups) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        if (groups != null) {
+            this.groups.addAll(groups);
+        }
     }
 
     /**
@@ -38,6 +50,9 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
+        groups.addAll(source.getGroups().stream()
+            .map(JsonAdaptedGroupName::new)
+            .collect(Collectors.toList()));
     }
 
     /**
@@ -46,6 +61,11 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
+        final List<GroupName> personGroups = new ArrayList<>();
+        for (JsonAdaptedGroupName group : groups) {
+            personGroups.add(group.toModelType());
+        }
+
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -70,7 +90,9 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        return new Person(modelName, modelPhone, modelEmail);
+        final Set<GroupName> modelGroups = new HashSet<>(personGroups);
+
+        return new Person(modelName, modelPhone, modelEmail, modelGroups);
     }
 
 }

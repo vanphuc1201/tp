@@ -3,9 +3,10 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
+import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.group.GroupName;
 
 /**
  * Represents a Person in the address book.
@@ -18,12 +19,12 @@ public class Person {
     private final Phone phone;
     private final Email email;
 
-    private final UniqueGroupList groups;
+    private final Set<GroupName> groups;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, UniqueGroupList groups) {
+    public Person(Name name, Phone phone, Email email, Set<GroupName> groups) {
         requireAllNonNull(name, phone, email, groups);
         this.name = name;
         this.phone = phone;
@@ -41,6 +42,10 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Set<GroupName> getGroups() {
+        return groups;
     }
 
     /**
