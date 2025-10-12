@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -17,7 +19,6 @@ import seedu.address.model.Model;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 
-import java.util.List;
 
 /**
  * Adds a person to the specified group.

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.persons.AddCommand;
-import seedu.address.logic.commands.persons.ClearCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.persons.DeleteCommand;
 import seedu.address.logic.commands.persons.EditCommand;
 import seedu.address.logic.commands.persons.EditCommand.EditPersonDescriptor;
