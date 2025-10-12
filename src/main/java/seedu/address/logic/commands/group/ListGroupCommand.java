@@ -12,7 +12,7 @@ import seedu.address.model.Model;
  */
 public class ListGroupCommand extends Command {
 
-    public static final String COMMAND_WORD = "listgroups";
+    public static final String COMMAND_WORD = "list-groups";
 
     public static final String MESSAGE_SUCCESS = "Listed all groups";
 
