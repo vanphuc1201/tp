@@ -118,4 +118,5 @@ public class DeleteGroupCommandTest {
 
         assertTrue(model.getFilteredGroupList().isEmpty());
     }
+
 }
