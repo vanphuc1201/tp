@@ -40,8 +40,7 @@ public class DeleteGroupCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        //List<Group> lastShownList = model.getFilteredGroupList();
-        List<Group> lastShownList = new ArrayList<Group>();
+        List<Group> lastShownList = model.getFilteredGroupList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
