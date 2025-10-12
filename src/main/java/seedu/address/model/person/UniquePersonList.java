@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,6 +96,16 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+    }
+
+    /**
+     * Return the string name of all the person in the uniquelist
+     */
+    public String getPersonsName() {
+        return internalList.stream()
+                            .map(person -> person.getName()
+                                                        .toString())
+                            .collect(Collectors.joining(", "));
     }
 
     /**
