@@ -104,7 +104,7 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY,
-                new AddCommand(expectedPerson));
+                new AddCommand(expectedPerson, new HashSet<>()));
     }
 
     @Test
