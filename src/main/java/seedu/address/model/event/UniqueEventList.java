@@ -3,6 +3,7 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +45,15 @@ public class UniqueEventList implements Iterable<Event> {
     public void setEvents(UniqueEventList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+    }
+
+    /**
+     * Return the string of all the event in the event list
+     */
+    public String getEventsDescription() {
+        return internalList.stream()
+                .map(event -> event.toString())
+                .collect(Collectors.joining(", "));
     }
 
     /**

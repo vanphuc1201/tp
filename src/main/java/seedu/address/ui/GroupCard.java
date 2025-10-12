@@ -7,7 +7,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.group.Group;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Group}.
  */
 public class GroupCard extends UiPart<Region> {
 
@@ -30,19 +30,19 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label persons;
     @FXML
-    private Label email;
+    private Label events;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code GroupCode} with the given {@code Group} and index to display.
      */
     public GroupCard(Group group, int displayedIndex) {
         super(FXML);
         this.group = group;
-            id.setText(displayedIndex + ". ");
-            name.setText(group.getName().fullName);
-            phone.setText(group.getPersons().toString());
-            email.setText(group.getEvents().toString());
+        id.setText(displayedIndex + ". ");
+        name.setText(group.getName().fullName);
+        persons.setText("Group Member: " + group.getPersons().getPersonsName());
+        events.setText("Events: " + group.getEvents().getEventsDescription());
     }
 }
