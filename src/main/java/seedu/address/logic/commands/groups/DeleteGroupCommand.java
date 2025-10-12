@@ -2,7 +2,6 @@ package seedu.address.logic.commands.groups;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
