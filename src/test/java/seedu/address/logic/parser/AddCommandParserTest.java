@@ -28,8 +28,8 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.persons.AddCommand;
-import seedu.address.logic.parser.persons.AddCommandParser;
+import seedu.address.logic.commands.person.AddCommand;
+import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
