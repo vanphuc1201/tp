@@ -104,8 +104,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a group to the address book.
      * The group must not already exist in the address book.
      */
-    public void addGroup(Group group) {
-        groups.add(group);
+    public void addGroup(Group g) {
+        groups.add(g);
     }
 
     /**
