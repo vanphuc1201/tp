@@ -2,13 +2,11 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.group.GroupName;
 
 /**
  * Represents a Person in the address book.
@@ -21,17 +19,17 @@ public class Person {
     private final Phone phone;
     private final Email email;
 
-    private final Set<Tag> tags = new HashSet<>();
+    private final Set<GroupName> groups;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, tags);
+    public Person(Name name, Phone phone, Email email, Set<GroupName> groups) {
+        requireAllNonNull(name, phone, email, groups);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.tags.addAll(tags);
+        this.groups = groups;
     }
 
     public Name getName() {
@@ -46,12 +44,8 @@ public class Person {
         return email;
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+    public Set<GroupName> getGroups() {
+        return groups;
     }
 
     /**
@@ -86,13 +80,13 @@ public class Person {
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && tags.equals(otherPerson.tags);
+                && groups.equals(otherPerson.groups);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, tags);
+        return Objects.hash(name, phone, email, groups);
     }
 
     @Override
@@ -101,7 +95,7 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
-                .add("tags", tags)
+                .add("groups", groups)
                 .toString();
     }
 

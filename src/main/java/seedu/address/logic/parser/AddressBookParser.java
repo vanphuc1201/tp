@@ -21,6 +21,11 @@ import seedu.address.logic.commands.persons.EditCommand;
 import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.persons.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.groups.AddMemberCommandParser;
+import seedu.address.logic.parser.persons.AddCommandParser;
+import seedu.address.logic.parser.persons.DeleteCommandParser;
+import seedu.address.logic.parser.persons.EditCommandParser;
+import seedu.address.logic.parser.persons.FindCommandParser;
 
 /**
  * Parses user input.

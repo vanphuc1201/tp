@@ -39,6 +39,14 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
+     * Replaces the contents of this list with the contents of {@code replacement}.
+     */
+    public void setEvents(UniqueEventList replacement) {
+        requireNonNull(replacement);
+        internalList.setAll(replacement.internalList);
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Event> asUnmodifiableObservableList() {
