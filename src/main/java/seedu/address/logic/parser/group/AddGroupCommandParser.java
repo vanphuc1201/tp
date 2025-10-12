@@ -1,9 +1,9 @@
-package seedu.address.logic.parser.groups;
+package seedu.address.logic.parser.group;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import seedu.address.logic.commands.groups.AddGroupCommand;
+import seedu.address.logic.commands.group.AddGroupCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
