@@ -1,7 +1,7 @@
 ---
   layout: default.md
-    title: "Developer Guide"
-    pageNav: 3
+  title: "Developer Guide"
+  pageNav: 3
 ---
 
 # AB-3 Developer Guide
@@ -397,7 +397,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The contact the user wishes to add is not in the list.
+* 1a. The contact the user wishes to add is not in the list or the list is empty.
 
     * 1a1. User requests to <u>create a new contact (UC2)</u>.
 
@@ -440,7 +440,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 6.  User confirms the deletion.
 7.  SC deletes the group, keeping the member contacts, and displays the deleted group.
 
-    Use case ends.
+  Use case ends.
 
 **Extensions**
 
@@ -476,7 +476,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to list all contacts.
 2.  SC display a list of all contacts and their details.
 
-    Use case ends.
+  Use case ends.
 
 **Extensions**
 
@@ -496,7 +496,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to list groups.
 2.  SC shows user a list of all groups and their details.
 
-    Use case ends.
+  Use case ends.
 
 **Extensions**
 
@@ -518,7 +518,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  User requests to view a specific contact’s details in the list.
 3.  SC shows the user the given contact’s details.
 
-    Use case ends.
+  Use case ends.
 
 **Extensions**
 
