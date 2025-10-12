@@ -4,14 +4,20 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.commons.core.index.Index;
-// import seedu.address.logic.Messages;
+import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-// import seedu.address.model.person.Person;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
+
+import java.util.List;
 
 /**
  * Adds a person to the specified group.
@@ -49,28 +55,50 @@ public class AddMemberCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        /*
-        TODO: Actual implementation of whole execution sequence
-        List<Person> = lastShownPersonList = model.getFilteredPersonList();
-        List<Group> = lastShownGroupList = model.getFilteredGroupList();
+        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        List<Group> lastShownGroupList = model.getFilteredGroupList();
 
-        if (contactIndex.getZeroBased() >= lastShownPersonList) {
+        if (contactIndex.getZeroBased() >= lastShownPersonList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (groupIndex.getZeroBased() >= lastShownGroupList) {
+        if (groupIndex.getZeroBased() >= lastShownGroupList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Person personToAdd = lastShownPersonList.get(contactIndex);
-        Group groupToAddTo = lastShownGroupList.get(groupIndex);
+        Person personToAdd = lastShownPersonList.get(contactIndex.getZeroBased());
+        Group groupToAddTo = lastShownGroupList.get(groupIndex.getZeroBased());
 
         model.addPersonToGroup(groupToAddTo, personToAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToAdd),
-                Messages.format(groupToAddTo));
-         */
+        model.updateFilteredGroupList(group -> false);
+        model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format("Added member %s to group %s",
-                this.contactIndex.getOneBased(), this.groupIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToAdd),
+                Messages.format(groupToAddTo)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddMemberCommand)) {
+            return false;
+        }
+
+        AddMemberCommand otherAddMemberCommand = (AddMemberCommand) other;
+        return groupIndex.equals(otherAddMemberCommand.groupIndex)
+                && contactIndex.equals(otherAddMemberCommand.contactIndex);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("groupIndex", groupIndex)
+                .add("contactIndex", contactIndex)
+                .toString();
     }
 }

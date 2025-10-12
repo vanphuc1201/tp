@@ -48,6 +48,10 @@ public class Person {
         return groups;
     }
 
+    public void addGroup(GroupName groupName) {
+        groups.add(groupName);
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
