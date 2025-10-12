@@ -45,6 +45,22 @@ public class GroupBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code GroupEvent} of the {@code Group} that we are building.
+     */
+    public GroupBuilder withEvents(UniqueEventList events) {
+        this.events = events;
+        return this;
+    }
+
+    /**
+     * Sets the {@code GroupName} of the {@code Group} that we are building.
+     */
+    public GroupBuilder withPersons(UniquePersonList persons) {
+        this.persons = persons;
+        return this;
+    }
+
     public Group build() {
         return new Group(name, events, persons);
     }
