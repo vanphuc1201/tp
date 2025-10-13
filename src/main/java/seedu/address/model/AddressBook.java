@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 
@@ -134,6 +135,16 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeGroup(Group key) {
         groups.remove(key);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removePersonFromGroup(Group targetGroup, Person toRemove) {
+        requireAllNonNull(targetGroup, toRemove);
+
+        groups.removePersonFromGroups(targetGroup, toRemove);
     }
 
     /**
