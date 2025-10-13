@@ -101,6 +101,12 @@ public interface Model {
      */
     void addPersonToGroup(Group group, Person person);
 
+    /**
+     * Removes the specified person from the specified group.
+     * The group must exist in the address book.
+     */
+    void removePersonFromGroup(Group targetGroup, Person toRemove);
+
     /** Returns an unmodifiable view of the filtered group list */
     ObservableList<Group> getFilteredGroupList();
 
