@@ -25,17 +25,20 @@ import seedu.address.model.person.Person;
  */
 public class AddCommand extends Command {
 
-    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_WORD = "add-contact";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL \n"
+            + PREFIX_EMAIL + "EMAIL "
+            + "[" + PREFIX_GROUP_INDEX + "Groups]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com ";
+            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_GROUP_INDEX + "1 "
+            + PREFIX_GROUP_INDEX + "2 ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
