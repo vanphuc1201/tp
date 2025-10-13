@@ -85,7 +85,8 @@ public class AddCommandTest {
     @Test
     public void toStringMethod() {
         AddCommand addCommand = new AddCommand(ALICE, new HashSet<>());
-        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
+        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + ", groupsIndexes="
+                + ALICE.getGroups() + "}";
         assertEquals(expected, addCommand.toString());
     }
 
