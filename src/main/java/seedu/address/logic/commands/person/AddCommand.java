@@ -97,6 +97,7 @@ public class AddCommand extends Command {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("toAdd", toAdd)
+                .add("groupsIndexes", groupsIndexes)
                 .toString();
     }
 }
