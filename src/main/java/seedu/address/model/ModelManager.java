@@ -147,6 +147,12 @@ public class ModelManager implements Model {
         addressBook.setPerson(targetPerson, person);
     }
 
+    public void removePersonFromGroup(Group targetGroup, Person toRemove){
+        requireAllNonNull(targetGroup, toRemove);
+
+        addressBook.removePersonFromGroup(targetGroup, toRemove);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
