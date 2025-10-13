@@ -70,6 +70,12 @@ public class Group {
         persons.setPersons(replacement);
     }
 
+    /**
+     * Returns true if the group contains an equivalent person as the given argument.
+     */
+    public boolean containsPerson(Person personToCheck) {
+        return persons.contains(personToCheck);
+    }
 
     /**
      * Returns true if both groups have the same name.

@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.groups;
+package seedu.address.logic.commands.group;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -24,7 +24,7 @@ public class AddGroupCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "CS2103T ";
 
-    public static final String MESSAGE_SUCCESS = "New group has been created: %1$s";
+    public static final String MESSAGE_SUCCESS = "New group created: %1$s";
     public static final String MESSAGE_DUPLICATE_GROUP = "Group already exists in the address book";
 
     private final Group toAdd;

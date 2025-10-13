@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.groups;
+package seedu.address.logic.commands.group;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
@@ -12,7 +12,7 @@ import seedu.address.model.Model;
  */
 public class ListGroupCommand extends Command {
 
-    public static final String COMMAND_WORD = "list-group";
+    public static final String COMMAND_WORD = "list-groups";
 
     public static final String MESSAGE_SUCCESS = "Listed all groups";
 

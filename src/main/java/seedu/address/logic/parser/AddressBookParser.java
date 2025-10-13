@@ -8,25 +8,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.groups.AddGroupCommand;
-import seedu.address.logic.commands.groups.AddMemberCommand;
-import seedu.address.logic.commands.groups.DeleteGroupCommand;
-import seedu.address.logic.commands.groups.ListGroupCommand;
-import seedu.address.logic.commands.persons.AddCommand;
-import seedu.address.logic.commands.persons.ClearCommand;
-import seedu.address.logic.commands.persons.DeleteCommand;
-import seedu.address.logic.commands.persons.EditCommand;
-import seedu.address.logic.commands.persons.FindCommand;
-import seedu.address.logic.commands.persons.ListCommand;
+import seedu.address.logic.commands.group.AddGroupCommand;
+import seedu.address.logic.commands.group.AddMemberCommand;
+import seedu.address.logic.commands.group.DeleteGroupCommand;
+import seedu.address.logic.commands.group.ListGroupCommand;
+import seedu.address.logic.commands.person.AddCommand;
+import seedu.address.logic.commands.person.DeleteCommand;
+import seedu.address.logic.commands.person.EditCommand;
+import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.groups.AddMemberCommandParser;
-import seedu.address.logic.parser.persons.AddCommandParser;
-import seedu.address.logic.parser.persons.DeleteCommandParser;
-import seedu.address.logic.parser.persons.EditCommandParser;
-import seedu.address.logic.parser.persons.FindCommandParser;
+import seedu.address.logic.parser.group.AddGroupCommandParser;
+import seedu.address.logic.parser.group.AddMemberCommandParser;
+import seedu.address.logic.parser.group.DeleteGroupCommandParser;
+import seedu.address.logic.parser.person.AddCommandParser;
+import seedu.address.logic.parser.person.DeleteCommandParser;
+import seedu.address.logic.parser.person.EditCommandParser;
+import seedu.address.logic.parser.person.FindCommandParser;
 
 /**
  * Parses user input.

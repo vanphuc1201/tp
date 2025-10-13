@@ -95,6 +95,12 @@ public interface Model {
      */
     boolean hasGroup(Group group);
 
+    /**
+     * Adds the specified person to the specified group.
+     * The group and person must exist in the address book.
+     */
+    void addPersonToGroup(Group group, Person person);
+
     /** Returns an unmodifiable view of the filtered group list */
     ObservableList<Group> getFilteredGroupList();
 

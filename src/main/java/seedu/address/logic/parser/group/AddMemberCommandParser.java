@@ -1,18 +1,15 @@
-package seedu.address.logic.parser.groups;
+package seedu.address.logic.parser.group;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 
-import java.util.stream.Stream;
-
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.groups.AddMemberCommand;
+import seedu.address.logic.commands.group.AddMemberCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
-import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -33,7 +30,7 @@ public class AddMemberCommandParser implements Parser<AddMemberCommand> {
         Index personIndex;
         Index groupIndex;
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_GROUP_INDEX, PREFIX_CONTACT_INDEX)
+        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_GROUP_INDEX, PREFIX_CONTACT_INDEX)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMemberCommand.MESSAGE_USAGE));
         }
@@ -45,11 +42,4 @@ public class AddMemberCommandParser implements Parser<AddMemberCommand> {
         return new AddMemberCommand(groupIndex, personIndex);
     }
 
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
 }
