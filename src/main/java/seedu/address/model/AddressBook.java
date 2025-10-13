@@ -144,7 +144,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removePersonFromGroup(Group targetGroup, Person toRemove) {
         requireAllNonNull(targetGroup, toRemove);
 
-        groups.removePersonFromGroups(targetGroup, toRemove);
+        groups.removePersonFromGroup(targetGroup, toRemove);
     }
 
     /**
