@@ -2,10 +2,10 @@ package seedu.address.logic.commands.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +17,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 
 /**
@@ -63,20 +62,19 @@ public class AddCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Set<GroupName> groupsToAdd = new HashSet<>();
-        // Retrieve the groups to add base on the indexes
-        for (Index index : groupsIndexes) {
-            GroupName group = lastShownGroupList.get(index.getZeroBased()).getName();
-            groupsToAdd.add(group);
-        }
-
-        // Create a new person with the groups
-        toAdd = new Person(toAdd.getName(), toAdd.getPhone(), toAdd.getEmail(), groupsToAdd);
+        // check for duplicate person
         if (model.hasPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
-
         model.addPerson(toAdd);
+
+        //Adding the person to the groups
+        //no need check for duplicate person in group because is a newly created person
+        for (Index index : groupsIndexes) {
+            Group groupToAddTo = lastShownGroupList.get(index.getZeroBased());
+            model.addPersonToGroup(groupToAddTo, toAdd);
+        }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
