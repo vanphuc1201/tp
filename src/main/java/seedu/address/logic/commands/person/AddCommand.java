@@ -69,9 +69,12 @@ public class AddCommand extends Command {
         model.addPerson(toAdd);
 
         //Adding the person to the groups
-        //no need check for duplicate person in group because is a newly created person
         for (Index index : groupsIndexes) {
             Group groupToAddTo = lastShownGroupList.get(index.getZeroBased());
+            //duplicate check - skip if person already in group
+            if (groupToAddTo.containsPerson(toAdd)) {
+                continue;
+            }
             model.addPersonToGroup(groupToAddTo, toAdd);
         }
 
