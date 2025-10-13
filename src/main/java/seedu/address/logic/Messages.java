@@ -42,7 +42,9 @@ public class Messages {
                 .append("; Phone: ")
                 .append(person.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail());
+                .append(person.getEmail())
+                .append("; Groups: ");
+        person.getGroups().forEach(builder::append);
         return builder.toString();
     }
 
