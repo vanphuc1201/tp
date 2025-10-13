@@ -147,7 +147,11 @@ public class ModelManager implements Model {
         addressBook.setPerson(targetPerson, person);
     }
 
-    public void removePersonFromGroup(Group targetGroup, Person toRemove){
+    /**
+     * Removes the specified person from the specified group.
+     * The group must exist in the address book.
+     */
+    public void removePersonFromGroup(Group targetGroup, Person toRemove) {
         requireAllNonNull(targetGroup, toRemove);
 
         addressBook.removePersonFromGroup(targetGroup, toRemove);
