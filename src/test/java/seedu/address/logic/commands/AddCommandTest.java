@@ -85,7 +85,8 @@ public class AddCommandTest {
     @Test
     public void toStringMethod() {
         AddCommand addCommand = new AddCommand(ALICE, new HashSet<>());
-        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
+        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + ", groupsIndexes="
+                + ALICE.getGroups() + "}";
         assertEquals(expected, addCommand.toString());
     }
 
@@ -95,7 +96,8 @@ public class AddCommandTest {
     private class ModelStub implements Model {
         //empty group list
         private final FilteredList<Group> filteredGroups = new FilteredList<>(new UniqueGroupList()
-            .asUnmodifiableObservableList());
+                .asUnmodifiableObservableList());
+
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -173,6 +175,11 @@ public class AddCommandTest {
 
         @Override
         public void addPersonToGroup(Group group, Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removePersonFromGroup(Group targetGroup, Person toRemove) {
             throw new AssertionError("This method should not be called.");
         }
 
