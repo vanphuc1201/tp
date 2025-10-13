@@ -135,9 +135,16 @@ public class ModelManager implements Model {
     @Override
     public void addPersonToGroup(Group group, Person person) {
         requireAllNonNull(group, person);
-        GroupName name = group.getName();
+        //modify the group
+        Group targetGroup = group;
         group.addPerson(person);
+        addressBook.setGroup(targetGroup, group);
+
+        //modify the person
+        Person targetPerson = person;
+        GroupName name = group.getName();
         person.addGroup(name);
+        addressBook.setPerson(targetPerson, person);
     }
 
     //=========== Filtered Person List Accessors =============================================================

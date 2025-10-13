@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -75,9 +73,6 @@ public class AddMemberCommand extends Command {
         }
 
         model.addPersonToGroup(groupToAddTo, personToAdd);
-        model.updateFilteredGroupList(group -> false);
-        model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToAdd),
                 Messages.format(groupToAddTo)));
