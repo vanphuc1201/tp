@@ -72,7 +72,7 @@ class JsonAdaptedGroup {
         final UniqueEventList modelEvents = new UniqueEventList();
         modelEvents.setEvents(events);
 
-        return new Group(modelName, modelEvents, modelPersons);
+        return Group.fromStorage(modelName, modelEvents, modelPersons);
     }
 
 }

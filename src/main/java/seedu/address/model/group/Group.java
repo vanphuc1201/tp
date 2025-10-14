@@ -1,6 +1,7 @@
 package seedu.address.model.group;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +22,17 @@ public class Group {
     private final GroupName name;
 
     // Data fields
-    private final UniqueEventList events = new UniqueEventList();
-    private final UniquePersonList persons = new UniquePersonList();
+    private final UniqueEventList events;
+    private final UniquePersonList persons;
+
+
+    // To be used only by the factory method
+    private Group(GroupName name, UniqueEventList events, UniquePersonList persons) {
+        requireAllNonNull(name, events, persons);
+        this.name = name;
+        this.events = events;
+        this.persons = persons;
+    }
 
     /**
      * Every field must be present and not null.
@@ -30,6 +40,16 @@ public class Group {
     public Group(GroupName name) {
         requireNonNull(name);
         this.name = name;
+        events = new UniqueEventList();
+        persons = new UniquePersonList();
+    }
+
+    /**
+     * Static method to create Group from storage or external data.
+     **/
+    public static Group fromStorage(GroupName name, UniqueEventList events, UniquePersonList persons) {
+        requireAllNonNull(name, events, persons);
+        return new Group(name, events, persons);
     }
 
     public GroupName getName() {
