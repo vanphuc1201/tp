@@ -29,7 +29,7 @@
             </HBox>
             <FlowPane fx:id="tags" />
             <Label fx:id="persons" styleClass="cell_small_label" text="\$phone" />
-            <Label fx:id="events" styleClass="cell_small_label" text="\$email" />
+            <VBox fx:id="eventListPlaceholder" />
         </VBox>
     </GridPane>
 </HBox>

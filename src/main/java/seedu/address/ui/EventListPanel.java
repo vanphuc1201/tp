@@ -15,7 +15,7 @@ import seedu.address.model.event.Event;
  */
 public class EventListPanel extends UiPart<Region> {
     // Use same layout as member list for now
-    private static final String FXML = "MiniPersonListPanel.fxml";
+    private static final String FXML = "EventListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
 
     @FXML
