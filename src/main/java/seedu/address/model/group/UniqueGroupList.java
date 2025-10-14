@@ -109,13 +109,16 @@ public class UniqueGroupList implements Iterable<Group> {
     public void removePersonFromGroup(Group targetGroup, Person toRemove) {
         requireAllNonNull(targetGroup, toRemove);
 
+        GroupName groupName = targetGroup.getName();
+        UniqueEventList events = targetGroup.getEvents();
+
         // create a modified copy of the target group's person list
         UniquePersonList newPersons = new UniquePersonList();
         newPersons.setPersons(targetGroup.getPersons()); // copy existing persons
         newPersons.remove(toRemove); // remove the person to delete
 
-        Group editedGroup = new Group(targetGroup.getName(), targetGroup.getEvents(), newPersons);
-        setGroup(targetGroup, editedGroup);
+        Group newGroup = new Group(groupName, events, newPersons);
+        setGroup(targetGroup, newGroup);
     }
 
     /**
