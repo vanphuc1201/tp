@@ -88,17 +88,7 @@ public class UniqueGroupList implements Iterable<Group> {
      */
     public void addPersonToGroup(Group targetGroup, Person toAdd) {
         requireAllNonNull(targetGroup, toAdd);
-
-        GroupName groupName = targetGroup.getName();
-        UniqueEventList events = targetGroup.getEvents();
-
-        // create a new unique person list with the new person added
-        UniquePersonList newPersons = new UniquePersonList();
-        newPersons.setPersons(targetGroup.getPersons());
-        newPersons.add(toAdd);
-
-        Group newGroup = new Group(groupName, events, newPersons);
-        setGroup(targetGroup, newGroup);
+        targetGroup.addPerson(toAdd);
     }
 
     /**
