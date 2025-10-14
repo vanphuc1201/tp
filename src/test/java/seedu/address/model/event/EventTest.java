@@ -10,7 +10,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-class EventTest {
+public class EventTest {
 
     public static final Event VALID_EVENT = new Event(VALID_DESCRIPTION);
     public static final Event VALID_EVENT_2 = new Event(VALID_DESCRIPTION_2);
