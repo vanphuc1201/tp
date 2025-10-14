@@ -8,7 +8,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
@@ -139,11 +138,10 @@ public class UniqueGroupList implements Iterable<Group> {
             return true;
         }
 
-        if (!(other instanceof UniqueGroupList)) {
+        if (!(other instanceof UniqueGroupList otherList)) {
             return false;
         }
 
-        UniqueGroupList otherList = (UniqueGroupList) other;
         return internalList.equals(otherList.internalList);
     }
 
