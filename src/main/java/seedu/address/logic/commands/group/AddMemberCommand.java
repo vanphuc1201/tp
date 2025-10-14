@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -15,7 +16,11 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 
 
 /**
@@ -65,17 +70,30 @@ public class AddMemberCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Person personToAdd = lastShownPersonList.get(contactIndex.getZeroBased());
+        Person personToEdit = lastShownPersonList.get(contactIndex.getZeroBased());
         Group groupToAddTo = lastShownGroupList.get(groupIndex.getZeroBased());
+        Person toAdd = addGroupToPerson(groupToAddTo.getName(), personToEdit);
 
-        if (groupToAddTo.containsPerson(personToAdd)) {
+        if (groupToAddTo.containsPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.addPersonToGroup(groupToAddTo, personToAdd);
+        model.setPerson(personToEdit, toAdd);
+        model.addPersonToGroup(groupToAddTo, toAdd);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToAdd),
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToEdit),
                 Messages.format(groupToAddTo)));
+    }
+
+    private static Person addGroupToPerson(GroupName groupName, Person toAddto) {
+        requireAllNonNull(groupName, toAddto);
+        Name name = toAddto.getName();
+        Phone phone = toAddto.getPhone();
+        Email email = toAddto.getEmail();
+        Set<GroupName> groups = toAddto.getGroups();
+        groups.add(groupName);
+
+        return new Person(name, phone, email, groups);
     }
 
     @Override
