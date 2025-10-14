@@ -1,30 +1,50 @@
 package seedu.address.testutil;
 
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
 
 /**
  * A utility class containing a list of {@code Group} objects to be used in tests.
  */
 public class TypicalGroups {
 
-    public static final Group CS2103T = new GroupBuilder().withName("CS2103T").build();
-    public static final Group CS2101_CA2 = new GroupBuilder().withName("CS2101 CA2").build();
-    public static final Group CS2101_CA3 = new GroupBuilder().withName("CS2101 CA3").build();
-    public static final Group IS1108 = new GroupBuilder().withName("IS1108").build();
+    public static final Group CS2103T = new GroupBuilder().withName("CS2103T")
+            .withPersons(ALICE, BENSON, DANIEL, CARL, FIONA)
+            .build();
+    public static final Group CS2101_CA2 = new GroupBuilder().withName("CS2101 CA2")
+            .withPersons(ALICE, CARL)
+            .build();
+    public static final Group CS2101_CA3 = new GroupBuilder().withName("CS2101 CA3")
+            .withPersons(ALICE, BENSON, DANIEL, ELLE, FIONA)
+            .build();
+    public static final Group IS1108 = new GroupBuilder().withName("IS1108")
+            .withPersons(BENSON, DANIEL, CARL, FIONA)
+            .build();
 
     private TypicalGroups() {
     } // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical groups.
+     * Returns an {@code AddressBook} with all the typical groups and typical persons.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
+        for (Person person : getTypicalPersons()) {
+            ab.addPerson(person);
+        }
         for (Group group : getTypicalGroups()) {
             ab.addGroup(group);
         }
