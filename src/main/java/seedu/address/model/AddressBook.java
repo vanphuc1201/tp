@@ -8,6 +8,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -137,13 +138,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.remove(key);
     }
 
+
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * Adds {@code toAdd} to {@code targetGroup}.
+     * {@code toAdd} and {@code targetGroup} must exist in the address book.
+     */
+    public void addPersonToGroup(Group targetGroup, Person toAdd) {
+        requireAllNonNull(targetGroup, toAdd);
+        groups.addPersonToGroup(targetGroup, toAdd);
+    }
+
+    /**
+     * Removes {@code toRemove} from {@code targetGroup}.
+     * {@code toRemove} and {@code targetGroup} must exist in the address book.
      */
     public void removePersonFromGroup(Group targetGroup, Person toRemove) {
         requireAllNonNull(targetGroup, toRemove);
-
         groups.removePersonFromGroup(targetGroup, toRemove);
     }
 

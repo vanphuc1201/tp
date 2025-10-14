@@ -49,7 +49,6 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         email.setText(person.getEmail().value);
-        //TODO
         person.getGroups().stream()
                 .forEach(groupName -> groups.getChildren().add(new Label(groupName.toString())));
     }
