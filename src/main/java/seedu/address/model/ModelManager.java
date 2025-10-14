@@ -12,7 +12,6 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 
 /**
@@ -133,18 +132,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addPersonToGroup(Group group, Person person) {
-        requireAllNonNull(group, person);
-        //modify the group
-        Group targetGroup = group;
-        group.addPerson(person);
-        addressBook.setGroup(targetGroup, group);
-
-        //modify the person
-        Person targetPerson = person;
-        GroupName name = group.getName();
-        person.addGroup(name);
-        addressBook.setPerson(targetPerson, person);
+    public void addPersonToGroup(Group targetGroup, Person toAdd) {
+        requireAllNonNull(targetGroup, toAdd);
+        addressBook.addPersonToGroup(targetGroup, toAdd);
     }
 
     /**
@@ -153,7 +143,6 @@ public class ModelManager implements Model {
      */
     public void removePersonFromGroup(Group targetGroup, Person toRemove) {
         requireAllNonNull(targetGroup, toRemove);
-
         addressBook.removePersonFromGroup(targetGroup, toRemove);
     }
 

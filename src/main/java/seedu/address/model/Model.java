@@ -99,7 +99,7 @@ public interface Model {
      * Adds the specified person to the specified group.
      * The group and person must exist in the address book.
      */
-    void addPersonToGroup(Group group, Person person);
+    void addPersonToGroup(Group targetGroup, Person toAdd);
 
     /**
      * Removes the specified person from the specified group.
