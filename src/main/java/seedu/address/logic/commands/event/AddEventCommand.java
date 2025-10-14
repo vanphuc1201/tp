@@ -25,7 +25,7 @@ public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "add-event";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the group identified "
-            + "by the index number used in the displayed groups list. "
+            + "by the index number used in the displayed groups list.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_DESCRIPTION + "DESCRIPTION";
 
