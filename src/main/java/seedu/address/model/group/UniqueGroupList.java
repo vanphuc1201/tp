@@ -83,6 +83,10 @@ public class UniqueGroupList implements Iterable<Group> {
         }
     }
 
+    /**
+     * Adds the specified person to the specified group.
+     * The group and person must exist in the list.
+     */
     public void addPersonToGroup(Group targetGroup, Person toAdd) {
         requireAllNonNull(targetGroup, toAdd);
 
