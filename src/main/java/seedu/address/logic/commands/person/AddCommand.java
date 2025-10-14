@@ -66,7 +66,6 @@ public class AddCommand extends Command {
         if (model.hasPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
-        model.addPerson(toAdd);
 
         //Adding the person to the groups
         for (Index index : groupsIndexes) {
@@ -75,8 +74,13 @@ public class AddCommand extends Command {
             if (groupToAddTo.containsPerson(toAdd)) {
                 continue;
             }
+            //add person to group's member list and group to person's group list
             model.addPersonToGroup(groupToAddTo, toAdd);
+            toAdd.addGroup(groupToAddTo.getName());
         }
+
+        //add the finalise person to the address book
+        model.addPerson(toAdd);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
