@@ -44,7 +44,7 @@ public class Messages {
                 .append("; Email: ")
                 .append(person.getEmail())
                 .append("; Groups: ");
-        person.getGroups().forEach(builder::append);
+        person.getGroups().forEach(group -> builder.append("[").append(group).append("]"));
         return builder.toString();
     }
 

@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class Person {
     }
 
     public Set<GroupName> getGroups() {
-        return groups;
+        return Collections.unmodifiableSet(groups);
     }
 
     public void addGroup(GroupName groupName) {
