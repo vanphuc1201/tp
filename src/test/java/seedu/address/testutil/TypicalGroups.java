@@ -6,7 +6,6 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE_WITH_GROUP;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import java.util.ArrayList;
@@ -24,9 +23,6 @@ public class TypicalGroups {
 
     public static final Group CS2103T = new GroupBuilder().withName("CS2103T")
             .withPersons(ALICE, BENSON, DANIEL, CARL, FIONA)
-            .build();
-    public static final Group CS2103T_WG = new GroupBuilder().withName("CS2103T")
-            .withPersons(ALICE, BENSON, DANIEL, CARL, FIONA, GEORGE_WITH_GROUP)
             .build();
     public static final Group CS2101_CA2 = new GroupBuilder().withName("CS2101 CA2")
             .withPersons(ALICE, CARL)

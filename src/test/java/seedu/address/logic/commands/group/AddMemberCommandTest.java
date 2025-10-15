@@ -7,14 +7,18 @@ import static seedu.address.logic.commands.group.AddMemberCommand.MESSAGE_DUPLIC
 import static seedu.address.logic.commands.group.AddMemberCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalGroups.CS2103T;
-import static seedu.address.testutil.TypicalGroups.CS2103T_WG;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_GROUP;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.GEORGE_WITH_GROUP;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +33,13 @@ import seedu.address.logic.commands.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.GroupBuilder;
 
 
 public class AddMemberCommandTest {
+    public static final Group CS2103T_WG = new GroupBuilder().withName("CS2103T")
+            .withPersons(ALICE, BENSON, DANIEL, CARL, FIONA, GEORGE_WITH_GROUP)
+            .build();
 
     @Test
     public void constructor_nullGroup_throwsNullPointerException() {
