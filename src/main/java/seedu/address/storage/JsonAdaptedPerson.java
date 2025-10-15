@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +25,7 @@ class JsonAdaptedPerson {
     private final String name;
     private final String phone;
     private final String email;
-    private final List<JsonAdaptedGroupName> groups = new ArrayList<>();
+    private final List<String> groupNames = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -34,12 +33,12 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email,
-                             @JsonProperty("groups") List<JsonAdaptedGroupName> groups) {
+                             @JsonProperty("groups") List<String> groupNames) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        if (groups != null) {
-            this.groups.addAll(groups);
+        if (groupNames != null) {
+            this.groupNames.addAll(groupNames);
         }
     }
 
@@ -50,9 +49,9 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        groups.addAll(source.getGroups().stream()
-            .map(JsonAdaptedGroupName::new)
-            .collect(Collectors.toList()));
+        groupNames.addAll(source.getGroups().stream()
+            .map(GroupName::toString)
+            .toList());
     }
 
     /**
@@ -62,8 +61,12 @@ class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<GroupName> personGroups = new ArrayList<>();
-        for (JsonAdaptedGroupName group : groups) {
-            personGroups.add(group.toModelType());
+        // TODO: Should we check for duplicates here? Functionally it doesn't matter since we convert to a Set.
+        for (String groupName : groupNames) {
+            if (!GroupName.isValidName(groupName)) {
+                throw new IllegalValueException(GroupName.MESSAGE_CONSTRAINTS);
+            }
+            personGroups.add(new GroupName(groupName));
         }
 
         if (name == null) {

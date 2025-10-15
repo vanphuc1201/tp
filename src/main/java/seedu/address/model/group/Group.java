@@ -1,5 +1,6 @@
 package seedu.address.model.group;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
@@ -24,14 +25,31 @@ public class Group {
     private final UniqueEventList events;
     private final UniquePersonList persons;
 
-    /**
-     * Every field must be present and not null.
-     */
-    public Group(GroupName name, UniqueEventList events, UniquePersonList persons) {
+
+    // To be used only by the factory method
+    private Group(GroupName name, UniqueEventList events, UniquePersonList persons) {
         requireAllNonNull(name, events, persons);
         this.name = name;
         this.events = events;
         this.persons = persons;
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Group(GroupName name) {
+        requireNonNull(name);
+        this.name = name;
+        events = new UniqueEventList();
+        persons = new UniquePersonList();
+    }
+
+    /**
+     * Static method to create Group from storage or external data.
+     **/
+    public static Group fromStorage(GroupName name, UniqueEventList events, UniquePersonList persons) {
+        requireAllNonNull(name, events, persons);
+        return new Group(name, events, persons);
     }
 
     public GroupName getName() {
@@ -75,6 +93,13 @@ public class Group {
      */
     public boolean containsPerson(Person personToCheck) {
         return persons.contains(personToCheck);
+    }
+
+    /**
+     * Returns true if the group contains the given {@code Event}.
+     */
+    public boolean containsEvent(Event eventToCheck) {
+        return events.contains(eventToCheck);
     }
 
     /**

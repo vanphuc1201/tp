@@ -9,10 +9,8 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
-import seedu.address.model.person.UniquePersonList;
 
 /**
  * Parses input arguments and creates a new AddGroupCommand object
@@ -35,10 +33,8 @@ public class AddGroupCommandParser implements Parser<AddGroupCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
         GroupName name = ParserUtil.parseGroupName(argMultimap.getValue(PREFIX_NAME).get());
-        UniqueEventList events = new UniqueEventList();
-        UniquePersonList persons = new UniquePersonList();
 
-        Group group = new Group(name, events, persons);
+        Group group = new Group(name);
 
         return new AddGroupCommand(group);
     }

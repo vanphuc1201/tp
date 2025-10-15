@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.group.Group;
 
 /**
@@ -30,9 +31,9 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label persons;
+    private VBox personListPlaceholder;
     @FXML
-    private Label events;
+    private VBox eventListPlaceholder;
 
     /**
      * Creates a {@code GroupCode} with the given {@code Group} and index to display.
@@ -42,7 +43,13 @@ public class GroupCard extends UiPart<Region> {
         this.group = group;
         id.setText(displayedIndex + ". ");
         name.setText(group.getName().fullName);
-        persons.setText("Group Member: " + group.getPersons().getPersonsName());
-        events.setText("Events: " + group.getEvents().getEventsDescription());
+
+        MiniPersonListPanel personListPanel =
+                new MiniPersonListPanel(group.getPersons().asUnmodifiableObservableList());
+        personListPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        EventListPanel eventListPanel =
+                new EventListPanel(group.getEvents().asUnmodifiableObservableList());
+        eventListPlaceholder.getChildren().add(eventListPanel.getRoot());
     }
 }

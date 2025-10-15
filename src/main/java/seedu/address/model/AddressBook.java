@@ -4,10 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -98,6 +100,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedPerson);
 
         persons.setPerson(target, editedPerson);
+
+        // Propagate changes to persons throughout the model.
+        // TODO: Lacking sanity checks. This is an ugly solution.
+        Set<GroupName> targetGroups = target.getGroups();
+        for (Group group : groups) {
+            if (targetGroups.contains(group.getName())) {
+                group.updatePersons(target, editedPerson);
+            }
+        }
     }
 
     /**

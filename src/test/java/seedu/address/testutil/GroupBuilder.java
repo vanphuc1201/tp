@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
 /**
@@ -23,9 +24,6 @@ public class GroupBuilder {
         name = new GroupName(DEFAULT_GROUP_NAME);
         events = new UniqueEventList();
         persons = new UniquePersonList();
-
-        persons.add(new PersonBuilder().withName("Van Phuc").build());
-        persons.add(new PersonBuilder().withName("Gang Quan").build());
     }
 
     /**
@@ -56,13 +54,16 @@ public class GroupBuilder {
     /**
      * Sets the {@code GroupName} of the {@code Group} that we are building.
      */
-    public GroupBuilder withPersons(UniquePersonList persons) {
-        this.persons = persons;
+    public GroupBuilder withPersons(Person... persons) {
+        this.persons = new UniquePersonList();
+        for (Person person : persons) {
+            this.persons.add(person);
+        }
         return this;
     }
 
     public Group build() {
-        return new Group(name, events, persons);
+        return Group.fromStorage(name, events, persons);
     }
 
 }
