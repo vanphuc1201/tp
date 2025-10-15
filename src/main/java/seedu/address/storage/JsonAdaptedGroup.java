@@ -1,14 +1,18 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.Person;
+import seedu.address.storage.event.JsonAdaptedEvent;
 
 /**
  * Jackson-friendly version of {@link Group}.
@@ -16,20 +20,23 @@ import seedu.address.model.person.UniquePersonList;
 class JsonAdaptedGroup {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Group's %s field is missing!";
+    public static final String MESSAGE_DUPLICATE_PERSON = "Group %s contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_EVENT = "Group %s contains duplicate event(s).";
 
     private final String groupName;
-    private final UniquePersonList persons;
-    private final UniqueEventList events;
+    private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedEvent> events = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedGroup} with the given group details.
      */
     @JsonCreator
-    public JsonAdaptedGroup(@JsonProperty("name") String groupName, @JsonProperty("persons") UniquePersonList persons,
-                            @JsonProperty("events") UniqueEventList events) {
+    public JsonAdaptedGroup(@JsonProperty("name") String groupName,
+                            @JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                            @JsonProperty("events") List<JsonAdaptedEvent> events) {
         this.groupName = groupName;
-        this.persons = persons;
-        this.events = events;
+        this.persons.addAll(persons);
+        this.events.addAll(events);
     }
 
     /**
@@ -37,8 +44,10 @@ class JsonAdaptedGroup {
      */
     public JsonAdaptedGroup(Group source) {
         groupName = source.getName().fullName;
-        persons = source.getPersons();
-        events = source.getEvents();
+        persons.addAll(source.getPersons().asUnmodifiableObservableList()
+                .stream().map(JsonAdaptedPerson::new).toList());
+        events.addAll(source.getEvents().asUnmodifiableObservableList()
+                .stream().map(JsonAdaptedEvent::new).toList());
     }
 
     /**
@@ -55,24 +64,26 @@ class JsonAdaptedGroup {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final GroupName modelName = new GroupName(groupName);
+        final Group group = new Group(modelName);
 
-        if (persons == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                                                        UniquePersonList.class.getSimpleName()));
+        // Populate member list
+        for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
+            Person person = jsonAdaptedPerson.toModelType();
+            if (group.containsPerson(person)) {
+                throw new IllegalValueException(String.format(MESSAGE_DUPLICATE_PERSON, groupName));
+            }
+            group.addPerson(person);
         }
 
-        final UniquePersonList modelPersons = new UniquePersonList();
-        modelPersons.setPersons(persons);
-
-        if (events == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                                                    UniqueEventList.class.getSimpleName()));
+        // Populate event list
+        for (JsonAdaptedEvent jsonAdaptedEvent : events) {
+            Event event = jsonAdaptedEvent.toModelType();
+            if (group.containsEvent(event)) {
+                throw new IllegalValueException(String.format(MESSAGE_DUPLICATE_EVENT, groupName));
+            }
+            group.addEvent(event);
         }
 
-        final UniqueEventList modelEvents = new UniqueEventList();
-        modelEvents.setEvents(events);
-
-        return Group.fromStorage(modelName, modelEvents, modelPersons);
+        return group;
     }
-
 }
