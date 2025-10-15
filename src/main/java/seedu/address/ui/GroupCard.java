@@ -33,7 +33,7 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private VBox personListPlaceholder;
     @FXML
-    private Label events;
+    private VBox eventListPlaceholder;
 
     /**
      * Creates a {@code GroupCode} with the given {@code Group} and index to display.
@@ -48,6 +48,8 @@ public class GroupCard extends UiPart<Region> {
                 new MiniPersonListPanel(group.getPersons().asUnmodifiableObservableList());
         personListPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        events.setText("Events: " + group.getEvents().getEventsDescription());
+        EventListPanel eventListPanel =
+                new EventListPanel(group.getEvents().asUnmodifiableObservableList());
+        eventListPlaceholder.getChildren().add(eventListPanel.getRoot());
     }
 }
