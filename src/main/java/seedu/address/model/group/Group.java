@@ -78,6 +78,13 @@ public class Group {
     }
 
     /**
+     * Returns true if the group contains the given {@code Event}.
+     */
+    public boolean containsEvent(Event eventToCheck) {
+        return events.contains(eventToCheck);
+    }
+
+    /**
      * Returns true if both groups have the same name.
      * This defines a weaker notion of equality between two groups.
      */
