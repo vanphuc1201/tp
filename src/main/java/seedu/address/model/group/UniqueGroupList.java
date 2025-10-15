@@ -138,11 +138,10 @@ public class UniqueGroupList implements Iterable<Group> {
             return true;
         }
 
-        if (!(other instanceof UniqueGroupList)) {
+        if (!(other instanceof UniqueGroupList otherList)) {
             return false;
         }
 
-        UniqueGroupList otherList = (UniqueGroupList) other;
         return internalList.equals(otherList.internalList);
     }
 
