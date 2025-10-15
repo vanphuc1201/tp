@@ -135,10 +135,6 @@ public class AddCommandTest {
             personsAdded.add(person);
         }
 
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
     }
 
 }
