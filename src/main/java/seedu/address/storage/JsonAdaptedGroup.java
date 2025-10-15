@@ -83,6 +83,7 @@ class JsonAdaptedGroup {
             if (group.containsEvent(event)) {
                 throw new IllegalValueException(String.format(MESSAGE_DUPLICATE_EVENT, groupName));
             }
+            group.addEvent(event);
         }
 
         return group;
