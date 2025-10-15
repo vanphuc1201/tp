@@ -4,25 +4,27 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.person.AddCommand;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.GroupBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -34,11 +36,50 @@ public class AddCommandTest {
 
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        // setup model stub with one group
+        ModelStubForFullAddCommand modelStub = new ModelStubForFullAddCommand();
+        Group group = new GroupBuilder().build();
+        modelStub.addGroup(group);
+
+        // Valid group index
+        Set<Index> validGroupIndexes = new HashSet<>();
+        validGroupIndexes.add(Index.fromOneBased(1));
+
         Person validPerson = new PersonBuilder().build();
+        CommandResult commandResult = new AddCommand(validPerson, validGroupIndexes).execute(modelStub);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+                commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+    }
 
-        CommandResult commandResult = new AddCommand(validPerson, new HashSet<>()).execute(modelStub);
+    @Test
+    public void execute_invalidGroupIndex_throwsCommandException() {
+        Person validPerson = new PersonBuilder().build();
+        ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
+        // Assuming group list is empty, index 1 is invalid
+        Set<Index> invalidGroupIndexes = new HashSet<>();
+        invalidGroupIndexes.add(Index.fromOneBased(1));
+
+        AddCommand addCommand = new AddCommand(validPerson, invalidGroupIndexes);
+
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX, () -> addCommand
+                .execute(modelStub));
+    }
+
+    @Test
+    public void execute_personAlreadyInGroup_addSuccessful() throws Exception {
+        // setup model stub with one group
+        ModelStubForFullAddCommand modelStub = new ModelStubForFullAddCommand();
+        Person validPerson = new PersonBuilder().build();
+        Group group = new GroupBuilder().withPersons(validPerson).build();
+        modelStub.addGroup(group);
+
+        // Valid group index
+        Set<Index> validGroupIndexes = new HashSet<>();
+        validGroupIndexes.add(Index.fromOneBased(1));
+
+        CommandResult commandResult = new AddCommand(validPerson, validGroupIndexes).execute(modelStub);
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
