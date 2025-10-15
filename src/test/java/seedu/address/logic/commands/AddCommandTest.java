@@ -85,29 +85,22 @@ public class AddCommandTest {
         assertEquals(expected, addCommand.toString());
     }
 
+
     /**
-     * A default model stub that have all methods failing except getFilteredGroupList.
+     * A Model stub that contains a single person with getFilteredGroups.
      */
-    private class ModelStubWithGroupList extends ModelStub {
-        //empty group list
+    private class ModelStubWithPerson extends ModelStub {
+        private final Person person;
         private final FilteredList<Group> filteredGroups = new FilteredList<>(new UniqueGroupList()
                 .asUnmodifiableObservableList());
-
-        @Override
-        public ObservableList<Group> getFilteredGroupList() {
-            return filteredGroups;
-        }
-    }
-
-    /**
-     * A Model stub that contains a single person.
-     */
-    private class ModelStubWithPerson extends ModelStubWithGroupList {
-        private final Person person;
 
         ModelStubWithPerson(Person person) {
             requireNonNull(person);
             this.person = person;
+        }
+        @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            return filteredGroups;
         }
 
         @Override
@@ -118,10 +111,30 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that allow methods required for a complete AddCommand.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStubWithGroupList {
+    private class ModelStubForFullAddCommand extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
+        private UniqueGroupList groups = new UniqueGroupList();
+
+        private final FilteredList<Group> filteredGroups = new FilteredList<>(groups.asUnmodifiableObservableList());
+
+        @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            return filteredGroups;
+        }
+
+        @Override
+        public void addGroup(Group group) {
+            requireNonNull(group);
+            groups.add(group);
+        }
+
+        @Override
+        public void addPersonToGroup(Group targetGroup, Person toAdd) {
+            requireAllNonNull(targetGroup, toAdd);
+            groups.addPersonToGroup(targetGroup, toAdd);
+        }
 
         @Override
         public boolean hasPerson(Person person) {
