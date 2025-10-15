@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.event.EventTest.VALID_EVENT;
+import static seedu.address.model.event.EventTest.VALID_EVENT_2;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -86,6 +87,9 @@ public class AddEventCommandTest {
 
         // different group index -> returns false
         assertNotEquals(addFirstCommand, addSecondCommand);
+
+        // different event -> returns false
+        assertNotEquals(addFirstCommand, new AddEventCommand(indexZero, VALID_EVENT_2));
     }
 
     @Test
