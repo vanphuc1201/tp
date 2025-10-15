@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.storage.event.JsonAdaptedEvent;
 
 /**
@@ -66,7 +64,7 @@ class JsonAdaptedGroup {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final GroupName modelName = new GroupName(groupName);
-        final Group group = new Group(modelName, new UniqueEventList(), new UniquePersonList());
+        final Group group = new Group(modelName);
 
         // Populate member list
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
