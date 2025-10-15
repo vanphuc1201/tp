@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -25,8 +26,8 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final List<JsonAdaptedGroupName> VALID_GROUPS = BENSON.getGroups().stream()
-        .map(JsonAdaptedGroupName::new).collect(Collectors.toList());
+    private static final List<String> VALID_GROUPS = BENSON.getGroups().stream()
+        .map(GroupName::toString).collect(Collectors.toList());
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
@@ -81,8 +82,8 @@ public class JsonAdaptedPersonTest {
 
     @Test
     public void toModelType_invalidGroupName_throwsIllegalValueException() {
-        List<JsonAdaptedGroupName> invalidGroups = new ArrayList<>(VALID_GROUPS);
-        invalidGroups.add(new JsonAdaptedGroupName(INVALID_GROUP_NAME));
+        List<String> invalidGroups = new ArrayList<>(VALID_GROUPS);
+        invalidGroups.add(INVALID_GROUP_NAME);
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, invalidGroups);
         assertThrows(IllegalValueException.class, person::toModelType);
