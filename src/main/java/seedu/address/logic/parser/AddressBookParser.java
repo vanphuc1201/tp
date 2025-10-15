@@ -19,7 +19,6 @@ import seedu.address.logic.commands.group.DeleteGroupCommand;
 import seedu.address.logic.commands.group.ListGroupCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
-import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.parser.event.AddEventCommandParser;
@@ -29,7 +28,6 @@ import seedu.address.logic.parser.group.AddMemberCommandParser;
 import seedu.address.logic.parser.group.DeleteGroupCommandParser;
 import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
-import seedu.address.logic.parser.person.EditCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
 
 /**
