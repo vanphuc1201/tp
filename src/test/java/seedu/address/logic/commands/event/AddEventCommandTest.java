@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.event;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.event.EventTest.VALID_EVENT;
@@ -78,10 +79,10 @@ public class AddEventCommandTest {
         assertEquals(addFirstCommand, addFirstCommandCopy);
 
         // different types -> returns false
-        assertNotEquals(5.0f, addFirstCommand);
+        assertFalse(addFirstCommand.equals(5.0f));
 
         // null -> returns false
-        assertNotEquals(null, addFirstCommand);
+        assertFalse(addFirstCommand.equals(null));
 
         // different group index -> returns false
         assertNotEquals(addFirstCommand, addSecondCommand);
