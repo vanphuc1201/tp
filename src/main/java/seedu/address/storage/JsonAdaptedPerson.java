@@ -62,6 +62,7 @@ class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<GroupName> personGroups = new ArrayList<>();
+        // TODO: Should we check for duplicates here? Functionally it doesn't matter since we convert to a Set.
         for (String groupName : groupNames) {
             if (!GroupName.isValidName(groupName)) {
                 throw new IllegalValueException(GroupName.MESSAGE_CONSTRAINTS);
