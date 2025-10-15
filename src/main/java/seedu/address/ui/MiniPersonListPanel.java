@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -27,6 +28,15 @@ public class MiniPersonListPanel extends UiPart<Region> {
         super(FXML);
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new MiniPersonListViewCell());
+
+        personListView.setFixedCellSize(15);
+        personListView.prefHeightProperty().bind(
+                Bindings.max(15,
+                        Bindings.size(personListView.getItems())
+                                .multiply(personListView.getFixedCellSize())
+                                .add(10)));
+
+        personListView.setStyle("-fx-scroll-bar-visible: false;");
     }
 
     /**
