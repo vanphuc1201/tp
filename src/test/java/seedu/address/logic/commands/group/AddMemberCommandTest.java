@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.group.AddMemberCommand.MESSAGE_DUPLIC
 import static seedu.address.logic.commands.group.AddMemberCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalGroups.CS2103T;
+import static seedu.address.testutil.TypicalGroups.CS2103T_WG;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_GROUP;
@@ -64,7 +65,6 @@ public class AddMemberCommandTest {
         ModelStub modelStub = new ModelStubAcceptingAddMember();
         Group group = modelStub.getFilteredGroupList().get(0);
         Person person = modelStub.getFilteredPersonList().get(0);
-        modelStub.addPersonToGroup(group, person);
 
         AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_FIRST_PERSON);
 
@@ -81,6 +81,8 @@ public class AddMemberCommandTest {
         assertEquals(String.format(MESSAGE_SUCCESS,
                 Messages.format(modelStub.getFilteredPersonList().get(1)),
                 modelStub.getFilteredGroupList().get(0).getName()), cmd.execute(modelStub).getFeedbackToUser());
+
+        assertEquals(CS2103T_WG, modelStub.getFilteredGroupList().get(0));
 
     }
 
@@ -130,7 +132,9 @@ public class AddMemberCommandTest {
         public void setPerson(Person target, Person editedPerson) {}
 
         @Override
-        public void addPersonToGroup(Group group, Person person) {}
-    }
+        public void addPersonToGroup(Group group, Person person) {
+            group.addPerson(person);
 
+        }
+    }
 }
