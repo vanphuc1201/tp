@@ -51,7 +51,9 @@ public class MiniPersonListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setText(person.getName().toString());
+                setText("• " + person.getName().toString() + " (" + person.getEmail().toString() + ")");
+                setWrapText(true);
+                setPrefWidth(0);
             }
         }
     }

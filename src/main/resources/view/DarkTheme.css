@@ -370,7 +370,9 @@
 }
 
 .mini-person-list .list-cell {
-    -fx-pref-height: 20px;
+    -fx-pref-height: -1;
+    -fx-min-height: 20px;
+    -fx-wrap-text: true;
     -fx-font-size: 11px;
     -fx-text-fill: white;
     -fx-font-family: "Verdana";
