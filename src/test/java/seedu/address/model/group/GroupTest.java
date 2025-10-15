@@ -6,10 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalGroups.CS2101_CA2;
 import static seedu.address.testutil.TypicalGroups.CS2103T;
 import static seedu.address.testutil.TypicalGroups.IS1108;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.testutil.GroupBuilder;
 
 public class GroupTest {
@@ -62,8 +66,8 @@ public class GroupTest {
         Group editedCS2103T = new GroupBuilder().withName("Diff name").build();
         assertFalse(CS2103T.equals(editedCS2103T));
 
-        // different UniquePersonList -> returns false
-        editedCS2103T = new GroupBuilder(CS2103T).withPersons(new UniquePersonList()).build();
+        // different person list -> returns false
+        editedCS2103T = new GroupBuilder(CS2103T).withPersons(ALICE, BENSON, ELLE, CARL, FIONA).build();
         assertFalse(CS2103T.equals(editedCS2103T));
 
     }
