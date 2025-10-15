@@ -31,7 +31,7 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label persons;
+    private VBox personListPlaceholder;
     @FXML
     private VBox eventListPlaceholder;
 
@@ -43,7 +43,10 @@ public class GroupCard extends UiPart<Region> {
         this.group = group;
         id.setText(displayedIndex + ". ");
         name.setText(group.getName().fullName);
-        persons.setText("Members: " + group.getPersons().getPersonsName());
+
+        MiniPersonListPanel personListPanel =
+                new MiniPersonListPanel(group.getPersons().asUnmodifiableObservableList());
+        personListPlaceholder.getChildren().add(personListPanel.getRoot());
 
         EventListPanel eventListPanel =
                 new EventListPanel(group.getEvents().asUnmodifiableObservableList());

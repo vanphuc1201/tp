@@ -63,7 +63,7 @@ public class GroupBuilder {
     }
 
     public Group build() {
-        return new Group(name, events, persons);
+        return Group.fromStorage(name, events, persons);
     }
 
 }

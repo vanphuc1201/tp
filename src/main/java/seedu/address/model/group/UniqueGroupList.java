@@ -8,11 +8,9 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
 
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
@@ -89,17 +87,7 @@ public class UniqueGroupList implements Iterable<Group> {
      */
     public void addPersonToGroup(Group targetGroup, Person toAdd) {
         requireAllNonNull(targetGroup, toAdd);
-
-        GroupName groupName = targetGroup.getName();
-        UniqueEventList events = targetGroup.getEvents();
-
-        // create a new unique person list with the new person added
-        UniquePersonList newPersons = new UniquePersonList();
-        newPersons.setPersons(targetGroup.getPersons());
-        newPersons.add(toAdd);
-
-        Group newGroup = new Group(groupName, events, newPersons);
-        setGroup(targetGroup, newGroup);
+        targetGroup.addPerson(toAdd);
     }
 
     /**
@@ -108,17 +96,7 @@ public class UniqueGroupList implements Iterable<Group> {
      */
     public void removePersonFromGroup(Group targetGroup, Person toRemove) {
         requireAllNonNull(targetGroup, toRemove);
-
-        GroupName groupName = targetGroup.getName();
-        UniqueEventList events = targetGroup.getEvents();
-
-        // create a modified copy of the target group's person list
-        UniquePersonList newPersons = new UniquePersonList();
-        newPersons.setPersons(targetGroup.getPersons()); // copy existing persons
-        newPersons.remove(toRemove); // remove the person to delete
-
-        Group newGroup = new Group(groupName, events, newPersons);
-        setGroup(targetGroup, newGroup);
+        targetGroup.removePerson(toRemove);
     }
 
     /**
