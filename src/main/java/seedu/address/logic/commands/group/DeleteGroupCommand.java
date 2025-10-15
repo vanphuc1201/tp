@@ -3,6 +3,7 @@ package seedu.address.logic.commands.group;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -71,7 +72,7 @@ public class DeleteGroupCommand extends Command {
         Name name = toRemove.getName();
         Phone phone = toRemove.getPhone();
         Email email = toRemove.getEmail();
-        Set<GroupName> groups = toRemove.getGroups();
+        Set<GroupName> groups = new HashSet<>(toRemove.getGroups());
         groups.remove(groupName);
 
         return new Person(name, phone, email, groups);

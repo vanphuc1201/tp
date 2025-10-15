@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -85,12 +86,12 @@ public class AddMemberCommand extends Command {
                 Messages.format(groupToAddTo)));
     }
 
-    private static Person addGroupToPerson(GroupName groupName, Person toAddto) {
-        requireAllNonNull(groupName, toAddto);
-        Name name = toAddto.getName();
-        Phone phone = toAddto.getPhone();
-        Email email = toAddto.getEmail();
-        Set<GroupName> groups = toAddto.getGroups();
+    private static Person addGroupToPerson(GroupName groupName, Person toAddTo) {
+        requireAllNonNull(groupName, toAddTo);
+        Name name = toAddTo.getName();
+        Phone phone = toAddTo.getPhone();
+        Email email = toAddTo.getEmail();
+        Set<GroupName> groups = new HashSet<>(toAddTo.getGroups());
         groups.add(groupName);
 
         return new Person(name, phone, email, groups);
