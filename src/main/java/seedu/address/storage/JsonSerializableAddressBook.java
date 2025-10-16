@@ -74,6 +74,10 @@ class JsonSerializableAddressBook {
             addressBook.addGroup(group);
         }
 
+        for (Person person : addressBook.getPersonList()) {
+            checkExistenceOfGroupsInPerson(addressBook, person);
+        }
+
         return addressBook;
     }
 
@@ -87,6 +91,16 @@ class JsonSerializableAddressBook {
         }
     }
 
-
+    private void checkExistenceOfGroupsInPerson(AddressBook addressBook, Person person)
+            throws IllegalValueException {
+        for (GroupName groupName : person.getGroups()) {
+            Group checkGroup = new Group(groupName);
+            if (!addressBook.getGroupList().stream()
+                    .anyMatch(existingGroup -> existingGroup.isSameGroup(checkGroup))) {
+                throw new IllegalValueException(
+                        String.format(MESSAGE_NON_EXISTENT_GROUP_IN_GROUP, person.getName(), groupName));
+            }
+        }
+    }
 
 }
