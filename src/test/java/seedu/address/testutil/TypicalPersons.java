@@ -36,6 +36,8 @@ public class TypicalPersons {
             .withEmail("lydia@example.com").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").build();
+    public static final Person GEORGE_WITH_GROUP = new PersonBuilder().withName("George Best").withPhone("9482442")
+            .withEmail("anna@example.com").withGroups("CS2103T").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
