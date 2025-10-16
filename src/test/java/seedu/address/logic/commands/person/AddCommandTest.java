@@ -121,9 +121,12 @@ public class AddCommandTest {
 
     @Test
     public void toStringMethod() {
-        AddCommand addCommand = new AddCommand(ALICE, new HashSet<>());
+        Set<Index> groupsIndexes = new HashSet<>();
+        groupsIndexes.add(Index.fromOneBased(1));
+
+        AddCommand addCommand = new AddCommand(ALICE, groupsIndexes);
         String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + ", groupsIndexes="
-                + ALICE.getGroups() + "}";
+                + groupsIndexes + "}";
         assertEquals(expected, addCommand.toString());
     }
 
