@@ -36,7 +36,7 @@ public class GroupCard extends UiPart<Region> {
     private VBox eventListPlaceholder;
 
     /**
-     * Creates a {@code GroupCode} with the given {@code Group} and index to display.
+     * Creates a {@code GroupCard} with the given {@code Group} and index to display.
      */
     public GroupCard(Group group, int displayedIndex) {
         super(FXML);

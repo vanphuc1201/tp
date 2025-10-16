@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -28,6 +29,17 @@ public class EventListPanel extends UiPart<Region> {
         super(FXML);
         eventListView.setItems(eventList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
+
+        eventListView.setFixedCellSize(-1);
+
+        eventListView.prefHeightProperty().bind(
+                Bindings.createDoubleBinding(() -> {
+                    int itemCount = eventListView.getItems().size();
+                    double estimatedHeight = Math.max(1, itemCount) * 25; // Base height per item
+                    return Math.max(50, estimatedHeight);
+                }, eventListView.getItems()));
+
+        eventListView.setStyle("-fx-scroll-bar-visible: false;");
     }
 
     /**
@@ -42,7 +54,9 @@ public class EventListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setText(event.toString());
+                setText("• " + event);
+                setWrapText(true);
+                setPrefWidth(0);
             }
         }
     }
