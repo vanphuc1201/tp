@@ -7,10 +7,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 
 /**
@@ -68,9 +70,23 @@ class JsonSerializableAddressBook {
             if (addressBook.hasGroup(group)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
             }
+            checkExistenceOfPersonsInGroup(group, addressBook.getPersonList());
             addressBook.addGroup(group);
         }
+
         return addressBook;
     }
+
+    private void checkExistenceOfPersonsInGroup(Group group, ObservableList<Person> globalPersonList)
+            throws IllegalValueException {
+        for (Person person : group.getPersons()) {
+            if (!globalPersonList.contains(person)) {
+                throw new IllegalValueException(String.format(MESSAGE_NON_EXISTENT_PERSON_IN_GROUP,
+                        group.getName(), person));
+            }
+        }
+    }
+
+
 
 }
