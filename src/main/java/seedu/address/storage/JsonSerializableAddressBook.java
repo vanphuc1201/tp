@@ -21,6 +21,8 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_GROUP = "Groups list contains duplicate group(s).";
+    public static final String MESSAGE_NON_EXISTENT_PERSON_IN_GROUP = "Group %s contains a non-existent person %s";
+    public static final String MESSAGE_NON_EXISTENT_GROUP_IN_GROUP = "Person %s contains a non-existent group %s";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedGroup> groups = new ArrayList<>();
