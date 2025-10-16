@@ -7,10 +7,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 
 /**
@@ -21,6 +23,10 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_GROUP = "Groups list contains duplicate group(s).";
+    public static final String MESSAGE_NON_EXISTENT_PERSON_IN_GROUP = "Group %s contains a non-existent person %s";
+    public static final String MESSAGE_NON_EXISTENT_GROUP_IN_PERSON = "Person %s contains a non-existent group %s";
+    public static final String MESSAGE_GROUP_AND_PERSON_CONFLICT =
+            "Person %s group-list conflict with group %s person-list";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedGroup> groups = new ArrayList<>();
@@ -66,9 +72,46 @@ class JsonSerializableAddressBook {
             if (addressBook.hasGroup(group)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
             }
+            checkExistenceOfPersonsInGroup(group, addressBook.getPersonList());
             addressBook.addGroup(group);
         }
+
+        for (Person person : addressBook.getPersonList()) {
+            checkExistenceOfGroupsInPerson(addressBook, person);
+        }
+
         return addressBook;
+    }
+
+    private void checkExistenceOfPersonsInGroup(Group group, ObservableList<Person> globalPersonList)
+            throws IllegalValueException {
+        for (Person person : group.getPersons()) {
+            if (!globalPersonList.contains(person)) {
+                throw new IllegalValueException(String.format(MESSAGE_NON_EXISTENT_PERSON_IN_GROUP,
+                        group.getName(), person));
+            }
+        }
+    }
+
+    private void checkExistenceOfGroupsInPerson(AddressBook addressBook, Person person)
+            throws IllegalValueException {
+        for (GroupName groupName : person.getGroups()) {
+            if (addressBook.getGroupList().stream()
+                    .noneMatch(existingGroup -> existingGroup.getName().equals(groupName))) {
+                throw new IllegalValueException(
+                        String.format(MESSAGE_NON_EXISTENT_GROUP_IN_PERSON, person.getName(), groupName));
+            }
+
+            for (Group group : addressBook.getGroupList()) {
+                if (!group.getName().equals(groupName)) {
+                    continue;
+                }
+                if (!group.containsPerson(person)) {
+                    throw new IllegalValueException(
+                            String.format(MESSAGE_GROUP_AND_PERSON_CONFLICT, person.getName(), groupName));
+                }
+            }
+        }
     }
 
 }
