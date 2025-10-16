@@ -24,7 +24,9 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_GROUP = "Groups list contains duplicate group(s).";
     public static final String MESSAGE_NON_EXISTENT_PERSON_IN_GROUP = "Group %s contains a non-existent person %s";
-    public static final String MESSAGE_NON_EXISTENT_GROUP_IN_GROUP = "Person %s contains a non-existent group %s";
+    public static final String MESSAGE_NON_EXISTENT_GROUP_IN_PERSON = "Person %s contains a non-existent group %s";
+    public static final String MESSAGE_GROUP_AND_PERSON_CONFLICT =
+            "Person %s group-list conflict with group %s person-list";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedGroup> groups = new ArrayList<>();
@@ -94,11 +96,20 @@ class JsonSerializableAddressBook {
     private void checkExistenceOfGroupsInPerson(AddressBook addressBook, Person person)
             throws IllegalValueException {
         for (GroupName groupName : person.getGroups()) {
-            Group checkGroup = new Group(groupName);
-            if (!addressBook.getGroupList().stream()
-                    .anyMatch(existingGroup -> existingGroup.isSameGroup(checkGroup))) {
+            if (addressBook.getGroupList().stream()
+                    .noneMatch(existingGroup -> existingGroup.getName().equals(groupName))) {
                 throw new IllegalValueException(
-                        String.format(MESSAGE_NON_EXISTENT_GROUP_IN_GROUP, person.getName(), groupName));
+                        String.format(MESSAGE_NON_EXISTENT_GROUP_IN_PERSON, person.getName(), groupName));
+            }
+
+            for (Group group : addressBook.getGroupList()) {
+                if (!group.getName().equals(groupName)) {
+                    continue;
+                }
+                if (!group.containsPerson(person)) {
+                    throw new IllegalValueException(
+                            String.format(MESSAGE_GROUP_AND_PERSON_CONFLICT, person.getName(), groupName));
+                }
             }
         }
     }
