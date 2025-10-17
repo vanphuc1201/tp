@@ -54,7 +54,7 @@ public class EventListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setText("• " + event);
+                setText((getIndex() + 1) + ") " + event);
                 setWrapText(true);
                 setPrefWidth(0);
             }
