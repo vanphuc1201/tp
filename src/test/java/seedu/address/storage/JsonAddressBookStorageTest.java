@@ -62,7 +62,7 @@ public class JsonAddressBookStorageTest {
     }
 
     @Test
-    @Disabled("Temorarily disabled")
+    @Disabled("Temporarily disabled")
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAddressBook.json");
         AddressBook original = getTypicalAddressBook();
