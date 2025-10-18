@@ -33,6 +33,8 @@ public class TypicalGroups {
     public static final Group IS1108 = new GroupBuilder().withName("IS1108")
             .withPersons(BENSON, DANIEL, CARL, FIONA)
             .build();
+    public static final Group NO_MEMBER = new GroupBuilder().withName("NO MEMBER")
+            .build();
 
     private TypicalGroups() {
     } // prevents instantiation
@@ -52,6 +54,6 @@ public class TypicalGroups {
     }
 
     public static List<Group> getTypicalGroups() {
-        return new ArrayList<>(Arrays.asList(CS2103T, CS2101_CA2, CS2101_CA3, IS1108));
+        return new ArrayList<>(Arrays.asList(NO_MEMBER,CS2103T, CS2101_CA2, CS2101_CA3, IS1108));
     }
 }
