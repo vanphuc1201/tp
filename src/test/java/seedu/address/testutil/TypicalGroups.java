@@ -54,6 +54,6 @@ public class TypicalGroups {
     }
 
     public static List<Group> getTypicalGroups() {
-        return new ArrayList<>(Arrays.asList(NO_MEMBER,CS2103T, CS2101_CA2, CS2101_CA3, IS1108));
+        return new ArrayList<>(Arrays.asList(NO_MEMBER, CS2103T, CS2101_CA2, CS2101_CA3, IS1108));
     }
 }
