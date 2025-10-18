@@ -76,6 +76,12 @@ public class JsonAddressBookStorageTest {
         // Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
+        List<Group> groupList = original.getGroupList();
+        for (Group group : groupList) {
+            if (group.containsPerson(ALICE)) {
+                original.removePersonFromGroup(group, ALICE);
+            }
+        }
         jsonAddressBookStorage.saveAddressBook(original, filePath);
         readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
