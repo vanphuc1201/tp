@@ -23,7 +23,7 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withEmail("alice@example.com")
-            .withPhone("94351253")
+            .withPhone("94351253").withGroups("CS2103T", "CS2101 CA2", "CS2101 CA3")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withEmail("johnd@example.com").withPhone("98765432").withGroups("CS2103T", "CS2101 CA3", "IS1108")
