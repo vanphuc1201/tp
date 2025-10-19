@@ -67,7 +67,7 @@ public class TypicalPersons {
             ab.addPerson(person);
         }
         for (Group group : getTypicalGroups()) {
-            ab.addGroup(group);
+            ab.addGroup(new GroupBuilder(group).build());
         }
         return ab;
     }
