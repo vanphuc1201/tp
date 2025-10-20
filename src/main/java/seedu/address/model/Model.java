@@ -106,10 +106,10 @@ public interface Model {
     Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd);
 
     /**
-     * Removes the specified person from the specified group.
+     * Removes the specified person from the all group.
      * The group must exist in the address book.
      */
-    void removePersonFromGroup(Group targetGroup, Person toRemove);
+    void removePersonFromAllGroups(Person toRemove);
 
     /** Returns an unmodifiable view of the filtered group list */
     ObservableList<Group> getFilteredGroupList();

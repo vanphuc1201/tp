@@ -155,13 +155,10 @@ public class ModelManager implements Model {
         return personToAdd;
     }
 
-    /**
-     * Removes the specified person from the specified group.
-     * The group must exist in the address book.
-     */
-    public void removePersonFromGroup(Group targetGroup, Person toRemove) {
-        requireAllNonNull(targetGroup, toRemove);
-        addressBook.removePersonFromGroup(targetGroup, toRemove);
+    @Override
+    public void removePersonFromAllGroups(Person toRemove) {
+        requireAllNonNull(toRemove);
+        addressBook.removePersonFromAllGroups(toRemove);
     }
 
     //=========== Filtered Person List Accessors =============================================================
