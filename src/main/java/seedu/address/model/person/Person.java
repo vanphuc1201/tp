@@ -54,6 +54,13 @@ public class Person {
     }
 
     /**
+     * Returns the persons' name as a String
+     */
+    public String getNameAsString() {
+        return getName().toString();
+    }
+
+    /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */

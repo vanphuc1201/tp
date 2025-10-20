@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.group.AddMemberCommand;
+import seedu.address.logic.commands.group.DeleteMemberCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
@@ -17,17 +17,16 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new AddMemberCommand object
+ * Parses input arguments and creates a new DeleteMemberCommand object
  */
-public class AddMemberCommandParser implements Parser<AddMemberCommand> {
-
+public class DeleteMemberCommandParser implements Parser<DeleteMemberCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the AddMemberCommand
-     * and returns an AddMemberCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DeleteMemberCommand
+     * and returns a DeleteMemberCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     @Override
-    public AddMemberCommand parse(String args) throws ParseException {
+    public DeleteMemberCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_GROUP_INDEX, PREFIX_CONTACT_INDEX);
 
@@ -36,7 +35,7 @@ public class AddMemberCommandParser implements Parser<AddMemberCommand> {
 
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_GROUP_INDEX, PREFIX_CONTACT_INDEX)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMemberCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMemberCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_GROUP_INDEX, PREFIX_CONTACT_INDEX);
@@ -48,7 +47,7 @@ public class AddMemberCommandParser implements Parser<AddMemberCommand> {
         personIndexes = ParserUtil.parseIndexes(indexesAsList);
 
 
-        return new AddMemberCommand(groupIndex, personIndexes);
+        return new DeleteMemberCommand(groupIndex, personIndexes);
     }
 
 }

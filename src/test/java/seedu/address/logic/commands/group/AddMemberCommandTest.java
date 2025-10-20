@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.group.AddMemberCommand.MESSAGE_SUCCES
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_GROUP;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -20,7 +21,9 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.GEORGE_WITH_GROUP;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +49,9 @@ public class AddMemberCommandTest {
 
     @Test
     public void constructor_nullGroup_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddMemberCommand(null, INDEX_FIRST_PERSON));
+        Set<Index> persons = new HashSet<>();
+        persons.add(INDEX_FIRST_PERSON);
+        assertThrows(NullPointerException.class, () -> new AddMemberCommand(null, persons));
 
         assertThrows(NullPointerException.class, () -> new AddMemberCommand(INDEX_FIRST_GROUP, null));
     }
@@ -54,8 +59,21 @@ public class AddMemberCommandTest {
     @Test
     public void execute_invalidPersonIndex_throwsCommandException() {
         ModelStub modelStub = new ModelStubWithPersonAndGroup();
-        Index invalidPerson = Index.fromOneBased(5);
-        AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, invalidPerson);
+        Set<Index> invalidPersons = new HashSet<>();
+        invalidPersons.add(INDEX_THIRD_PERSON);
+        AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, invalidPersons);
+
+        assertThrows(CommandException.class,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, () -> cmd.execute(modelStub));
+    }
+
+    @Test
+    public void execute_invalidPersonsIndex_throwsCommandException() {
+        ModelStub modelStub = new ModelStubWithPersonAndGroup();
+        Set<Index> invalidPersons = new HashSet<>();
+        invalidPersons.add(INDEX_SECOND_PERSON);
+        invalidPersons.add(INDEX_FOURTH_PERSON);
+        AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, invalidPersons);
 
         assertThrows(CommandException.class,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, () -> cmd.execute(modelStub));
@@ -64,8 +82,9 @@ public class AddMemberCommandTest {
     @Test
     public void execute_invalidGroupIndex_throwsCommandException() {
         ModelStub modelStub = new ModelStubWithPersonAndGroup();
-        Index invalidGroup = Index.fromOneBased(5);
-        AddMemberCommand cmd = new AddMemberCommand(invalidGroup, INDEX_FIRST_PERSON);
+        Set<Index> persons = new HashSet<>();
+        persons.add(INDEX_FIRST_PERSON);
+        AddMemberCommand cmd = new AddMemberCommand(INDEX_SECOND_GROUP, persons);
 
         assertThrows(CommandException.class,
                 Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX, () -> cmd.execute(modelStub));
@@ -74,23 +93,24 @@ public class AddMemberCommandTest {
     @Test
     public void execute_duplicateGroupMember_throwsCommandException() {
         ModelStub modelStub = new ModelStubAcceptingAddMember();
-        Group group = modelStub.getFilteredGroupList().get(0);
-        Person person = modelStub.getFilteredPersonList().get(0);
+        Set<Index> persons = new HashSet<>();
+        persons.add(INDEX_FIRST_PERSON);
 
-        AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_FIRST_PERSON);
+        AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, persons);
 
         assertThrows(CommandException.class,
-                MESSAGE_DUPLICATE_PERSON, () -> cmd.execute(modelStub));
-
+                String.format(MESSAGE_DUPLICATE_PERSON, ALICE.getNameAsString()), () -> cmd.execute(modelStub));
     }
 
     @Test
     public void execute_memberAddedToGroup_success() throws CommandException {
         ModelStub modelStub = new ModelStubAcceptingAddMember();
-        AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_SECOND_PERSON);
+        Set<Index> persons = new HashSet<>();
+        persons.add(INDEX_SECOND_PERSON);
+        AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, persons);
 
         assertEquals(String.format(MESSAGE_SUCCESS,
-                Messages.format(modelStub.getFilteredPersonList().get(1)),
+                modelStub.getFilteredPersonList().get(1).getNameAsString(),
                 modelStub.getFilteredGroupList().get(0).getName()), cmd.execute(modelStub).getFeedbackToUser());
 
         assertEquals(CS2103T_WG, modelStub.getFilteredGroupList().get(0));
@@ -99,10 +119,16 @@ public class AddMemberCommandTest {
 
     @Test
     public void equalsTest() {
-        AddMemberCommand cmd1 = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_SECOND_PERSON);
-        AddMemberCommand cmd2 = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_SECOND_PERSON);
-        AddMemberCommand cmd3 = new AddMemberCommand(INDEX_SECOND_GROUP, INDEX_FIRST_PERSON);
-        AddMemberCommand cmd4 = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_THIRD_PERSON);
+        Set<Index> persons1 = new HashSet<>();
+        Set<Index> persons2 = new HashSet<>();
+        Set<Index> persons3 = new HashSet<>();
+        persons1.add(INDEX_FIRST_PERSON);
+        persons2.add(INDEX_SECOND_PERSON);
+        persons3.add(INDEX_THIRD_PERSON);
+        AddMemberCommand cmd1 = new AddMemberCommand(INDEX_FIRST_GROUP, persons2);
+        AddMemberCommand cmd2 = new AddMemberCommand(INDEX_FIRST_GROUP, persons2);
+        AddMemberCommand cmd3 = new AddMemberCommand(INDEX_SECOND_GROUP, persons1);
+        AddMemberCommand cmd4 = new AddMemberCommand(INDEX_FIRST_GROUP, persons3);
 
         assertTrue(cmd1.equals(cmd2));
         assertTrue(cmd1.equals(cmd1));
@@ -114,9 +140,11 @@ public class AddMemberCommandTest {
 
     @Test
     public void toStringTest() {
-        AddMemberCommand cmd1 = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_SECOND_PERSON);
+        Set<Index> persons = new HashSet<>();
+        persons.add(INDEX_SECOND_PERSON);
+        AddMemberCommand cmd1 = new AddMemberCommand(INDEX_FIRST_GROUP, persons);
         String expected = AddMemberCommand.class.getCanonicalName() + "{groupIndex=" + INDEX_FIRST_GROUP + ", "
-                + "contactIndex=" + INDEX_SECOND_PERSON + "}";
+                + "contactIndex=[" + INDEX_SECOND_PERSON + "]}";
         assertEquals(expected, cmd1.toString());
     }
 

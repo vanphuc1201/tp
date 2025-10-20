@@ -6,10 +6,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_GROUP;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.group.AddMemberCommand;
 
@@ -18,9 +23,22 @@ public class AddMemberCommandParserTest {
     private AddMemberCommandParser parser = new AddMemberCommandParser();
 
     @Test
-    public void parse_validArgs_returnsAddMemberCommand() {
+    public void parse_validArgsSinglePerson_returnsAddMemberCommand() {
+        Set<Index> persons = new HashSet<>();
+        persons.add(INDEX_FIRST_PERSON);
+
         assertParseSuccess(parser, " " + PREFIX_GROUP_INDEX + "3 " + PREFIX_CONTACT_INDEX + "1",
-                new AddMemberCommand(INDEX_THIRD_GROUP, INDEX_FIRST_PERSON));
+                new AddMemberCommand(INDEX_THIRD_GROUP, persons));
+    }
+
+    @Test
+    public void parse_validArgsMultiplePersons_returnsAddMemberCommand() {
+        Set<Index> persons = new HashSet<>();
+        persons.add(INDEX_FIRST_PERSON);
+        persons.add(INDEX_SECOND_PERSON);
+
+        assertParseSuccess(parser, " " + PREFIX_GROUP_INDEX + "3 " + PREFIX_CONTACT_INDEX + "1,2",
+                new AddMemberCommand(INDEX_THIRD_GROUP, persons));
     }
 
     @Test
