@@ -49,6 +49,16 @@ public class Person {
         return Collections.unmodifiableSet(groups);
     }
 
+    /**
+     * Returns a new {@code Person} instance with the specified {@code GroupName} added.
+     * <p>
+     * This method does not modify the existing {@code Person} object. Instead, it creates
+     * a new {@code Person} containing all of the current groups plus the given group.
+     * </p>
+     *
+     * @param groupName the group to be added to this person's group set
+     * @return a new {@code Person} instance with the specified group added
+     */
     public Person addGroup(GroupName groupName) {
         Set<GroupName> newGroups = new java.util.HashSet<>(groups);
         newGroups.add(groupName);
