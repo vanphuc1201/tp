@@ -155,22 +155,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Person removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
-        requireAllNonNull(targetGroupIndexes, toRemove);
-
-        Person personToRemove = toRemove;
-
-        for (Index index : targetGroupIndexes) {
-            Group groupToRemoveFrom = filteredGroups.get(index.getZeroBased());
-            personToRemove = personToRemove.removeGroup(groupToRemoveFrom.getName());
-        }
-
-        for (Index index : targetGroupIndexes) {
-            Group groupToRemoveFrom = filteredGroups.get(index.getZeroBased());
-            groupToRemoveFrom.removePerson(toRemove);
-        }
-
-        return personToRemove;
+    public void removePersonFromGroup(Group group, Person toRemove) {
+        requireAllNonNull(group, toRemove);
+        addressBook.removePersonFromGroup(group, toRemove);
     }
 
     @Override

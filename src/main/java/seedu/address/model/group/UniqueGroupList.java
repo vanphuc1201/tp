@@ -83,12 +83,9 @@ public class UniqueGroupList implements Iterable<Group> {
         }
     }
 
-    public void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
-        requireAllNonNull(targetGroupIndexes, toRemove);
-        for (Index targetGroupIndex : targetGroupIndexes) {
-            Group targetGroup = internalList.get(targetGroupIndex.getZeroBased());
-            targetGroup.removePerson(toRemove);
-        }
+    public void removePersonFromGroup(Group group, Person toRemove) {
+        requireAllNonNull(group, toRemove);
+        group.removePerson(toRemove);
     }
 
     /**

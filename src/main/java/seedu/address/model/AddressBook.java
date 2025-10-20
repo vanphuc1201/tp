@@ -102,17 +102,15 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         persons.setPerson(target, editedPerson);
 
-        /*
         // Propagate changes to persons throughout the model
-        // TODO: not sure if this is even needed anymore due to change in implementation of
-            adding/deleting groups in contacts
+        // TODO: ugly solution, lacking sanity checks
         Set<GroupName> targetGroups = target.getGroups();
         for (Group group : groups) {
             if (targetGroups.contains(group.getName())) {
                 group.updatePersons(target, editedPerson);
             }
         }
-        */
+
     }
 
     /**
@@ -156,9 +154,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes {@code toRemove} from the specified groups given by {@code targetGroupIndexes}.
      * {@code toRemove} and groups specified by {@code targetGroupIndexes} must exist in the address book.
      */
-    public void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
-        requireAllNonNull(targetGroupIndexes, toRemove);
-        groups.removePersonFromGroups(targetGroupIndexes, toRemove);
+    public void removePersonFromGroup(Group group, Person toRemove) {
+        requireAllNonNull(group, toRemove);
+        groups.removePersonFromGroup(group, toRemove);
     }
 
     /**

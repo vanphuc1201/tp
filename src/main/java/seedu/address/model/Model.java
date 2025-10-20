@@ -111,7 +111,7 @@ public interface Model {
      *
      * Returns the modified person after removing from the group/s.
      */
-    Person removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove);
+    void removePersonFromGroup(Group group, Person toRemove);
 
     /**
      * Removes the specified person from all groups.
