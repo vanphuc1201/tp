@@ -61,7 +61,7 @@ public class DeleteMemberCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        UniquePersonList lastShownMiniPersonList;
+        List<Person> lastShownMiniPersonList;
         List<Group> lastShownGroupList = model.getFilteredGroupList();
 
         if (groupIndex.getZeroBased() >= lastShownGroupList.size()) {

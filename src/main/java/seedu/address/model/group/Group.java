@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
@@ -56,12 +57,12 @@ public class Group {
         return name;
     }
 
-    public UniqueEventList getEvents() {
-        return events;
+    public ObservableList<Event> getEvents() {
+        return events.asUnmodifiableObservableList();
     }
 
-    public UniquePersonList getPersons() {
-        return persons;
+    public ObservableList<Person> getPersons() {
+        return persons.asUnmodifiableObservableList();
     }
 
     public void addEvent(Event event) {
