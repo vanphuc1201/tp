@@ -30,7 +30,7 @@ public class DeleteMemberCommand extends Command {
 
     public static final String COMMAND_WORD = "delete-member";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete persons specified by index number"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete persons specified by index numbers"
             + "from the specified group's member list\n"
             + "Parameters: "
             + PREFIX_GROUP_INDEX + "GROUP INDEX (must be a positive integer) "
