@@ -3,11 +3,11 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
-import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
@@ -40,20 +40,22 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
+     * Removes an {@code Event} from the list.
+     * The {@code Event} must already exist in the list.
+     */
+    public void remove(Event toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new EventNotFoundException();
+        }
+    }
+
+    /**
      * Replaces the contents of this list with the contents of {@code replacement}.
      */
     public void setEvents(UniqueEventList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
-    }
-
-    /**
-     * Return the string of all the event in the event list
-     */
-    public String getEventsDescription() {
-        return internalList.stream()
-                .map(event -> event.toString())
-                .collect(Collectors.joining(", "));
     }
 
     /**
