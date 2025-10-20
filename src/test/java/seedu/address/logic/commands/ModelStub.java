@@ -1,10 +1,12 @@
 package seedu.address.logic.commands;
 
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -92,12 +94,12 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void addPersonToGroup(Group group, Person person) {
+    public Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void removePersonFromGroup(Group targetGroup, Person toRemove) {
+    public void removePersonFromAllGroups(Person toRemove) {
         throw new AssertionError("This method should not be called.");
     }
 

@@ -11,12 +11,14 @@ import static seedu.address.testutil.TypicalGroups.CS2103T;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.AddressBook;
@@ -155,12 +157,12 @@ public class AddGroupCommandTest {
         }
 
         @Override
-        public void addPersonToGroup(Group group, Person person) {
+        public Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void removePersonFromGroup(Group targetGroup, Person toRemove) {
+        public void removePersonFromAllGroups(Person toRemove) {
             throw new AssertionError("This method should not be called.");
         }
 
