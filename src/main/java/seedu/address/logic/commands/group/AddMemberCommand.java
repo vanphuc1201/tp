@@ -65,17 +65,32 @@ public class AddMemberCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Person targetPerson = lastShownPersonList.get(contactIndex.getZeroBased());
         Group groupToAddTo = lastShownGroupList.get(groupIndex.getZeroBased());
+        List<Person> personsToAdd = new ArrayList<>();
+        List<String> personNames = new ArrayList<>();
 
-        if (groupToAddTo.containsPerson(targetPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        for (Index contactIndex : contactIndexes) {
+            if (contactIndex.getZeroBased() >= lastShownPersonList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
 
+            Person targetPerson = lastShownPersonList.get(contactIndex.getZeroBased());
+
+            if (groupToAddTo.containsPerson(targetPerson)) {
+                throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON, targetPerson.getName()));
+            }
+
+            personsToAdd.add(targetPerson);
+            personNames.add(targetPerson.getNameAsString());
         }
-        Person modifiedPerson = model.addPersonToGroups(new HashSet<>(Set.of(groupIndex)), targetPerson);
-        model.setPerson(targetPerson, modifiedPerson);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(modifiedPerson),
+        for (Person toAdd : personsToAdd) {
+            Person modifiedPerson = model.addPersonToGroups(new HashSet<>(Set.of(groupIndex)), toAdd);
+            model.setPerson(toAdd, modifiedPerson);
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                personNames.stream().collect(Collectors.joining(", ")),
                 Messages.format(groupToAddTo)));
     }
 

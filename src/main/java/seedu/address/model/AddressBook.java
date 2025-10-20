@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
@@ -101,14 +102,17 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         persons.setPerson(target, editedPerson);
 
-        // Propagate changes to persons throughout the model.
-        // TODO: Lacking sanity checks. This is an ugly solution.
+        /*
+        // Propagate changes to persons throughout the model
+        // TODO: not sure if this is even needed anymore due to change in implementation of
+            adding/deleting groups in contacts
         Set<GroupName> targetGroups = target.getGroups();
         for (Group group : groups) {
             if (targetGroups.contains(group.getName())) {
                 group.updatePersons(target, editedPerson);
             }
         }
+        */
     }
 
     /**
@@ -149,11 +153,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code toRemove} from {@code targetGroup}.
-     * {@code toRemove} and {@code targetGroup} must exist in the address book.
+     * Removes {@code toRemove} from the specified groups given by {@code targetGroupIndexes}.
+     * {@code toRemove} and groups specified by {@code targetGroupIndexes} must exist in the address book.
+     */
+    public void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
+        requireAllNonNull(targetGroupIndexes, toRemove);
+        groups.removePersonFromGroups(targetGroupIndexes, toRemove);
+    }
+
+    /**
+     * Removes {@code toRemove} from all groups.
+     * {@code toRemove} must exist in the address book.
      */
     public void removePersonFromAllGroups(Person toRemove) {
-        requireAllNonNull(toRemove);
+        requireNonNull(toRemove);
         groups.removePersonFromAllGroups(toRemove);
     }
 

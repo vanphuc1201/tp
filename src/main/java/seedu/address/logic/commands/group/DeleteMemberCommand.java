@@ -45,7 +45,6 @@ public class DeleteMemberCommand extends Command {
             + PREFIX_CONTACT_INDEX + "2,3,4";
 
     public static final String MESSAGE_SUCCESS = "Member(s): '%1$s' deleted from group: '%2$s'";
-    public static final String MESSAGE_PERSON_NOT_IN_GROUP = "Person '%1$s' is not in the group";
 
     private final Index groupIndex;
     private final Set<Index> contactIndexes;
@@ -81,35 +80,19 @@ public class DeleteMemberCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-            Person personToEdit = lastShownMiniPersonList.get(contactIndex.getZeroBased());
-            personsToRemove.add(personToEdit);
-            personNames.add(personToEdit.getNameAsString());
+            Person targetPerson = lastShownMiniPersonList.get(contactIndex.getZeroBased());
+            personsToRemove.add(targetPerson);
+            personNames.add(targetPerson.getNameAsString());
         }
 
-        for (Person personToEdit : personsToRemove) {
-            Person toAdd = removeGroupFromPerson(groupToRemoveFrom.getName(), personToEdit);
-            model.setPerson(personToEdit, toAdd);
-            model.removePersonFromGroup(groupToRemoveFrom, toAdd);
+        for (Person toRemove : personsToRemove) {
+            Person modifiedPerson = model.removePersonFromGroups(new HashSet<>(Set.of(groupIndex)), toRemove);
+            model.setPerson(toRemove, modifiedPerson);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS,
                 personNames.stream().collect(Collectors.joining(", ")),
                 Messages.format(groupToRemoveFrom)));
-    }
-
-    /**
-     * Removes the group from the person's set of groups.
-     * Returns a new Person object with the updated set of groups.
-     */
-    private static Person removeGroupFromPerson(GroupName groupName, Person toRemove) {
-        requireAllNonNull(groupName, toRemove);
-        Name name = toRemove.getName();
-        Phone phone = toRemove.getPhone();
-        Email email = toRemove.getEmail();
-        Set<GroupName> groups = new HashSet<>(toRemove.getGroups());
-        groups.remove(groupName);
-
-        return new Person(name, phone, email, groups);
     }
 
     @Override

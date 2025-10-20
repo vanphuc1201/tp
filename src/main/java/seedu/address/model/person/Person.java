@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -53,15 +54,31 @@ public class Person {
      * Returns a new {@code Person} instance with the specified {@code GroupName} added.
      * <p>
      * This method does not modify the existing {@code Person} object. Instead, it creates
-     * a new {@code Person} containing all of the current groups plus the given group.
+     * a new {@code Person} containing all the current groups together with the added group.
      * </p>
      *
      * @param groupName the group to be added to this person's group set
      * @return a new {@code Person} instance with the specified group added
      */
     public Person addGroup(GroupName groupName) {
-        Set<GroupName> newGroups = new java.util.HashSet<>(groups);
+        Set<GroupName> newGroups = new HashSet<>(groups);
         newGroups.add(groupName);
+        return new Person(name, phone, email, newGroups);
+    }
+
+    /**
+     * Returns a new {@code Person} instance with the specified {@code GroupName} removed.
+     * <p>
+     * This method does not modify the existing {@code Person} object. Instead, it creates
+     * a new {@code Person} containing all the current groups without removed group.
+     * </p>
+     *
+     * @param groupName the group to be removed from this person's group set
+     * @return a new {@code Person} instance with the specified group removed
+     */
+    public Person removeGroup(GroupName groupName) {
+        Set<GroupName> newGroups = new HashSet<>(groups);
+        newGroups.remove(groupName);
         return new Person(name, phone, email, newGroups);
     }
 

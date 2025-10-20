@@ -103,10 +103,18 @@ public interface Model {
      *
      * Returns the modified person after adding to the group/s.
      */
-    Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd);
+    Person addPersonToGroups(Set<Index> targetGroupIndexes, Person toAdd);
 
     /**
-     * Removes the specified person from the all group.
+     * Removes the specified person from the specified group/s by group index.
+     * The group and person must exist in the address book.
+     *
+     * Returns the modified person after removing from the group/s.
+     */
+    Person removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove);
+
+    /**
+     * Removes the specified person from all groups.
      * The group must exist in the address book.
      */
     void removePersonFromAllGroups(Person toRemove);
