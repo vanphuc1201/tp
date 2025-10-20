@@ -30,7 +30,7 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.groups = groups;
+        this.groups = Set.copyOf(groups);
     }
 
     public Name getName() {
@@ -49,8 +49,10 @@ public class Person {
         return Collections.unmodifiableSet(groups);
     }
 
-    public void addGroup(GroupName groupName) {
-        groups.add(groupName);
+    public Person addGroup(GroupName groupName) {
+        Set<GroupName> newGroups = new java.util.HashSet<>(groups);
+        newGroups.add(groupName);
+        return new Person(name, phone, email, newGroups);
     }
 
     /**
