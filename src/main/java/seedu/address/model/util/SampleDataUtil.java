@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.Event;
+import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -34,11 +37,27 @@ public class SampleDataUtil {
         };
     }
 
+    public static Group[] getSampleGroups() {
+        Group sampleGroup = new Group(new GroupName("CS2103T"));
+        sampleGroup.addEvent(new Event(new Description("tp milestone 1.4")));
+
+        return new Group[]{
+                sampleGroup,
+                new Group(new GroupName("CS2103")),
+                new Group(new GroupName("CS2101"))
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Person samplePerson : getSamplePersons()) {
             sampleAb.addPerson(samplePerson);
         }
+
+        for (Group sampleGroup : getSampleGroups()) {
+            sampleAb.addGroup(sampleGroup);
+        }
+
         return sampleAb;
     }
 
