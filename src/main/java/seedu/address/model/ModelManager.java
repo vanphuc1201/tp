@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,7 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 
 /**
@@ -132,9 +136,23 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addPersonToGroup(Group targetGroup, Person toAdd) {
-        requireAllNonNull(targetGroup, toAdd);
-        addressBook.addPersonToGroup(targetGroup, toAdd);
+    public Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd) {
+        requireAllNonNull(targetGroupIndex, toAdd);
+
+        //create person with groups from targetGroupIndex
+        Person personToAdd = toAdd;
+        for (Index index : targetGroupIndex) {
+            Group groupToAddTo = filteredGroups.get(index.getZeroBased());
+            personToAdd = personToAdd.addGroup(new GroupName(groupToAddTo.getName().toString()));
+        }
+
+        //add person to group member list
+        for (Index index : targetGroupIndex) {
+            Group groupToAddTo = filteredGroups.get(index.getZeroBased());
+            groupToAddTo.addPerson(personToAdd);
+        }
+
+        return personToAdd;
     }
 
     /**

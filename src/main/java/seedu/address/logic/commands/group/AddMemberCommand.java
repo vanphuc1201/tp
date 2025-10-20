@@ -71,30 +71,17 @@ public class AddMemberCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownPersonList.get(contactIndex.getZeroBased());
+        Person targetPerson = lastShownPersonList.get(contactIndex.getZeroBased());
         Group groupToAddTo = lastShownGroupList.get(groupIndex.getZeroBased());
-        Person toAdd = addGroupToPerson(groupToAddTo.getName(), personToEdit);
 
-        if (groupToAddTo.containsPerson(toAdd)) {
+        if (groupToAddTo.containsPerson(targetPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
+        Person modifiedPerson = model.addPersonToGroups(new HashSet<>(Set.of(groupIndex)), targetPerson);
+        model.setPerson(targetPerson, modifiedPerson);
 
-        model.setPerson(personToEdit, toAdd);
-        model.addPersonToGroup(groupToAddTo, toAdd);
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToEdit),
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(modifiedPerson),
                 Messages.format(groupToAddTo)));
-    }
-
-    private static Person addGroupToPerson(GroupName groupName, Person toAddTo) {
-        requireAllNonNull(groupName, toAddTo);
-        Name name = toAddTo.getName();
-        Phone phone = toAddTo.getPhone();
-        Email email = toAddTo.getEmail();
-        Set<GroupName> groups = new HashSet<>(toAddTo.getGroups());
-        groups.add(groupName);
-
-        return new Person(name, phone, email, groups);
     }
 
     @Override
