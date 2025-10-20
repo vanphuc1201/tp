@@ -9,21 +9,21 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.GroupBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -37,26 +37,27 @@ public class AddCommandTest {
 
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        // setup model stub with one group
-        ModelStubForFullAddCommand modelStub = new ModelStubForFullAddCommand();
-        Group group = new GroupBuilder().build();
-        modelStub.addGroup(group);
-
-        // Valid group index
-        Set<Index> validGroupIndexes = new HashSet<>();
-        validGroupIndexes.add(Index.fromOneBased(1));
-
+        //set up valid arg for add command
         Person validPerson = new PersonBuilder().build();
+        Group defaultGroup = new GroupBuilder().build();
+        ModelStubForFullAddCommand modelStub = new ModelStubForFullAddCommand(null, defaultGroup);
+        Set<Index> validGroupIndexes = Set.of(Index.fromOneBased(1));
         CommandResult commandResult = new AddCommand(validPerson, validGroupIndexes).execute(modelStub);
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+
+        //set up expected person with group added
+        Person finalisePerson = validPerson.addGroup(new GroupName(defaultGroup.getName().toString()));
+
+        //assertion of commandResult and model changes
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(finalisePerson)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(List.of(finalisePerson), modelStub.persons);
+        assertEquals(List.of(defaultGroup), modelStub.groups);
     }
 
     @Test
     public void execute_invalidGroupIndex_throwsCommandException() {
         Person validPerson = new PersonBuilder().build();
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+        ModelStub modelStub = new ModelStubForErrorCheck(null, null);
 
         // Assuming group list is empty, index 1 is invalid
         Set<Index> invalidGroupIndexes = new HashSet<>();
@@ -69,28 +70,24 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_personAlreadyInGroup_addSuccessful() throws Exception {
+    public void execute_personAlreadyInGroup_throwsCommandException() throws Exception {
         // setup model stub with one group
-        ModelStubForFullAddCommand modelStub = new ModelStubForFullAddCommand();
-        Person validPerson = new PersonBuilder().build();
-        Group group = new GroupBuilder().withPersons(validPerson).build();
-        modelStub.addGroup(group);
+        Person validPerson = new PersonBuilder().build().addGroup(new GroupName("CS2103T"));
+        Group groupWithValidPerson = new GroupBuilder().withName("CS2103T").withPersons(validPerson).build();
+        ModelStubForErrorCheck modelStub = new ModelStubForErrorCheck(null, groupWithValidPerson);
 
         // Valid group index
-        Set<Index> validGroupIndexes = new HashSet<>();
-        validGroupIndexes.add(Index.fromOneBased(1));
+        Set<Index> validGroupIndexes = Set.of(Index.fromOneBased(1));
 
-        CommandResult commandResult = new AddCommand(validPerson, validGroupIndexes).execute(modelStub);
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
-                commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON_IN_GROUP, () ->
+                new AddCommand(validPerson, validGroupIndexes).execute(modelStub));
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Person validPerson = new PersonBuilder().build();
         AddCommand addCommand = new AddCommand(validPerson, new HashSet<>());
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+        ModelStub modelStub = new ModelStubForErrorCheck(validPerson, null);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
     }
@@ -99,14 +96,14 @@ public class AddCommandTest {
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice, new HashSet<>());
+        AddCommand addAliceCommand = new AddCommand(alice, Set.of(Index.fromOneBased(1)));
         AddCommand addBobCommand = new AddCommand(bob, new HashSet<>());
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice, new HashSet<>());
+        AddCommand addAliceCommandCopy = new AddCommand(alice, Set.of(Index.fromOneBased(1)));
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -117,6 +114,10 @@ public class AddCommandTest {
 
         // different person -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
+
+        // different group index -> returns false
+        AddCommand aliceWithDiffGroupIndex = new AddCommand(alice, Set.of(Index.fromOneBased(2)));
+        assertFalse(addAliceCommand.equals(aliceWithDiffGroupIndex));
     }
 
     @Test
@@ -132,65 +133,66 @@ public class AddCommandTest {
 
 
     /**
-     * A Model stub that contains a single person with getFilteredGroups.
+     * A Model stub with default a single person and a single group.
      */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
-        private final FilteredList<Group> filteredGroups = new FilteredList<>(new UniqueGroupList()
-                .asUnmodifiableObservableList());
+    private class ModelStubForErrorCheck extends ModelStub {
+        final ArrayList<Person> persons = new ArrayList<>();
+        final ArrayList<Group> groups = new ArrayList<>();
 
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
+        ModelStubForErrorCheck(Person person, Group group) {
+            if (person != null) {
+                persons.add(person);
+            }
+            if (group != null) {
+                groups.add(group);
+            }
         }
+
         @Override
         public ObservableList<Group> getFilteredGroupList() {
-            return filteredGroups;
+            return FXCollections.observableList(groups);
         }
 
         @Override
         public boolean hasPerson(Person person) {
             requireNonNull(person);
-            return this.person.isSamePerson(person);
+            return persons.stream().anyMatch(person::isSamePerson);
         }
     }
 
     /**
-     * A Model stub that allow methods required for a complete AddCommand.
+     * A Model stub with default one group. Setup for add command execution.
      */
-    private class ModelStubForFullAddCommand extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-        private UniqueGroupList groups = new UniqueGroupList();
+    private class ModelStubForFullAddCommand extends ModelStubForErrorCheck {
 
-        private final FilteredList<Group> filteredGroups = new FilteredList<>(groups.asUnmodifiableObservableList());
-
-        @Override
-        public ObservableList<Group> getFilteredGroupList() {
-            return filteredGroups;
+        ModelStubForFullAddCommand(Person person, Group group) {
+            super(person, group);
         }
 
         @Override
-        public void addGroup(Group group) {
-            requireNonNull(group);
-            groups.add(group);
-        }
+        public Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd) {
+            requireAllNonNull(targetGroupIndex, toAdd);
 
-        @Override
-        public void addPersonToGroup(Group targetGroup, Person toAdd) {
-            requireAllNonNull(targetGroup, toAdd);
-            groups.addPersonToGroup(targetGroup, toAdd);
-        }
+            //create person with groups from targetGroupIndex
+            Person personToAdd = toAdd;
+            for (Index index : targetGroupIndex) {
+                Group groupToAddTo = getFilteredGroupList().get(index.getZeroBased());
+                personToAdd = personToAdd.addGroup(new GroupName(groupToAddTo.getName().toString()));
+            }
 
-        @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
+            //add person to group member list
+            for (Index index : targetGroupIndex) {
+                Group groupToAddTo = getFilteredGroupList().get(index.getZeroBased());
+                groupToAddTo.addPerson(personToAdd);
+            }
+
+            return personToAdd;
         }
 
         @Override
         public void addPerson(Person person) {
             requireNonNull(person);
-            personsAdded.add(person);
+            persons.add(person);
         }
 
     }

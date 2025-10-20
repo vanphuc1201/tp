@@ -148,23 +148,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.remove(key);
     }
 
-
-    /**
-     * Adds {@code toAdd} to {@code targetGroup}.
-     * {@code toAdd} and {@code targetGroup} must exist in the address book.
-     */
-    public void addPersonToGroup(Group targetGroup, Person toAdd) {
-        requireAllNonNull(targetGroup, toAdd);
-        groups.addPersonToGroup(targetGroup, toAdd);
-    }
-
     /**
      * Removes {@code toRemove} from {@code targetGroup}.
      * {@code toRemove} and {@code targetGroup} must exist in the address book.
      */
-    public void removePersonFromGroup(Group targetGroup, Person toRemove) {
-        requireAllNonNull(targetGroup, toRemove);
-        groups.removePersonFromGroup(targetGroup, toRemove);
+    public void removePersonFromAllGroups(Person toRemove) {
+        requireAllNonNull(toRemove);
+        groups.removePersonFromAllGroups(toRemove);
     }
 
     /**

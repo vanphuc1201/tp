@@ -3,6 +3,7 @@ package seedu.address.logic.commands.group;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.group.AddMemberCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.commands.group.AddMemberCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -21,6 +22,7 @@ import static seedu.address.testutil.TypicalPersons.GEORGE_WITH_GROUP;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +33,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.GroupBuilder;
 
@@ -74,8 +77,6 @@ public class AddMemberCommandTest {
     @Test
     public void execute_duplicateGroupMember_throwsCommandException() {
         ModelStub modelStub = new ModelStubAcceptingAddMember();
-        Group group = modelStub.getFilteredGroupList().get(0);
-        Person person = modelStub.getFilteredPersonList().get(0);
 
         AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_FIRST_PERSON);
 
@@ -89,9 +90,10 @@ public class AddMemberCommandTest {
         ModelStub modelStub = new ModelStubAcceptingAddMember();
         AddMemberCommand cmd = new AddMemberCommand(INDEX_FIRST_GROUP, INDEX_SECOND_PERSON);
 
+        GroupName targetGroupName = modelStub.getFilteredGroupList().get(INDEX_FIRST_GROUP.getZeroBased()).getName();
         assertEquals(String.format(MESSAGE_SUCCESS,
-                Messages.format(modelStub.getFilteredPersonList().get(1)),
-                modelStub.getFilteredGroupList().get(0).getName()), cmd.execute(modelStub).getFeedbackToUser());
+                Messages.format(modelStub.getFilteredPersonList().get(1).addGroup(targetGroupName)),
+                targetGroupName), cmd.execute(modelStub).getFeedbackToUser());
 
         assertEquals(CS2103T_WG, modelStub.getFilteredGroupList().get(0));
 
@@ -143,8 +145,23 @@ public class AddMemberCommandTest {
         public void setPerson(Person target, Person editedPerson) {}
 
         @Override
-        public void addPersonToGroup(Group group, Person person) {
-            group.addPerson(person);
+        public Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd) {
+            requireAllNonNull(targetGroupIndex, toAdd);
+
+            //create person with groups from targetGroupIndex
+            Person personToAdd = toAdd;
+            for (Index index : targetGroupIndex) {
+                Group groupToAddTo = getFilteredGroupList().get(index.getZeroBased());
+                personToAdd = personToAdd.addGroup(new GroupName(groupToAddTo.getName().toString()));
+            }
+
+            //add person to group member list
+            for (Index index : targetGroupIndex) {
+                Group groupToAddTo = getFilteredGroupList().get(index.getZeroBased());
+                groupToAddTo.addPerson(personToAdd);
+            }
+
+            return personToAdd;
 
         }
     }
