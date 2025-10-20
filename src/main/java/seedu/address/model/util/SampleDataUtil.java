@@ -42,9 +42,9 @@ public class SampleDataUtil {
         sampleGroup.addEvent(new Event(new Description("tp milestone 1.4")));
 
         return new Group[]{
-                sampleGroup,
-                new Group(new GroupName("CS2103")),
-                new Group(new GroupName("CS2101"))
+            sampleGroup,
+            new Group(new GroupName("CS2103")),
+            new Group(new GroupName("CS2101"))
         };
     }
 
