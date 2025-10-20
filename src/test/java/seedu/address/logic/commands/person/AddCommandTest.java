@@ -40,7 +40,7 @@ public class AddCommandTest {
         //set up valid arg for add command
         Person validPerson = new PersonBuilder().build();
         Group defaultGroup = new GroupBuilder().build();
-        ModelStubForFullAddCommand modelStub = new ModelStubForFullAddCommand(null,defaultGroup);
+        ModelStubForFullAddCommand modelStub = new ModelStubForFullAddCommand(null, defaultGroup);
         Set<Index> validGroupIndexes = Set.of(Index.fromOneBased(1));
         CommandResult commandResult = new AddCommand(validPerson, validGroupIndexes).execute(modelStub);
 
@@ -57,7 +57,7 @@ public class AddCommandTest {
     @Test
     public void execute_invalidGroupIndex_throwsCommandException() {
         Person validPerson = new PersonBuilder().build();
-        ModelStub modelStub = new ModelStubForErrorCheck(null,null);
+        ModelStub modelStub = new ModelStubForErrorCheck(null, null);
 
         // Assuming group list is empty, index 1 is invalid
         Set<Index> invalidGroupIndexes = new HashSet<>();
@@ -87,7 +87,7 @@ public class AddCommandTest {
     public void execute_duplicatePerson_throwsCommandException() {
         Person validPerson = new PersonBuilder().build();
         AddCommand addCommand = new AddCommand(validPerson, new HashSet<>());
-        ModelStub modelStub = new ModelStubForErrorCheck(validPerson,null);
+        ModelStub modelStub = new ModelStubForErrorCheck(validPerson, null);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
     }
@@ -140,13 +140,14 @@ public class AddCommandTest {
         final ArrayList<Group> groups = new ArrayList<>();
 
         ModelStubForErrorCheck(Person person, Group group) {
-            if(person != null) {
+            if (person != null) {
                 persons.add(person);
             }
-            if(group != null) {
+            if (group != null) {
                 groups.add(group);
             }
         }
+
         @Override
         public ObservableList<Group> getFilteredGroupList() {
             return FXCollections.observableList(groups);
