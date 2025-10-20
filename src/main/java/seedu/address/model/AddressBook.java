@@ -1,13 +1,11 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
@@ -148,15 +146,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeGroup(Group key) {
         groups.remove(key);
-    }
-
-    /**
-     * Removes {@code toRemove} from the specified groups given by {@code targetGroupIndexes}.
-     * {@code toRemove} and groups specified by {@code targetGroupIndexes} must exist in the address book.
-     */
-    public void removePersonFromGroup(Group group, Person toRemove) {
-        requireAllNonNull(group, toRemove);
-        groups.removePersonFromGroup(group, toRemove);
     }
 
     /**

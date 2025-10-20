@@ -99,7 +99,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public Person removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
+    public void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
         throw new AssertionError("This method should not be called.");
     }
 

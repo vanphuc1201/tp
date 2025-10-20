@@ -19,11 +19,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.GroupName;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.UniquePersonList;
 
 
@@ -86,31 +82,13 @@ public class DeleteMemberCommand extends Command {
         }
 
         for (Person toRemove : personsToRemove) {
-            Person modifiedPerson = removeGroupFromPerson(groupToRemoveFrom.getName(), toRemove);
-            model.setPerson(toRemove, modifiedPerson);
-            model.removePersonFromGroup(groupToRemoveFrom, modifiedPerson);
+            model.removePersonFromGroups(new HashSet<>(Set.of(groupIndex)), toRemove);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS,
                 personNames.stream().collect(Collectors.joining(", ")),
                 Messages.format(groupToRemoveFrom)));
     }
-
-    /**
-     * Removes the group from the person's set of groups.
-     * Returns a new Person object with the updated set of groups.
-     */
-    private static Person removeGroupFromPerson(GroupName groupName, Person toRemove) {
-        requireAllNonNull(groupName, toRemove);
-        Name name = toRemove.getName();
-        Phone phone = toRemove.getPhone();
-        Email email = toRemove.getEmail();
-        Set<GroupName> groups = new HashSet<>(toRemove.getGroups());
-        groups.remove(groupName);
-
-        return new Person(name, phone, email, groups);
-    }
-
 
     @Override
     public boolean equals(Object other) {

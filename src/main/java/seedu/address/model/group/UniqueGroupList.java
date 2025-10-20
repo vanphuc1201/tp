@@ -5,11 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
@@ -81,11 +79,6 @@ public class UniqueGroupList implements Iterable<Group> {
         if (!internalList.remove(toRemove)) {
             throw new GroupNotFoundException();
         }
-    }
-
-    public void removePersonFromGroup(Group group, Person toRemove) {
-        requireAllNonNull(group, toRemove);
-        group.removePerson(toRemove);
     }
 
     /**

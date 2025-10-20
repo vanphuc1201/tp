@@ -112,7 +112,7 @@ public class AddMemberCommandTest {
 
         GroupName targetGroupName = modelStub.getFilteredGroupList().get(INDEX_FIRST_GROUP.getZeroBased()).getName();
         assertEquals(String.format(MESSAGE_SUCCESS,
-                Messages.format(modelStub.getFilteredPersonList().get(1).addGroup(targetGroupName)),
+                modelStub.getFilteredPersonList().get(1).getNameAsString(),
                 targetGroupName), cmd.execute(modelStub).getFeedbackToUser());
 
         assertEquals(CS2103T_WG, modelStub.getFilteredGroupList().get(0));
