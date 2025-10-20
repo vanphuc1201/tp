@@ -19,11 +19,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.GroupName;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 
 
 /**
@@ -69,48 +65,18 @@ public class AddMemberCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
+        Person targetPerson = lastShownPersonList.get(contactIndex.getZeroBased());
         Group groupToAddTo = lastShownGroupList.get(groupIndex.getZeroBased());
-        List<Person> personsToAdd = new ArrayList<>();
-        List<String> personNames = new ArrayList<>();
 
-        for (Index contactIndex: contactIndexes) {
-            if (contactIndex.getZeroBased() >= lastShownPersonList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
+        if (groupToAddTo.containsPerson(targetPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
 
-            Person personToEdit = lastShownPersonList.get(contactIndex.getZeroBased());
-
-            if (groupToAddTo.containsPerson(personToEdit)) {
-                throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON, personToEdit.getName()));
-            }
-            personsToAdd.add(personToEdit);
-            personNames.add(personToEdit.getNameAsString());
         }
+        Person modifiedPerson = model.addPersonToGroups(new HashSet<>(Set.of(groupIndex)), targetPerson);
+        model.setPerson(targetPerson, modifiedPerson);
 
-        for (Person personToEdit : personsToAdd) {
-            Person toAdd = addGroupToPerson(groupToAddTo.getName(), personToEdit);
-            model.setPerson(personToEdit, toAdd);
-            model.addPersonToGroup(groupToAddTo, toAdd);
-        }
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS,
-                personNames.stream().collect(Collectors.joining(", ")),
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(modifiedPerson),
                 Messages.format(groupToAddTo)));
-    }
-
-    /**
-     * Adds the group to the person's set of groups.
-     * Returns a new Person object with the updated set of groups.
-     */
-    private static Person addGroupToPerson(GroupName groupName, Person toAddTo) {
-        requireAllNonNull(groupName, toAddTo);
-        Name name = toAddTo.getName();
-        Phone phone = toAddTo.getPhone();
-        Email email = toAddTo.getEmail();
-        Set<GroupName> groups = new HashSet<>(toAddTo.getGroups());
-        groups.add(groupName);
-
-        return new Person(name, phone, email, groups);
     }
 
     @Override

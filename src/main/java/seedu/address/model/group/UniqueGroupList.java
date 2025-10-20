@@ -82,21 +82,17 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
-     * Adds the specified person to the specified group.
-     * The group and person must exist in the list.
-     */
-    public void addPersonToGroup(Group targetGroup, Person toAdd) {
-        requireAllNonNull(targetGroup, toAdd);
-        targetGroup.addPerson(toAdd);
-    }
-
-    /**
      * Removes the specified person from the specified group.
      * The group must exist in the list.
      */
-    public void removePersonFromGroup(Group targetGroup, Person toRemove) {
-        requireAllNonNull(targetGroup, toRemove);
-        targetGroup.removePerson(toRemove);
+    public void removePersonFromAllGroups(Person toRemove) {
+        requireAllNonNull(toRemove);
+
+        for (Group group : internalList) {
+            if (group.containsPerson(toRemove)) {
+                group.removePerson(toRemove);
+            }
+        }
     }
 
     /**

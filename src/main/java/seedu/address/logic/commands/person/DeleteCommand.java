@@ -11,7 +11,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 
 /**
@@ -37,21 +36,18 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        //removing person from address book
         List<Person> lastShownList = model.getFilteredPersonList();
+
+        //check if index is valid
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+
+        //delete person from address book and remove from all groups
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
+        model.removePersonFromAllGroups(personToDelete);
 
-        // Also remove the person from all groups they are in
-        List<Group> groupList = model.getAddressBook().getGroupList();
-        for (Group group : groupList) {
-            if (group.containsPerson(personToDelete)) {
-                model.removePersonFromGroup(group, personToDelete);
-            }
-        }
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }
 

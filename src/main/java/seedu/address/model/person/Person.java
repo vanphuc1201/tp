@@ -30,7 +30,7 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.groups = groups;
+        this.groups = Set.copyOf(groups);
     }
 
     public Name getName() {
@@ -49,8 +49,20 @@ public class Person {
         return Collections.unmodifiableSet(groups);
     }
 
-    public void addGroup(GroupName groupName) {
-        groups.add(groupName);
+    /**
+     * Returns a new {@code Person} instance with the specified {@code GroupName} added.
+     * <p>
+     * This method does not modify the existing {@code Person} object. Instead, it creates
+     * a new {@code Person} containing all of the current groups plus the given group.
+     * </p>
+     *
+     * @param groupName the group to be added to this person's group set
+     * @return a new {@code Person} instance with the specified group added
+     */
+    public Person addGroup(GroupName groupName) {
+        Set<GroupName> newGroups = new java.util.HashSet<>(groups);
+        newGroups.add(groupName);
+        return new Person(name, phone, email, newGroups);
     }
 
     /**

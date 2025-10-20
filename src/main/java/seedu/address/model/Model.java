@@ -1,10 +1,12 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 
@@ -96,16 +98,18 @@ public interface Model {
     boolean hasGroup(Group group);
 
     /**
-     * Adds the specified person to the specified group.
+     * Adds the specified person to the specified group/s by group index.
      * The group and person must exist in the address book.
+     *
+     * Returns the modified person after adding to the group/s.
      */
-    void addPersonToGroup(Group targetGroup, Person toAdd);
+    Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd);
 
     /**
-     * Removes the specified person from the specified group.
+     * Removes the specified person from the all group.
      * The group must exist in the address book.
      */
-    void removePersonFromGroup(Group targetGroup, Person toRemove);
+    void removePersonFromAllGroups(Person toRemove);
 
     /** Returns an unmodifiable view of the filtered group list */
     ObservableList<Group> getFilteredGroupList();
