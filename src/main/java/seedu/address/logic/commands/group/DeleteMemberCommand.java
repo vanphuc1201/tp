@@ -33,12 +33,14 @@ public class DeleteMemberCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete persons specified by index numbers"
             + "from the specified group's member list\n"
             + "Parameters: "
-            + PREFIX_GROUP_INDEX + "GROUP INDEX (must be a positive integer) "
-            + PREFIX_CONTACT_INDEX + "CONTACT INDEXES (must be a positive integer) of contacts in group's member list "
-            + "separated by ','\n"
+            + PREFIX_GROUP_INDEX + "GROUP_INDEX (must be a positive integer) "
+            + PREFIX_CONTACT_INDEX + "CONTACT_INDEX (must be a positive integer of contacts in group's member list) "
+            + "[" + PREFIX_CONTACT_INDEX + "CONTACT_INDEXES]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_GROUP_INDEX + "1 "
-            + PREFIX_CONTACT_INDEX + "2,3,4";
+            + PREFIX_CONTACT_INDEX + "2 "
+            + PREFIX_CONTACT_INDEX + "3 "
+            + PREFIX_CONTACT_INDEX + "4 ";
 
     public static final String MESSAGE_SUCCESS = "Member(s): '%1$s' deleted from group: '%2$s'";
 

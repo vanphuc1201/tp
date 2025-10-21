@@ -39,13 +39,9 @@ public class AddMemberCommandParser implements Parser<AddMemberCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMemberCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_GROUP_INDEX, PREFIX_CONTACT_INDEX);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_GROUP_INDEX);
         groupIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_GROUP_INDEX).get());
-
-        String personIndexesString = argMultimap.getValue(PREFIX_CONTACT_INDEX).get();
-        // split all contact indexes by comma: ','
-        List<String> indexesAsList = Arrays.asList(personIndexesString.trim().split("\\s*,\\s*"));
-        personIndexes = ParserUtil.parseIndexes(indexesAsList);
+        personIndexes = ParserUtil.parseIndexes(argMultimap.getAllValues(PREFIX_CONTACT_INDEX));
 
 
         return new AddMemberCommand(groupIndex, personIndexes);

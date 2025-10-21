@@ -32,11 +32,14 @@ public class AddMemberCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds persons specified by index number"
             + "to the group also specified by index number\n"
             + "Parameters: "
-            + PREFIX_GROUP_INDEX + "GROUP INDEX (must be a positive integer) "
-            + PREFIX_CONTACT_INDEX + "CONTACT INDEXES (must be a positive integer) separated by ','\n"
+            + PREFIX_GROUP_INDEX + "GROUP_INDEX (must be a positive integer) "
+            + PREFIX_CONTACT_INDEX + "CONTACT_INDEX (must be a positive integer) "
+            + "[" + PREFIX_CONTACT_INDEX + "CONTACT_INDEXES]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_GROUP_INDEX + "1 "
-            + PREFIX_CONTACT_INDEX + "2,3,4";
+            + PREFIX_CONTACT_INDEX + "2 "
+            + PREFIX_CONTACT_INDEX + "3 "
+            + PREFIX_CONTACT_INDEX + "4 ";
 
     public static final String MESSAGE_SUCCESS = "New member(s): '%1$s' added to group: '%2$s'";
     public static final String MESSAGE_DUPLICATE_PERSON = "Person '%1$s' has already been added to the group";
