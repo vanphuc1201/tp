@@ -35,7 +35,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups = new UniqueGroupList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -105,7 +106,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: Lacking sanity checks. This is an ugly solution.
         Set<GroupName> targetGroups = target.getGroups();
         for (Group group : groups) {
-            if (targetGroups.contains(group.getName())) {
+            if (targetGroups.contains(group.getName()) && group.containsPerson(target)) {
                 group.updatePersons(target, editedPerson);
             }
         }
@@ -165,7 +166,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return groups.contains(group);
     }
 
-    //// util methods
+    /// / util methods
 
     @Override
     public String toString() {
