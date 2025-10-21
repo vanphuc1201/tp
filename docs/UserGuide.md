@@ -57,10 +57,10 @@ group management tasks done faster than traditional GUI apps.
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add-contact n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [g/GROUPS]` can be used as `n/John Doe g/1` or as `n/John Doe`.
+  e.g `n/NAME [g/GROUP_INDEX]` can be used as `n/John Doe g/1` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[g/GROUPS]…​` can be used as ` ` (i.e. 0 times), `g/1`, `g/2 g/3` etc.
+  e.g. `[g/GROUP_INDEX]…​` can be used as ` ` (i.e. 0 times), `g/1`, `g/2 g/3` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -73,8 +73,11 @@ group management tasks done faster than traditional GUI apps.
 
 * All commands are case sensitive. <br>
   e.g. `list-contacts` is not the same as `List-Contacts`
-  
+### UI
+![Ui](images/Ui_withLabel.png)
 </box>
+
+
 
 ### Viewing help : `help`
 
@@ -84,12 +87,12 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
+## Contact related commands
 ### Adding a person: `add-contact`
 
-Adds a person to the contact book.
+Adds a person to the StudyCircle contact list.
 
-Format: `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP]…​`
+Format: `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​`
 
 <box type="tip" seamless>
 
@@ -111,9 +114,8 @@ Format: `delete-contact CONTACT_INDEX`
 
 Examples:
 
-* `list-contacts` followed by `delete-contact 2` deletes the 2nd contact in StudyCircle.
+* `delete-contact 1` deletes the 1st contact in the current displayed list.
 
-* `delete-contact 1` deletes the 1st contact in the current list.
 
 ### Listing all persons : `list-contacts`
 
@@ -121,20 +123,22 @@ Shows a list of all contacts with their phone number, email and groups (if any) 
 
 Format: `list-contacts`
 
-### Finding a contact : `find`
+### Finding a contact : `find-contact`
 Finds all persons whose names contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
 
-Format: `find KEYWORD [MORE_KEYWORDS]…​`
+Format: `find-contact KEYWORD [MORE_KEYWORDS]…​`
 
 * `KEYWORD` is case-insensitve <br>
   e.g. finding with `BOB` and `bob` will return the same result
 * One or more keyword can be entered, returning all the persons which contain either of the keywords <br>
-  e.g. `find Bob Alice` will return all persons with either `Bob` or `Alice` in their names
+  e.g. `find-contact Bob Alice` will return all persons with either `Bob` or `Alice` in their names
 
 Examples:
-* `find rob` will show the contact list with all people whose name contains `rob`
-* `find Aaron Darren` will show the contact list with all people whose name contains either `aaron` or `darren`
+* `find-contact rob` will show the contact list with all people whose name contains `rob`
+* `find-contact Aaron Darren` will show the contact list with all people whose name contains either `aaron` or `darren`
+* `find-contact Aa Da` will match `aaron` or `darren`
 
+## Group related commands
 ### Adding a group : `add-group`
 Adds a new group to StudyCircle.
 
@@ -161,8 +165,7 @@ Format: `delete-group GROUP_INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list-groups` followed by `delete-group 2` deletes the 2nd group in StudyCircle.
-* `delete-group 1` deletes the 1st group in the current list.
+* `delete-group 1` deletes the 1st group in the current displayed list.
 
 ### Listing all groups : `list-groups`
 Shows a list of all groups with their members and events in StudyCircle.
@@ -177,42 +180,43 @@ Format: `find-group KEYWORD [MORE_KEYWORDS]…​`
 
 * `KEYWORD` is case-insensitve <br>
   e.g. finding with `tp` and `TP` will return the same result
-* One or more keyword can be entered, returning all the persons which contain either of the keywords <br>
-  e.g. `find-group tp CS2101` will return all persons with either `tp` or `CS2101` in their names
+* One or more keyword can be entered, returning all the groups which contain either of the keywords <br>
+  e.g. `find-group tp CS2101` will return all groups with either `tp` or `CS2101` in their names
 
 Examples:
 * `find-group CA2` will show the group list with all groups whose name contains `CA2`
-* `find group 2101` will show the group list with all groups whose name contains either `group` or `2101`
+* `find-group CS 210` will show the group list with all groups whose name contains either `CS` or `210`
+* `find-group ab3 2101` will match groups named `AB3` or `cs2101`
 
 ### Adding a member to a group : `add-member`
 Adds the specified contacts to the specified group.
 
-Format: `add-member g/GROUP_INDEX c/CONTACT_INDEXES`
+Format: `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​`
 
 * Both `GROUP_INDEX` and `CONTACT_INDEXES` **must be positive integers** 1, 2, 3, …​
 * `CONTACT_INDEXES` can be one or multiple contact indexes
 * `CONTACT_INDEXES` are taken from the currently displayed contact list
-* To input more than one index, separate each index with a `,`
-  e.g. `c/1,2,3,4` or `c/1, 2, 3, 4`
+* To input more than one index, separate each index with a new prefix c/
+  e.g. `c/1` or `c/1 c/2 c/3`
 
 Examples:
 * `add-member g/1 c/2` adds the 2nd contact to the 1st group.
-* `add-member g/1 c/1,2` adds the 1st and 2nd contact to the 1st group
+* `add-member g/1 c/1 c/2` adds the 1st and 2nd contact to the 1st group
 
 ### Deleting a member from a group : `delete-member`
 Deletes the specified contacts from the specified group.
 
-Format: `delete-member g/GROUP_INDEX c/CONTACT_INDEXES`
+Format: `delete-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​`
 
-* Both `GROUP_INDEX` and `CONTACT_INDEXES` **must be positive integers** 1, 2, 3, …​
-* `CONTACT_INDEXES` can be one or multiple contact indexes
-* `CONTACT_INDEXES` are taken from the currently displayed contact list
-* To input more than one index, separate each index with a `,`
-  e.g. `c/1,2,3,4` or `c/1, 2, 3, 4`
+* Both `GROUP_INDEX` and `CONTACT_INDEX` **must be positive integers** 1, 2, 3, …​
+* `CONTACT_INDEX` can be one or multiple contact indexes
+* `CONTACT_INDEX` are taken from the currently displayed contact list
+* To input more than one index, separate each index with a new prefix c/
+  e.g. `c/1` or `c/1 c/2 c/3`
 
 Examples:
 * `delete-member g/1 c/2` deletes the 2nd contact from the 1st group.
-* `delete-member g/1 c/1,2` deletes the 1st and 2nd contacts from the 1st group
+* `delete-member g/1 c/1 c/2` deletes the 1st and 2nd contacts from the 1st group
 
 ### Adding an event to a group : `add-event`
 Adds an event to the specified group.
@@ -282,15 +286,15 @@ contains the data of your previous StudyCircle home folder.
 Action                | Format, Examples
 ----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add contact**       | `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com g/1 g/2`
-**Delete contact**    | `delete CONTACT_INDEX`<br> e.g., `delete 3`
-**Find contact**      | `find KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find James Jake`
+**Delete contact**    | `delete-contact CONTACT_INDEX`<br> e.g., `delete-contact 3`
+**Find contact**      | `find-contact KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find-contact James Jake`
 **List contacts**     | `list-contacts`
 **Add group**       | `add-group n/NAME` <br> e.g., `add n/2103T`
 **Delete group**    | `delete-group GROUP_INDEX`<br> e.g., `delete-group 3`
 **Find group**      | `find-group KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find-group CA1 CA2`
 **List groups**     | `list-groups`
-**Add members to a group**       | `add-member g/GROUP_INDEX c/CONTACT_INDEXES` <br> e.g., `add-member g/1 c/1`, `add-member g/1 c/1,2`
-**Delete members from a group**  | `delete-member g/GROUP_INDEX c/CONTACT_INDEXES` <br> e.g., `delete-member g/1 c/1`, `delete-member g/1 c/1,2`
+**Add members to a group**       | `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `add-member g/1 c/1`, `add-member g/1 c/1 c/2`
+**Delete members from a group**  | `delete-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `delete-member g/1 c/1`, `delete-member g/1 c/1 c/2`
 **Add an event to a group**     | `add-event GROUP_INDEX d/DESCRIPTION`<br> e.g., `add-event 2 d/do project work`
 **Clear StudyCircle contacts and groups**| `clear`
 **Help**              | `help`
