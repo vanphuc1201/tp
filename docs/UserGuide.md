@@ -35,7 +35,7 @@ group management tasks done faster than traditional GUI apps.
 
    * `list-contacts` : Lists all contacts.
 
-   * `add-contact n/John Doe p/98765432 e/johnd@example.com` : Adds a contact named `John Doe` to the contact book.
+   * `add-contact n/John Doe p/98765432 e/johnd@example.com` : Adds a contact named `John Doe` to the contact list.
 
    * `delete-contact 3` : Deletes the 3rd contact shown in the current contact list.
 
@@ -114,12 +114,12 @@ Format: `delete-contact CONTACT_INDEX`
 
 Examples:
 
-* `delete-contact 1` deletes the 1st contact in the current displayed list.
+* `delete-contact 1` deletes the 1st contact in the current displayed contact list.
 
 
 ### Listing all persons : `list-contacts`
 
-Shows a list of all contacts with their phone number, email and groups (if any) in StudyCircle.
+Shows a list of all contacts with their name, phone number, email and groups (if any) in the current displayed contact list.
 
 Format: `list-contacts`
 
@@ -132,6 +132,7 @@ Format: `find-contact KEYWORD [MORE_KEYWORDS]…​`
   e.g. finding with `BOB` and `bob` will return the same result
 * One or more keyword can be entered, returning all the persons which contain either of the keywords <br>
   e.g. `find-contact Bob Alice` will return all persons with either `Bob` or `Alice` in their names
+* The search performs partial matches — for example, `find-contact ann` will match names like `Anna`, `Annette`, or `Joanne`.
 
 Examples:
 * `find-contact rob` will show the contact list with all people whose name contains `rob`
@@ -140,7 +141,7 @@ Examples:
 
 ## Group related commands
 ### Adding a group : `add-group`
-Adds a new group to StudyCircle.
+Adds a new group to StudyCircle group list.
 
 Format: `add-group n/GROUP_NAME`
 
@@ -150,13 +151,8 @@ Examples:
 * `add-group n/CS2103T` adds a group with name `CS2103T` to StudyCircle
 * `add-group n/Project Group A` adds a group with name `Project Group A` to StudyCircle
 
-Listing all groups : list-groups
-Shows a list of all groups with their members and events in StudyCircle.
-
-Format: list-groups
-
 ### Deleting a group : `delete-group`
-Deletes the specified group from StudyCircle.
+Deletes the specified group from StudyCircle group list.
 
 Format: `delete-group GROUP_INDEX`
 
@@ -165,10 +161,10 @@ Format: `delete-group GROUP_INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `delete-group 1` deletes the 1st group in the current displayed list.
+* `delete-group 1` deletes the 1st group in the current displayed group list.
 
 ### Listing all groups : `list-groups`
-Shows a list of all groups with their members and events in StudyCircle.
+Shows a list of all groups with their members and events in the current displayed group list.
 
 Format: `list-groups`
 
@@ -182,6 +178,7 @@ Format: `find-group KEYWORD [MORE_KEYWORDS]…​`
   e.g. finding with `tp` and `TP` will return the same result
 * One or more keyword can be entered, returning all the groups which contain either of the keywords <br>
   e.g. `find-group tp CS2101` will return all groups with either `tp` or `CS2101` in their names
+* The search performs partial matches — for example, `find-group tp` will match names like `tp2103`, `rentport`, or `cs2103tp`.
 
 Examples:
 * `find-group CA2` will show the group list with all groups whose name contains `CA2`
@@ -210,8 +207,8 @@ Format: `delete-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​`
 
 * Both `GROUP_INDEX` and `CONTACT_INDEX` **must be positive integers** 1, 2, 3, …​
 * `CONTACT_INDEX` can be one or multiple contact indexes
-* `CONTACT_INDEX` are taken from the currently displayed contact list
-* To input more than one index, separate each index with a new prefix c/
+* `CONTACT_INDEX` are taken from the current displayed contact list
+* To input more than one index, separate each index with a new prefix `c/`
   e.g. `c/1` or `c/1 c/2 c/3`
 
 Examples:
@@ -223,7 +220,7 @@ Adds an event to the specified group.
 
 Format: `add-event GROUP_INDEX d/DESCRIPTION`
 
-* The index **must be a positive integer** 1, 2, 3, …​
+* The `GROUP_INDEX` **must be a positive integer** 1, 2, 3, …​
 
 Examples:
 * `add-event 1 d/MVP Feature Specifications` adds the event `MVP FeatureSpecifications` to the 1st group
@@ -272,12 +269,13 @@ contains the data of your previous StudyCircle home folder.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
- **can someone test this im not sure if its still an issue**
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **When minimizing the window of StudyCircle**, if the window gets too small and the description of a group's 
+2. **When resizing the window of StudyCircle**, if the window gets too small and the description of a group's 
    event or member name is too long, it will cause the box displaying that group to stop automatically resizing. 
    This leads to the need to use a scroll bar to scroll through that group's events/members if there are too many 
    items in either category.
+3. **If you minimize the Help Window** and then run the help command (or use the Help menu, or the keyboard shortcut F1) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
