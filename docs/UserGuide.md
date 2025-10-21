@@ -35,7 +35,7 @@ group management tasks done faster than traditional GUI apps.
 
    * `list-contacts` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com` : Adds a contact named `John Doe` to the contact book.
+   * `add-contact n/John Doe p/98765432 e/johnd@example.com` : Adds a contact named `John Doe` to the contact book.
 
    * `delete-contact 3` : Deletes the 3rd contact shown in the current contact list.
 
@@ -54,7 +54,7 @@ group management tasks done faster than traditional GUI apps.
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add-contact n/John Doe`.
 
 * Items in square brackets are optional.<br>
   e.g `n/NAME [g/GROUPS]` can be used as `n/John Doe g/1` or as `n/John Doe`.
@@ -117,7 +117,7 @@ Examples:
 
 ### Listing all persons : `list-contacts`
 
-Shows a list of all persons in the contact book.
+Shows a list of all contacts with their phone number, email and groups (if any) in StudyCircle.
 
 Format: `list-contacts`
 
