@@ -32,7 +32,10 @@ public class GroupBuilder {
     public GroupBuilder(Group groupToCopy) {
         name = groupToCopy.getName();
         events = groupToCopy.getEvents();
-        persons = groupToCopy.getPersons();
+        this.persons = new UniquePersonList();
+        for (Person p : groupToCopy.getPersons()) {
+            this.persons.add(new PersonBuilder(p).build());
+        }
     }
 
     /**
