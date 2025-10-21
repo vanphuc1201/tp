@@ -15,6 +15,7 @@ group management tasks done faster than traditional GUI apps.
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Quick start
 
@@ -46,6 +47,7 @@ group management tasks done faster than traditional GUI apps.
 1. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -77,7 +79,7 @@ group management tasks done faster than traditional GUI apps.
 ![Ui](images/Ui_withLabel.png)
 </box>
 
-
+<div style="page-break-after: always;"></div>
 
 ### Viewing help : `help`
 
@@ -185,6 +187,8 @@ Examples:
 * `find-group CS 210` will show the group list with all groups whose name contains either `CS` or `210`
 * `find-group ab3 2101` will match groups named `AB3` or `cs2101`
 
+<div style="page-break-after: always;"></div>
+
 ### Adding a member to a group : `add-member`
 Adds the specified contacts to the specified group.
 
@@ -235,6 +239,9 @@ Exits the program.
 
 Format: `exit`
 
+
+<div style="page-break-after: always;"></div>
+
 ### Saving the data
 
 StudyCircle data is saved in the hard disk automatically after any command that changes the data. There is no need to 
@@ -278,6 +285,7 @@ contains the data of your previous StudyCircle home folder.
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Command summary
 
