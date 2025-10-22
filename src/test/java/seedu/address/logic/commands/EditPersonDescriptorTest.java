@@ -49,7 +49,7 @@ public class EditPersonDescriptorTest {
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different tags -> returns false
+        // different group -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withGroups(Set.of(INDEX_SECOND_GROUP)).build();
         assertFalse(DESC_AMY.equals(editedAmy));
     }
