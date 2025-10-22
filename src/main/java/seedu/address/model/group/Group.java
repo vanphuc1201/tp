@@ -89,6 +89,13 @@ public class Group {
     }
 
     /**
+     * Returns group name as a String
+     */
+    public String getNameAsString() {
+        return getName().toString();
+    }
+
+    /**
      * Returns true if the group contains an equivalent person as the given argument.
      */
     public boolean containsPerson(Person personToCheck) {

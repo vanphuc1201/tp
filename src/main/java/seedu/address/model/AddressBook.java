@@ -36,8 +36,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups = new UniqueGroupList();
     }
 
-    public AddressBook() {
-    }
+    public AddressBook() {}
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -103,8 +102,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         persons.setPerson(target, editedPerson);
 
-        // Propagate changes to persons throughout the model.
-        // TODO: Lacking sanity checks. This is an ugly solution.
+        // Propagate changes to persons throughout the model
+        // TODO: ugly solution, lacking sanity checks
         Set<GroupName> targetGroups = target.getGroups();
         for (Group group : groups) {
             if (targetGroups.contains(group.getName())) {
@@ -153,11 +152,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code toRemove} from {@code targetGroup}.
-     * {@code toRemove} and {@code targetGroup} must exist in the address book.
+     * Removes {@code toRemove} from all groups.
+     * {@code toRemove} must exist in the address book.
      */
     public void removePersonFromAllGroups(Person toRemove) {
-        requireAllNonNull(toRemove);
+        requireNonNull(toRemove);
         groups.removePersonFromAllGroups(toRemove);
     }
 
@@ -169,7 +168,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return groups.contains(group);
     }
 
-    /// / util methods
+    //// util methods
 
     @Override
     public String toString() {
