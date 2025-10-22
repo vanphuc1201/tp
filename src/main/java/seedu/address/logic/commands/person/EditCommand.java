@@ -122,10 +122,10 @@ public class EditCommand extends Command {
      *
      * @param groupsIndexes the set of group indexes specified by the user input;
      *                      may be {@code null} or empty
-     * @param model the {@code Model} managing persons and groups
-     * @param editedPerson the {@code Person} whose group associations should be synchronized
+     * @param model         the {@code Model} managing persons and groups
+     * @param editedPerson  the {@code Person} whose group associations should be synchronized
      */
-    private void syncGroupWithEditedPerson(Set<Index> groupsIndexes, Model model, Person editedPerson){
+    private void syncGroupWithEditedPerson(Set<Index> groupsIndexes, Model model, Person editedPerson) {
         // groupsIndexes == null means /g is not used in the user input
         if (groupsIndexes == null) {
             return;
@@ -165,9 +165,9 @@ public class EditCommand extends Command {
      *   <li>Otherwise, {@code groupNames} will replace the existing groups.</li>
      * </ul>
      *
-     * @param personToEdit the original {@code Person} to edit; must not be {@code null}
+     * @param personToEdit         the original {@code Person} to edit; must not be {@code null}
      * @param editPersonDescriptor the descriptor containing the fields to edit
-     * @param groupNames the new set of group names, or {@code null} to keep existing groups
+     * @param groupNames           the new set of group names, or {@code null} to keep existing groups
      * @return a new {@code Person} instance with the updated details
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor,

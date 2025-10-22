@@ -8,8 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_GROUP;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_GROUP;
 
 import java.util.ArrayList;
 import java.util.Arrays;
