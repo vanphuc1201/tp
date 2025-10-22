@@ -20,20 +20,21 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 
 
 /**
- * Adds specified persons to the specified group.
+ * Deletes specified persons from the specified group.
  */
-public class AddMemberCommand extends Command {
+public class DeleteMemberCommand extends Command {
 
-    public static final String COMMAND_WORD = "add-member";
+    public static final String COMMAND_WORD = "delete-member";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds persons specified by index number"
-            + "to the group also specified by index number\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete persons specified by index numbers"
+            + "from the specified group's member list\n"
             + "Parameters: "
             + PREFIX_GROUP_INDEX + "GROUP_INDEX (must be a positive integer) "
-            + PREFIX_CONTACT_INDEX + "CONTACT_INDEX (must be a positive integer) "
+            + PREFIX_CONTACT_INDEX + "CONTACT_INDEX (must be a positive integer of contacts in group's member list) "
             + "[" + PREFIX_CONTACT_INDEX + "CONTACT_INDEXES]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_GROUP_INDEX + "1 "
@@ -41,16 +42,15 @@ public class AddMemberCommand extends Command {
             + PREFIX_CONTACT_INDEX + "3 "
             + PREFIX_CONTACT_INDEX + "4 ";
 
-    public static final String MESSAGE_SUCCESS = "New member(s): '%1$s' added to group: '%2$s'";
-    public static final String MESSAGE_DUPLICATE_PERSON = "Person '%1$s' has already been added to the group";
+    public static final String MESSAGE_SUCCESS = "Member(s): '%1$s' deleted from group: '%2$s'";
 
     private final Index groupIndex;
     private final Set<Index> contactIndexes;
 
     /**
-     * Creates an AddMemberCommand to add the specified {@code persons} to the specified {@code group}
+     * Creates a DeleteMemberCommand to add the specified {@code persons} to the specified {@code group}
      */
-    public AddMemberCommand(Index groupIndex, Set<Index> contactIndexes) {
+    public DeleteMemberCommand(Index groupIndex, Set<Index> contactIndexes) {
         requireAllNonNull(contactIndexes, groupIndex);
         this.contactIndexes = contactIndexes;
         this.groupIndex = groupIndex;
@@ -61,40 +61,35 @@ public class AddMemberCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        UniquePersonList lastShownMiniPersonList;
         List<Group> lastShownGroupList = model.getFilteredGroupList();
 
         if (groupIndex.getZeroBased() >= lastShownGroupList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Group groupToAddTo = lastShownGroupList.get(groupIndex.getZeroBased());
-        List<Person> personsToAdd = new ArrayList<>();
+        Group groupToRemoveFrom = lastShownGroupList.get(groupIndex.getZeroBased());
+        lastShownMiniPersonList = groupToRemoveFrom.getPersons();
+        List<Person> personsToRemove = new ArrayList<>();
         List<String> personNames = new ArrayList<>();
 
-        for (Index contactIndex : contactIndexes) {
-            if (contactIndex.getZeroBased() >= lastShownPersonList.size()) {
+        for (Index contactIndex: contactIndexes) {
+            if (contactIndex.getZeroBased() >= lastShownMiniPersonList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-            Person targetPerson = lastShownPersonList.get(contactIndex.getZeroBased());
-
-            if (groupToAddTo.containsPerson(targetPerson)) {
-                throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON, targetPerson.getName()));
-            }
-
-            personsToAdd.add(targetPerson);
+            Person targetPerson = lastShownMiniPersonList.get(contactIndex.getZeroBased());
+            personsToRemove.add(targetPerson);
             personNames.add(targetPerson.getNameAsString());
         }
 
-        for (Person toAdd : personsToAdd) {
-            Person modifiedPerson = model.addPersonToGroups(new HashSet<>(Set.of(groupIndex)), toAdd);
-            model.setPerson(toAdd, modifiedPerson);
+        for (Person toRemove : personsToRemove) {
+            model.removePersonFromGroups(new HashSet<>(Set.of(groupIndex)), toRemove);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS,
                 personNames.stream().collect(Collectors.joining(", ")),
-                Messages.format(groupToAddTo)));
+                Messages.format(groupToRemoveFrom)));
     }
 
     @Override
@@ -104,13 +99,13 @@ public class AddMemberCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddMemberCommand)) {
+        if (!(other instanceof DeleteMemberCommand)) {
             return false;
         }
 
-        AddMemberCommand otherAddMemberCommand = (AddMemberCommand) other;
-        return groupIndex.equals(otherAddMemberCommand.groupIndex)
-                && contactIndexes.equals(otherAddMemberCommand.contactIndexes);
+        DeleteMemberCommand otherDeleteMemberCommand = (DeleteMemberCommand) other;
+        return groupIndex.equals(otherDeleteMemberCommand.groupIndex)
+                && contactIndexes.equals(otherDeleteMemberCommand.contactIndexes);
     }
 
     @Override
@@ -120,4 +115,5 @@ public class AddMemberCommand extends Command {
                 .add("contactIndex", contactIndexes)
                 .toString();
     }
+
 }
