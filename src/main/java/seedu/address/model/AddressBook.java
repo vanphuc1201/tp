@@ -35,7 +35,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups = new UniqueGroupList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -167,7 +168,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return groups.contains(group);
     }
 
-    //// util methods
+    /// / util methods
 
     @Override
     public String toString() {
