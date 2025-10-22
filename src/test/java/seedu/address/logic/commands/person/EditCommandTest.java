@@ -52,11 +52,10 @@ public class EditCommandTest {
 
         //setting up expected model and message
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel.removePersonFromAllGroups(model.getFilteredPersonList().get(1));
-        Person expectedPerson = expectedModel.addPersonToGroups(groupsIndexes, editedPerson);
-        expectedModel.setPerson(model.getFilteredPersonList().get(1), expectedPerson);
+        expectedModel.setPerson(model.getFilteredPersonList().get(1), editedPerson);
+        expectedModel.removePersonFromAllGroups(editedPerson);
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
-                Messages.format(expectedPerson));
+                Messages.format(editedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
