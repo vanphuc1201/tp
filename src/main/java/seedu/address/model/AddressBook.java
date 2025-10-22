@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.Messages.MESSAGE_UNSYNC_CASE;
 
 import java.util.List;
 import java.util.Set;
@@ -106,7 +107,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: Lacking sanity checks. This is an ugly solution.
         Set<GroupName> targetGroups = target.getGroups();
         for (Group group : groups) {
-            if (targetGroups.contains(group.getName()) && group.containsPerson(target)) {
+            if (targetGroups.contains(group.getName())) {
+                assert group.containsPerson(target) : String.format(MESSAGE_UNSYNC_CASE, group.getName(),
+                        target.getName());
                 group.updatePersons(target, editedPerson);
             }
         }
