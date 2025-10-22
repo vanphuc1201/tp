@@ -4,8 +4,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
