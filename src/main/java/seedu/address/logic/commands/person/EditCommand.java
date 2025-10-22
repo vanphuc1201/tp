@@ -71,59 +71,120 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        //Retrieve current data
         List<Person> lastShownPersonList = model.getFilteredPersonList();
         List<Group> lastShownGroupList = model.getFilteredGroupList();
 
+        //Validate person index
         if (index.getZeroBased() >= lastShownPersonList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Set<Index> groupsIndexes = editPersonDescriptor.getGroups().orElse(Collections.emptySet());
-        if (groupsIndexes.stream().anyMatch(idx -> idx.getZeroBased() >= lastShownGroupList.size())) {
+        //Validate group indexes
+        Set<Index> groupsIndexes = editPersonDescriptor.getGroups().orElse(null);
+        if (groupsIndexes != null && groupsIndexes.stream()
+                .anyMatch(idx -> idx.getZeroBased() >= lastShownGroupList.size())) {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
+        //Identify the target person and prepare updated field
         Person personToEdit = lastShownPersonList.get(index.getZeroBased());
+        Set<GroupName> groupNames = convertIndexToGroupName(lastShownGroupList, groupsIndexes);
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor, groupNames);
 
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        // update group list of the editedPerson if groupsIndexes is not empty.
-        if (!groupsIndexes.isEmpty()) {
-            model.removePersonFromAllGroups(personToEdit);
-            editedPerson = model.addPersonToGroups(groupsIndexes, editedPerson);
-        }
-
+        //Check for person duplicates
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        //Apply updates
         model.setPerson(personToEdit, editedPerson);
+        syncGroupWithEditedPerson(groupsIndexes, model, editedPerson);
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
     /**
-     * Creates and returns a new {@link Person} object with the updated details from the given
-     * {@link EditPersonDescriptor}. Fields that are not specified in the descriptor will retain their
-     * original values from {@code personToEdit}.
+     * Synchronizes the group memberships of the given {@code editedPerson} in the {@code model}
+     * based on the specified {@code groupsIndexes}.
      *
-     * <p>If {@code getGroups()} is not empty, the existing group associations will be reset to
-     * an empty set. Otherwise, the person's current groups will be preserved.</p>
+     * <p>This method updates the groups that {@code editedPerson} belongs to according to user input:
+     * <ul>
+     *   <li>If {@code groupsIndexes} is {@code null}, it means the {@code /g} flag was not used
+     *       in the command, so no group changes are made.</li>
+     *   <li>If {@code groupsIndexes} is empty, it means the {@code /g} flag was used with no
+     *       arguments, so the person is removed from all existing groups.</li>
+     *   <li>If {@code groupsIndexes} contains one or more indexes, the person is first removed
+     *       from all current groups, then added to the specified groups.</li>
+     * </ul>
      *
-     * @param personToEdit The original {@link Person} to be edited. Must not be {@code null}.
-     * @param editPersonDescriptor Contains the new values for the person's fields.
-     * @return A new {@link Person} instance reflecting the edits except group list.
-     * @throws AssertionError If {@code personToEdit} is {@code null}.
+     * @param groupsIndexes the set of group indexes specified by the user input;
+     *                      may be {@code null} or empty
+     * @param model the {@code Model} managing persons and groups
+     * @param editedPerson the {@code Person} whose group associations should be synchronized
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private void syncGroupWithEditedPerson(Set<Index> groupsIndexes, Model model, Person editedPerson){
+        // groupsIndexes == null means /g is not used in the user input
+        if (groupsIndexes == null) {
+            return;
+        }
+
+        // /g keyword is used — remove the person from all current groups first
+        // If the user provided non-empty group indexes, add them to the person
+        model.removePersonFromAllGroups(editedPerson);
+        if (!groupsIndexes.isEmpty()) {
+            model.addPersonToGroups(groupsIndexes, editedPerson);
+        }
+    }
+
+    private Set<GroupName> convertIndexToGroupName(List<Group> lastShownGroupList, Set<Index> targetGroupIndex) {
+        if (targetGroupIndex == null) {
+            return null;
+        }
+
+        Set<GroupName> targetGroupNames = new HashSet<>();
+        for (Index index : targetGroupIndex) {
+            Group groupToAddTo = lastShownGroupList.get(index.getZeroBased());
+            targetGroupNames.add(groupToAddTo.getName());
+        }
+        return targetGroupNames;
+    }
+
+    /**
+     * Creates and returns a new {@code Person} with the details of {@code personToEdit}
+     * updated according to the given {@code EditPersonDescriptor} and {@code groupNames}.
+     *
+     * <p>This method preserves the existing values of {@code personToEdit} for any fields
+     * not specified in {@code editPersonDescriptor}. The group membership of the edited person
+     * is determined based on the {@code groupNames} parameter:
+     * <ul>
+     *   <li>If {@code groupNames} is {@code null}, the existing groups of {@code personToEdit} are retained.</li>
+     *   <li>If {@code groupNames} is empty, the resulting {@code Person} will have no group associations.</li>
+     *   <li>Otherwise, {@code groupNames} will replace the existing groups.</li>
+     * </ul>
+     *
+     * @param personToEdit the original {@code Person} to edit; must not be {@code null}
+     * @param editPersonDescriptor the descriptor containing the fields to edit
+     * @param groupNames the new set of group names, or {@code null} to keep existing groups
+     * @return a new {@code Person} instance with the updated details
+     */
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor,
+                                             Set<GroupName> groupNames) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        // updatedGroups will equip with an empty set if getGroups() is not empty else with personToEdit group list
-        Set<GroupName> updatedGroups = editPersonDescriptor.getGroups().filter(set -> !set.isEmpty())
-                .map(set -> Collections.<GroupName>emptySet()).orElse(personToEdit.getGroups());
-
+        Set<GroupName> updatedGroups;
+        if (groupNames == null) {
+            updatedGroups = personToEdit.getGroups();
+        } else if (groupNames.isEmpty()) {
+            updatedGroups = Collections.emptySet();
+        } else {
+            updatedGroups = groupNames;
+        }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedGroups);
     }
 
@@ -178,7 +239,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email);
+            return CollectionUtil.isAnyNonNull(name, phone, email, groups);
         }
 
         public void setName(Name name) {
@@ -236,7 +297,8 @@ public class EditCommand extends Command {
             EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email);
+                    && Objects.equals(email, otherEditPersonDescriptor.email)
+                    && Objects.equals(groups, otherEditPersonDescriptor.groups);
         }
 
         @Override
@@ -245,6 +307,7 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
+                    .add("groups", groups)
                     .toString();
         }
     }
