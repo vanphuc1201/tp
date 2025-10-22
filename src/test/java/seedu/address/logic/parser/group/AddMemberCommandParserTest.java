@@ -37,7 +37,8 @@ public class AddMemberCommandParserTest {
         persons.add(INDEX_FIRST_PERSON);
         persons.add(INDEX_SECOND_PERSON);
 
-        assertParseSuccess(parser, " " + PREFIX_GROUP_INDEX + "3 " + PREFIX_CONTACT_INDEX + "1,2",
+        assertParseSuccess(parser, " " + PREFIX_GROUP_INDEX + "3 " + PREFIX_CONTACT_INDEX + "1 "
+                        + PREFIX_CONTACT_INDEX + "2",
                 new AddMemberCommand(INDEX_THIRD_GROUP, persons));
     }
 
