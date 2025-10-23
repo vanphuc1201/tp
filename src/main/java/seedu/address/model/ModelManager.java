@@ -136,6 +136,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setGroup(Group target, Group editedGroup) {
+        requireAllNonNull(target, editedGroup);
+
+        addressBook.setGroup(target, editedGroup);
+    }
+
+    @Override
     public Person addPersonToGroups(Set<Index> targetGroupIndexes, Person toAdd) {
         requireAllNonNull(targetGroupIndexes, toAdd);
 

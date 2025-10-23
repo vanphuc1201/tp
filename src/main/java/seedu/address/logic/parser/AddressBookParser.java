@@ -19,6 +19,7 @@ import seedu.address.logic.commands.group.AddMemberCommand;
 import seedu.address.logic.commands.group.DeleteGroupCommand;
 import seedu.address.logic.commands.group.DeleteMemberCommand;
 import seedu.address.logic.commands.group.DeleteRepoCommand;
+import seedu.address.logic.commands.group.EditGroupCommand;
 import seedu.address.logic.commands.group.FindGroupCommand;
 import seedu.address.logic.commands.group.GetRepoCommand;
 import seedu.address.logic.commands.group.ListGroupCommand;
@@ -36,6 +37,7 @@ import seedu.address.logic.parser.group.AddMemberCommandParser;
 import seedu.address.logic.parser.group.DeleteGroupCommandParser;
 import seedu.address.logic.parser.group.DeleteMemberCommandParser;
 import seedu.address.logic.parser.group.DeleteRepoCommandParser;
+import seedu.address.logic.parser.group.EditGroupCommandParser;
 import seedu.address.logic.parser.group.FindGroupCommandParser;
 import seedu.address.logic.parser.group.GetRepoCommandParser;
 import seedu.address.logic.parser.group.SetRepoCommandParser;
@@ -78,14 +80,23 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
-
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+            return new ListCommand();
+
+        case FindCommand.COMMAND_WORD:
+            return new FindCommandParser().parse(arguments);
+
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
 
         case AddGroupCommand.COMMAND_WORD:
             return new AddGroupCommandParser().parse(arguments);
@@ -93,20 +104,14 @@ public class AddressBookParser {
         case DeleteGroupCommand.COMMAND_WORD:
             return new DeleteGroupCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+        case ListGroupCommand.COMMAND_WORD:
+            return new ListGroupCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+        case FindGroupCommand.COMMAND_WORD:
+            return new FindGroupCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+        case EditGroupCommand.COMMAND_WORD:
+            return new EditGroupCommandParser().parse(arguments);
 
         case AddMemberCommand.COMMAND_WORD:
             return new AddMemberCommandParser().parse(arguments);
@@ -114,17 +119,17 @@ public class AddressBookParser {
         case DeleteMemberCommand.COMMAND_WORD:
             return new DeleteMemberCommandParser().parse(arguments);
 
+        case ClearCommand.COMMAND_WORD:
+            return new ClearCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
         case AddEventCommand.COMMAND_WORD:
             return new AddEventCommandParser().parse(arguments);
 
         case DeleteEventCommand.COMMAND_WORD:
             return new DeleteEventCommandParser().parse(arguments);
-
-        case ListGroupCommand.COMMAND_WORD:
-            return new ListGroupCommand();
-
-        case FindGroupCommand.COMMAND_WORD:
-            return new FindGroupCommandParser().parse(arguments);
 
         case SetRepoCommand.COMMAND_WORD:
             return new SetRepoCommandParser().parse(arguments);
