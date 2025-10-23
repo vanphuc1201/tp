@@ -59,6 +59,15 @@ public class Group {
         return new Group(name, events, persons, repoLink);
     }
 
+    /**
+     * Static method to edit Group's name.
+     **/
+    public static Group editGroup(Group original, GroupName newName) {
+        requireNonNull(original);
+        requireNonNull(newName);
+        return new Group(newName, original.events, original.persons, original.repoLink);
+    }
+
     public GroupName getName() {
         return name;
     }

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
+import static seedu.address.model.group.Group.editGroup;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,8 +18,10 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.person.Person;
 
 /**
  * Edits the details of an existing group in the address book.
@@ -90,7 +93,7 @@ public class EditGroupCommand extends Command {
 
         GroupName updatedName = editGroupDescriptor.getName().orElse(groupToEdit.getName());
 
-        return new Group(updatedName);
+        return editGroup(groupToEdit, updatedName);
     }
 
     @Override
