@@ -27,10 +27,10 @@ public class GetRepoCommand extends Command {
             + ": Retrieves the repository link of the group identified"
             + " by the index number in the displayed group list.\n"
             + "The retrieved link is copied to your clipboard.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: GROUP_INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_GET_REPO_SUCCESS = "Group %1$s repository link: %2$s\n"
+    public static final String MESSAGE_SUCCESS = "Group %1$s repository link: %2$s\n"
             + "This link is copied to your clipboard, you can paste it now";
 
     public static final String MESSAGE_GET_REPO_NOT_SET = "Group %1$s repository link is not setup yet \n"
@@ -66,6 +66,6 @@ public class GetRepoCommand extends Command {
         Toolkit.getDefaultToolkit()
                 .getSystemClipboard()
                 .setContents(new StringSelection(repoLink.toString()), null);
-        return new CommandResult(String.format(MESSAGE_GET_REPO_SUCCESS, targetGroup.getName(), repoLink));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetGroup.getName(), repoLink));
     }
 }

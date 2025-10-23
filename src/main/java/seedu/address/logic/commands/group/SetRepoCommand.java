@@ -25,7 +25,7 @@ public class SetRepoCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set repository link for the group identified "
             + "by index number used in the displayed groups list.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: GROUP_INDEX (must be a positive integer) "
             + PREFIX_REPO + "REPOSITORY_LINK\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_REPO + "https://github.com/AY2526S1-CS2103T-F12-1/tp";
 
@@ -35,7 +35,7 @@ public class SetRepoCommand extends Command {
     private final RepoLink repoLink;
 
     /**
-     * Creates a SetRepoCommand to set the repository link of specified {@code Group}
+     * Creates a SetRepoCommand to set the repository link of specified {@code Group} by groupIndex
      */
     public SetRepoCommand(Index groupIndex, RepoLink repoLink) {
         requireAllNonNull(groupIndex, repoLink);
