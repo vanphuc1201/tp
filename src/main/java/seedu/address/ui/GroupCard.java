@@ -27,6 +27,8 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private Label repoIndicator;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -43,6 +45,12 @@ public class GroupCard extends UiPart<Region> {
         this.group = group;
         id.setText(displayedIndex + ". ");
         name.setText(group.getName().fullName);
+        if (group.getRepoLink().isRepoSet()) {
+            repoIndicator.setStyle("-fx-background-color: #2ecc71;"); // green
+        } else {
+            repoIndicator.setVisible(false);
+            repoIndicator.setManaged(false);
+        }
 
         MiniPersonListPanel personListPanel =
                 new MiniPersonListPanel(group.getPersons().asUnmodifiableObservableList());
