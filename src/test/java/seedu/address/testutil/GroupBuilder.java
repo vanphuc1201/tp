@@ -1,8 +1,10 @@
 package seedu.address.testutil;
 
+import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -16,6 +18,7 @@ public class GroupBuilder {
     private GroupName name;
     private UniqueEventList events;
     private UniquePersonList persons;
+    private RepoLink repoLink;
 
     /**
      * Creates a {@code GroupBuilder} with the default details.
@@ -24,6 +27,7 @@ public class GroupBuilder {
         name = new GroupName(DEFAULT_GROUP_NAME);
         events = new UniqueEventList();
         persons = new UniquePersonList();
+        repoLink = new RepoLink();
     }
 
     /**
@@ -31,11 +35,16 @@ public class GroupBuilder {
      */
     public GroupBuilder(Group groupToCopy) {
         name = groupToCopy.getName();
-        events = groupToCopy.getEvents();
+        events = new UniqueEventList();
+        for (Event event : groupToCopy.getEvents()) {
+            // OK for now since Events are immutable.
+            this.events.add(event);
+        }
         this.persons = new UniquePersonList();
         for (Person p : groupToCopy.getPersons()) {
             this.persons.add(new PersonBuilder(p).build());
         }
+        repoLink = groupToCopy.getRepoLink();
     }
 
     /**
@@ -49,8 +58,11 @@ public class GroupBuilder {
     /**
      * Sets the {@code GroupEvent} of the {@code Group} that we are building.
      */
-    public GroupBuilder withEvents(UniqueEventList events) {
-        this.events = events;
+    public GroupBuilder withEvents(Event... events) {
+        this.events = new UniqueEventList();
+        for (Event event : events) {
+            this.events.add(event);
+        }
         return this;
     }
 
@@ -66,7 +78,7 @@ public class GroupBuilder {
     }
 
     public Group build() {
-        return Group.fromStorage(name, events, persons);
+        return Group.fromStorage(name, events, persons, repoLink);
     }
 
 }

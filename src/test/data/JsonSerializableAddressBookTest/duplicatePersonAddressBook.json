@@ -11,6 +11,7 @@
   "groups" : [ {
     "persons" : [ ],
     "events" : [ ],
+    "repoLink" : "none",
     "groupName" : "CS2103"
   } ]
 }

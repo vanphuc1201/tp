@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
@@ -25,13 +26,17 @@ public class Group {
     private final UniqueEventList events;
     private final UniquePersonList persons;
 
+    //quick link fields
+    private final RepoLink repoLink;
+
 
     // To be used only by the factory method
-    private Group(GroupName name, UniqueEventList events, UniquePersonList persons) {
+    private Group(GroupName name, UniqueEventList events, UniquePersonList persons, RepoLink repoLink) {
         requireAllNonNull(name, events, persons);
         this.name = name;
         this.events = events;
         this.persons = persons;
+        this.repoLink = repoLink;
     }
 
     /**
@@ -42,26 +47,28 @@ public class Group {
         this.name = name;
         events = new UniqueEventList();
         persons = new UniquePersonList();
+        repoLink = new RepoLink();
     }
 
     /**
      * Static method to create Group from storage or external data.
      **/
-    public static Group fromStorage(GroupName name, UniqueEventList events, UniquePersonList persons) {
-        requireAllNonNull(name, events, persons);
-        return new Group(name, events, persons);
+    public static Group fromStorage(GroupName name, UniqueEventList events, UniquePersonList persons,
+                                    RepoLink repoLink) {
+        requireAllNonNull(name, events, persons, repoLink);
+        return new Group(name, events, persons, repoLink);
     }
 
     public GroupName getName() {
         return name;
     }
 
-    public UniqueEventList getEvents() {
-        return events;
+    public ObservableList<Event> getEvents() {
+        return events.asUnmodifiableObservableList();
     }
 
-    public UniquePersonList getPersons() {
-        return persons;
+    public ObservableList<Person> getPersons() {
+        return persons.asUnmodifiableObservableList();
     }
 
     public void addEvent(Event event) {
@@ -70,6 +77,10 @@ public class Group {
 
     public void addPerson(Person toAdd) {
         persons.add(toAdd);
+    }
+
+    public void removeEvent(Event toRemove) {
+        events.remove(toRemove);
     }
 
     public void removePerson(Person toRemove) {
@@ -86,6 +97,16 @@ public class Group {
 
     public void replacePersons(List<Person> replacement) {
         persons.setPersons(replacement);
+    }
+
+    public Group setRepoLink(RepoLink repoLink) {
+        requireNonNull(repoLink);
+
+        return new Group(name, events, persons, repoLink);
+    }
+
+    public RepoLink getRepoLink() {
+        return repoLink;
     }
 
     /**
@@ -140,13 +161,14 @@ public class Group {
         Group otherGroup = (Group) other;
         return name.equals(otherGroup.name)
                 && events.equals(otherGroup.events)
-                && persons.equals(otherGroup.persons);
+                && persons.equals(otherGroup.persons)
+                && repoLink.equals(otherGroup.repoLink);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, events, persons);
+        return Objects.hash(name, events, persons, repoLink);
     }
 
     @Override
@@ -155,6 +177,7 @@ public class Group {
                 .add("name", name)
                 .add("events", events)
                 .add("persons", persons)
+                .add("repo-link", repoLink)
                 .toString();
     }
 
