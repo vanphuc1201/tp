@@ -43,7 +43,7 @@ public class EditEventCommand extends Command {
      * Creates a Command to delete the specified {@code Event}
      */
     public EditEventCommand(Index groupIndex, Index eventIndex, Description description) {
-        requireAllNonNull(groupIndex, eventIndex);
+        requireAllNonNull(groupIndex, eventIndex, description);
         this.groupIndex = groupIndex;
         this.eventIndex = eventIndex;
         this.description = description;
