@@ -11,6 +11,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Person;
 
 /**
@@ -105,6 +106,11 @@ public class ModelStub implements Model {
 
     @Override
     public void removePersonFromAllGroups(Person toRemove) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void setGroupRepo(Group group, RepoLink repoLink) {
         throw new AssertionError("This method should not be called.");
     }
 

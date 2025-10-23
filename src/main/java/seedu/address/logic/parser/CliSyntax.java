@@ -19,4 +19,7 @@ public class CliSyntax {
     // Events
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
 
+    // repo
+    public static final Prefix PREFIX_REPO = new Prefix("r/");
+
 }

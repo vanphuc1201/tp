@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Description;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -104,6 +105,16 @@ public class ParserUtil {
      */
     public static Description parseDescription(String description) throws ParseException {
         return parseField(description, Description::new);
+    }
+
+    /**
+     * Parses a {@code String repoLink} into a {@code RepoLink}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code description} is invalid.
+     */
+    public static RepoLink parseRepoLink(String repoLink) throws ParseException {
+        return parseField(repoLink, RepoLink::new);
     }
 
     /**

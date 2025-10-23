@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Person;
 
 /**
@@ -98,12 +99,15 @@ public interface Model {
     boolean hasGroup(Group group);
 
     /**
-     * Adds the specified person to the specified group/s by group index.
-     * The group and person must exist in the address book.
+     * Adds the specified person to the groups identified by the given indexes.
+     * A new {@code Person} instance containing the updated group memberships is returned.
      *
-     * Returns the modified person after adding to the group/s.
+     * @param targetGroupIndex the set of group indexes to add the person to
+     * @param toAdd the person to be added to the groups
+     * @return a new {@code Person} with the added groups
+     * @throws NullPointerException if {@code targetGroupIndex} or {@code toAdd} is {@code null}
      */
-    Person addPersonToGroups(Set<Index> targetGroupIndexes, Person toAdd);
+    Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd);
 
     /**
      * Removes the specified person from the specified group/s by group index.
@@ -114,10 +118,20 @@ public interface Model {
     void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove);
 
     /**
-     * Removes the specified person from all groups.
-     * The group must exist in the address book.
+     * Removes the specified person from all groups member list in the address book.
+     *
+     * @param toRemove the person to remove from all groups
+     * @throws NullPointerException if {@code toRemove} is {@code null}
      */
     void removePersonFromAllGroups(Person toRemove);
+
+    /**
+     * Sets the given group's repository link and updates it in the address book.
+     *
+     * @param group the group to update
+     * @param repoLink the repository link to set
+     */
+    void setGroupRepo(Group group, RepoLink repoLink);
 
     /** Returns an unmodifiable view of the filtered group list */
     ObservableList<Group> getFilteredGroupList();
