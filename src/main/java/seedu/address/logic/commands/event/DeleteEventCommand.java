@@ -29,7 +29,7 @@ public class DeleteEventCommand extends Command {
             + PREFIX_DESCRIPTION + "DESCRIPTION";
 
     public static final String MESSAGE_SUCCESS = "Event: '%1$s' deleted from group: %2$s";
-    public static final String MESSAGE_EVENT_NOT_FOUND = "This event does not exist in the group";
+    public static final String MESSAGE_EVENT_NOT_FOUND = "There is no event at that index in the group";
 
     private final Index groupIndex;
     private final Index eventIndex;
@@ -54,14 +54,13 @@ public class DeleteEventCommand extends Command {
 
         Group group = lastShownList.get(groupIndex.getZeroBased());
 
-        try {
-            Event toRemove = group.getEvents().get(eventIndex.getZeroBased());
-            group.removeEvent(toRemove);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toRemove.toString(), Messages.format(group)));
-
-        } catch (IndexOutOfBoundsException e) {
+        if (eventIndex.getZeroBased() >= group.getEvents().size()) {
             throw new CommandException(MESSAGE_EVENT_NOT_FOUND);
         }
+
+        Event toRemove = group.getEvents().get(eventIndex.getZeroBased());
+        group.removeEvent(toRemove);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toRemove.toString(), Messages.format(group)));
     }
 
     @Override
