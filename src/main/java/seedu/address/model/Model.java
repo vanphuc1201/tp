@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -8,6 +10,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Person;
 
 /**
@@ -115,6 +118,14 @@ public interface Model {
      * @throws NullPointerException if {@code toRemove} is {@code null}
      */
     void removePersonFromAllGroups(Person toRemove);
+
+    /**
+     * Sets the given group's repository link and updates it in the address book.
+     *
+     * @param group the group to update
+     * @param repoLink the repository link to set
+     */
+    void setGroupRepo(Group group, RepoLink repoLink);
 
     /** Returns an unmodifiable view of the filtered group list */
     ObservableList<Group> getFilteredGroupList();

@@ -15,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Person;
 
 /**
@@ -156,8 +157,13 @@ public class ModelManager implements Model {
 
     @Override
     public void removePersonFromAllGroups(Person toRemove) {
-        requireAllNonNull(toRemove);
+        requireNonNull(toRemove);
         addressBook.removePersonFromAllGroups(toRemove);
+    }
+
+    public void setGroupRepo(Group group, RepoLink repoLink) {
+        requireAllNonNull(group, repoLink);
+        addressBook.setGroup(group,group.setRepoLink(repoLink));
     }
 
     //=========== Filtered Person List Accessors =============================================================
