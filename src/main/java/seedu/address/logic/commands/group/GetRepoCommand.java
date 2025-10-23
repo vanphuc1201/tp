@@ -33,6 +33,9 @@ public class GetRepoCommand extends Command {
     public static final String MESSAGE_GET_REPO_SUCCESS = "Group %1$s repository link: %2$s\n"
             + "This link is copied to your clipboard, you can paste it now";
 
+    public static final String MESSAGE_GET_REPO_NOT_SET = "Group %1$s repository link is not setup yet \n"
+            + "Please use 'set-repo' command to setup first before retrieving it";
+
     private final Index targetIndex;
 
     /**
@@ -57,6 +60,9 @@ public class GetRepoCommand extends Command {
 
         Group targetGroup = lastShownGroupList.get(targetIndex.getZeroBased());
         RepoLink repoLink = targetGroup.getRepoLink();
+        if (!repoLink.isRepoSet()){
+            throw new CommandException(String.format(MESSAGE_GET_REPO_NOT_SET, targetGroup.getName()));
+        }
         Toolkit.getDefaultToolkit()
                 .getSystemClipboard()
                 .setContents(new StringSelection(repoLink.toString()), null);
