@@ -20,7 +20,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
 
 
 /**
@@ -61,7 +60,7 @@ public class DeleteMemberCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        UniquePersonList lastShownMiniPersonList;
+        List<Person> lastShownMiniPersonList;
         List<Group> lastShownGroupList = model.getFilteredGroupList();
 
         if (groupIndex.getZeroBased() >= lastShownGroupList.size()) {

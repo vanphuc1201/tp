@@ -45,11 +45,11 @@ public class GroupCard extends UiPart<Region> {
         name.setText(group.getName().fullName);
 
         MiniPersonListPanel personListPanel =
-                new MiniPersonListPanel(group.getPersons().asUnmodifiableObservableList());
+                new MiniPersonListPanel(group.getPersons());
         personListPlaceholder.getChildren().add(personListPanel.getRoot());
 
         EventListPanel eventListPanel =
-                new EventListPanel(group.getEvents().asUnmodifiableObservableList());
+                new EventListPanel(group.getEvents());
         eventListPlaceholder.getChildren().add(eventListPanel.getRoot());
     }
 }
