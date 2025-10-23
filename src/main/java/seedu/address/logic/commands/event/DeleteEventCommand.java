@@ -2,7 +2,7 @@ package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_INDEX;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ public class DeleteEventCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an event from the group identified "
             + "by the index number used in the displayed groups list.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_DESCRIPTION + "DESCRIPTION";
+            + "Parameters: GROUP_INDEX (must be a positive integer) "
+            + PREFIX_EVENT_INDEX + "EVENT_INDEX (must be a positive integer)";
 
     public static final String MESSAGE_SUCCESS = "Event: '%1$s' deleted from group: %2$s";
     public static final String MESSAGE_EVENT_NOT_FOUND = "There is no event at that index in the group";
