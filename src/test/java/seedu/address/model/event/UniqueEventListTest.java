@@ -9,6 +9,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 
 public class UniqueEventListTest {
 
@@ -39,6 +40,24 @@ public class UniqueEventListTest {
     public void add_duplicateEvent_throwsDuplicateEventException() {
         uniqueEventList.add(VALID_EVENT);
         assertThrows(DuplicateEventException.class, () -> uniqueEventList.add(VALID_EVENT));
+    }
+
+    @Test
+    public void remove_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueEventList.remove(null));
+    }
+
+    @Test
+    public void remove_eventNotInList_throwsEventNotFoundException() {
+        assertThrows(EventNotFoundException.class, () -> uniqueEventList.remove(VALID_EVENT));
+    }
+
+    @Test
+    public void remove_eventInList_removesEvent() {
+        uniqueEventList.add(VALID_EVENT);
+        uniqueEventList.remove(VALID_EVENT);
+        UniqueEventList expected = new UniqueEventList();
+        assertEquals(expected, uniqueEventList);
     }
 
     @Test
