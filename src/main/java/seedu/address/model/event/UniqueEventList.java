@@ -1,6 +1,7 @@
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 
@@ -48,6 +49,26 @@ public class UniqueEventList implements Iterable<Event> {
         if (!internalList.remove(toRemove)) {
             throw new EventNotFoundException();
         }
+    }
+
+    /**
+     * Replaces the event {@code target} in the list with {@code edited}.
+     * {@code target} must exist in the list.
+     * The event identity of {@code edited} must not be the same as another existing event in the list.
+     */
+    public void setEvent(Event target, Event edited) {
+        requireAllNonNull(target, edited);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new EventNotFoundException();
+        }
+
+        if (!target.equals(edited) && contains(edited)) {
+            throw new DuplicateEventException();
+        }
+
+        internalList.set(index, edited);
     }
 
     /**
