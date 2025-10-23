@@ -19,7 +19,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 
 /**
- * Deletes an Event from the specified Group
+ * Edits an Event in the specified Group
  */
 public class EditEventCommand extends Command {
 
@@ -40,7 +40,7 @@ public class EditEventCommand extends Command {
     private final Description description;
 
     /**
-     * Creates a Command to delete the specified {@code Event}
+     * Creates a Command to edit the specified {@code Event}
      */
     public EditEventCommand(Index groupIndex, Index eventIndex, Description description) {
         requireAllNonNull(groupIndex, eventIndex, description);
