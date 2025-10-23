@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.model.group.RepoLinkTest.VALID_DIFFERENT_REPO;
 import static seedu.address.model.group.RepoLinkTest.VALID_REPO;
 import static seedu.address.testutil.TypicalGroups.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
