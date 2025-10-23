@@ -1,12 +1,12 @@
 package seedu.address.logic.commands.group;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.ClipboardUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
@@ -37,6 +37,8 @@ public class GetRepoCommand extends Command {
     public static final String MESSAGE_GET_REPO_NOT_SET = "Group %1$s repository link is not setup yet \n"
             + "Please use 'set-repo' command to setup first before retrieving it";
 
+    private final ClipboardUtil clipboardUtil;
+
     private final Index targetIndex;
 
     /**
@@ -47,6 +49,21 @@ public class GetRepoCommand extends Command {
         requireNonNull(targetIndex);
 
         this.targetIndex = targetIndex;
+        clipboardUtil = new ClipboardUtil();
+    }
+
+    /**
+     * Creates a {@code GetRepoCommand} with the specified group index and a custom {@link ClipboardUtil}.
+     * <p>
+     * This constructor is mainly used for testing to inject a mock or fake clipboard utility.
+     *
+     * @param targetIndex   Index of the group whose repository link is to be retrieved.
+     * @param clipboardUtil Clipboard utility used to copy the repository link to the system clipboard.
+     */
+    public GetRepoCommand(Index targetIndex, ClipboardUtil clipboardUtil) {
+        requireAllNonNull(targetIndex, clipboardUtil);
+        this.targetIndex = targetIndex;
+        this.clipboardUtil = clipboardUtil;
     }
 
     @Override
@@ -66,9 +83,7 @@ public class GetRepoCommand extends Command {
             throw new CommandException(String.format(MESSAGE_GET_REPO_NOT_SET, targetGroup.getName()));
         }
 
-        Toolkit.getDefaultToolkit()
-                .getSystemClipboard()
-                .setContents(new StringSelection(repoLink.toString()), null);
+        clipboardUtil.copyToClipboard(repoLink.toString());
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetGroup.getName(), repoLink));
     }
 
