@@ -95,7 +95,12 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd) {
+    public Person addPersonToGroups(Set<Index> targetGroupIndexes, Person toAdd) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
         throw new AssertionError("This method should not be called.");
     }
 

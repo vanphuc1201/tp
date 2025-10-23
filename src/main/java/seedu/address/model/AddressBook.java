@@ -1,7 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.Messages.MESSAGE_UNSYNC_CASE;
 
 import java.util.List;
 import java.util.Set;
@@ -35,7 +35,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups = new UniqueGroupList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -101,11 +102,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         persons.setPerson(target, editedPerson);
 
-        // Propagate changes to persons throughout the model.
-        // TODO: Lacking sanity checks. This is an ugly solution.
+        // Propagate changes to persons throughout the model
+        // TODO: ugly solution, lacking sanity checks
         Set<GroupName> targetGroups = target.getGroups();
         for (Group group : groups) {
             if (targetGroups.contains(group.getName())) {
+                assert group.containsPerson(target) : String.format(MESSAGE_UNSYNC_CASE, group.getName(),
+                        target.getName());
                 group.updatePersons(target, editedPerson);
             }
         }
@@ -149,11 +152,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code toRemove} from {@code targetGroup}.
-     * {@code toRemove} and {@code targetGroup} must exist in the address book.
+     * Removes {@code toRemove} from all groups.
+     * {@code toRemove} must exist in the address book.
      */
     public void removePersonFromAllGroups(Person toRemove) {
-        requireAllNonNull(toRemove);
+        requireNonNull(toRemove);
         groups.removePersonFromAllGroups(toRemove);
     }
 
@@ -165,7 +168,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return groups.contains(group);
     }
 
-    //// util methods
+    /// / util methods
 
     @Override
     public String toString() {

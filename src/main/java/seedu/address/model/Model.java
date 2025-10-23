@@ -110,6 +110,14 @@ public interface Model {
     Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd);
 
     /**
+     * Removes the specified person from the specified group/s by group index.
+     * The group and person must exist in the address book.
+     *
+     * Returns the modified person after removing from the group/s.
+     */
+    void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove);
+
+    /**
      * Removes the specified person from all groups member list in the address book.
      *
      * @param toRemove the person to remove from all groups

@@ -136,23 +136,36 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Person addPersonToGroups(Set<Index> targetGroupIndex, Person toAdd) {
-        requireAllNonNull(targetGroupIndex, toAdd);
+    public Person addPersonToGroups(Set<Index> targetGroupIndexes, Person toAdd) {
+        requireAllNonNull(targetGroupIndexes, toAdd);
 
         //create person with groups from targetGroupIndex
         Person personToAdd = toAdd;
-        for (Index index : targetGroupIndex) {
+        for (Index index : targetGroupIndexes) {
             Group groupToAddTo = filteredGroups.get(index.getZeroBased());
-            personToAdd = personToAdd.addGroup(new GroupName(groupToAddTo.getName().toString()));
+            personToAdd = personToAdd.addGroup(new GroupName(groupToAddTo.getNameAsString()));
         }
 
         //add person to group member list
-        for (Index index : targetGroupIndex) {
+        for (Index index : targetGroupIndexes) {
             Group groupToAddTo = filteredGroups.get(index.getZeroBased());
             groupToAddTo.addPerson(personToAdd);
         }
 
         return personToAdd;
+    }
+
+    @Override
+    public void removePersonFromGroups(Set<Index> targetGroupIndexes, Person toRemove) {
+        requireAllNonNull(targetGroupIndexes, toRemove);
+        Person personToRemove = toRemove;
+
+        for (Index index : targetGroupIndexes) {
+            Group groupToRemoveFrom = filteredGroups.get(index.getZeroBased());
+            personToRemove = personToRemove.removeGroup(new GroupName(groupToRemoveFrom.getNameAsString()));
+            setPerson(toRemove, personToRemove);
+            groupToRemoveFrom.removePerson(personToRemove);
+        }
     }
 
     @Override
