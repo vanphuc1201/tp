@@ -60,7 +60,7 @@ public class GetRepoCommand extends Command {
 
         Group targetGroup = lastShownGroupList.get(targetIndex.getZeroBased());
         RepoLink repoLink = targetGroup.getRepoLink();
-        if (!repoLink.isRepoSet()){
+        if (!repoLink.isRepoSet()) {
             throw new CommandException(String.format(MESSAGE_GET_REPO_NOT_SET, targetGroup.getName()));
         }
         Toolkit.getDefaultToolkit()
