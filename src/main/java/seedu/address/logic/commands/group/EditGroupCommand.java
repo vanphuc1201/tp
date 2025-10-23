@@ -4,10 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -19,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.person.Person;
 
 /**
  * Edits the details of an existing group in the address book.
@@ -77,8 +80,21 @@ public class EditGroupCommand extends Command {
 
         // Apply edits
         model.setGroup(groupToEdit, editedGroup);
+        syncPersonWithEditedGroup(groupToEdit.getName(), model, editedGroup);
         model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
         return new CommandResult(String.format(MESSAGE_EDIT_GROUP_SUCCESS, Messages.format(editedGroup)));
+    }
+
+    /**
+     * Updates all persons who are in the edited group to reflect the new group name.
+     */
+    private void syncPersonWithEditedGroup(GroupName nameOfGroupToEdit, Model model, Group editedGroup) {
+        for (Person person : editedGroup.getPersons()) {
+            Person editedPerson = person
+                    .removeGroup(nameOfGroupToEdit)
+                    .addGroup(editedGroup.getName());
+            model.setPerson(person, editedPerson);
+        }
     }
 
     /**
