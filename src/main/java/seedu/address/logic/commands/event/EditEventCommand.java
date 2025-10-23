@@ -26,10 +26,10 @@ public class EditEventCommand extends Command {
     public static final String COMMAND_WORD = "edit-event";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an event from the group identified "
-            + "by the index number used in the displayed groups list."
+            + "by the index number used in the displayed groups list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_EVENT_INDEX + "EVENT_INDEX (must be a positive integer)"
+            + PREFIX_EVENT_INDEX + "EVENT_INDEX (must be a positive integer) "
             + PREFIX_DESCRIPTION + "DESCRIPTION";
 
     public static final String MESSAGE_SUCCESS = "Edited Event: '%1$s' in Group: '%2$s'";
