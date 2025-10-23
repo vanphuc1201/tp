@@ -34,6 +34,29 @@ public class RepoLink {
     }
 
     /**
+     * Constructs a {@code RepoLink} that allow string value "none"
+     * This Construct should only be call by fromStroage() to load RepoLink from stroage data
+     *
+     * @param link A valid link.
+     */
+    private RepoLink(String link, boolean isStorageDefault) {
+        requireNonNull(link);
+        if(!isStorageDefault) {
+            checkArgument(isValidName(link), MESSAGE_CONSTRAINTS);
+        }
+        repolink = link;
+    }
+
+    /**
+     * Static method to create RepoLink from storage or external data.
+     **/
+    public static RepoLink fromStorage(String link) {
+        requireNonNull(link);
+        boolean isStorageDefault = link.equals("none");
+        return new RepoLink(link, isStorageDefault);
+    }
+
+    /**
      * Constructs a {@code RepoLink} with default values
      */
     public RepoLink() {
@@ -47,7 +70,7 @@ public class RepoLink {
         return test.matches(VALIDATION_REGEX);
     }
 
-    public boolean isRepoSet(){
+    public boolean isRepoSet() {
         return !repolink.equals("none");
     }
 
