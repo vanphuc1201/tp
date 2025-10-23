@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import static seedu.address.model.group.RepoLinkTest.VALID_REPO;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
@@ -21,7 +22,7 @@ import seedu.address.model.person.Person;
 public class TypicalGroups {
 
     public static final Group CS2103T = new GroupBuilder().withName("CS2103T")
-            .withPersons(BENSON, DANIEL, CARL, FIONA)
+            .withPersons(BENSON, DANIEL, CARL, FIONA).withRepoLink(VALID_REPO)
             .build();
     public static final Group CS2101_CA2 = new GroupBuilder().withName("CS2101 CA2")
             .withPersons(CARL)

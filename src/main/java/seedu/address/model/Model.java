@@ -99,6 +99,13 @@ public interface Model {
     boolean hasGroup(Group group);
 
     /**
+     * Replaces the given group {@code target} with {@code editedGroup}.
+     * {@code target} must exist in the address book.
+     * The group identity of {@code editedGroup} must not be the same as another existing group in the address book.
+     */
+    void setGroup(Group target, Group editedGroup);
+
+    /**
      * Adds the specified person to the groups identified by the given indexes.
      * A new {@code Person} instance containing the updated group memberships is returned.
      *

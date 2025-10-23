@@ -77,6 +77,14 @@ public class GroupBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code RepoLink} of the {@code Group} that we are building.
+     */
+    public GroupBuilder withRepoLink(RepoLink repoLink) {
+        this.repoLink = repoLink;
+        return this;
+    }
+
     public Group build() {
         return Group.fromStorage(name, events, persons, repoLink);
     }

@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.event.DeleteEventCommandParserTest.VALI
 import static seedu.address.logic.parser.event.EditEventCommandParserTest.VALID_EDIT_EVENT_COMMAND_ARGS;
 import static seedu.address.model.event.DescriptionTest.VALID_DESCRIPTION_STRING;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -22,7 +23,13 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
+import seedu.address.logic.commands.group.AddGroupCommand;
+import seedu.address.logic.commands.group.DeleteGroupCommand;
 import seedu.address.logic.commands.event.EditEventCommand;
+import seedu.address.logic.commands.group.EditGroupCommand;
+import seedu.address.logic.commands.group.EditGroupCommand.EditGroupDescriptor;
+import seedu.address.logic.commands.group.FindGroupCommand;
+import seedu.address.logic.commands.group.ListGroupCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
@@ -30,9 +37,14 @@ import seedu.address.logic.commands.person.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupNameContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.EditGroupDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.GroupBuilder;
+import seedu.address.testutil.GroupUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -93,6 +105,43 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_addGroup() throws Exception {
+        Group group = new GroupBuilder().build();
+        AddGroupCommand command = (AddGroupCommand) parser.parseCommand(GroupUtil.getAddGroupCommand(group));
+        assertEquals(new AddGroupCommand(group), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroup() throws Exception {
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_WORD + " " + INDEX_FIRST_GROUP.getOneBased());
+        assertEquals(new DeleteGroupCommand(INDEX_FIRST_GROUP), command);
+    }
+
+    @Test
+    public void parseCommand_editGroup() throws Exception {
+        Group group = new GroupBuilder().build();
+        EditGroupDescriptor descriptor = new EditGroupDescriptorBuilder(group).build();
+        EditGroupCommand command = (EditGroupCommand) parser.parseCommand(EditGroupCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_GROUP.getOneBased() + " " + GroupUtil.getEditGroupDescriptorDetails(descriptor));
+        assertEquals(new EditGroupCommand(INDEX_FIRST_GROUP, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_listGroup() throws Exception {
+        assertTrue(parser.parseCommand(ListGroupCommand.COMMAND_WORD) instanceof ListGroupCommand);
+        assertTrue(parser.parseCommand(ListGroupCommand.COMMAND_WORD + " 3") instanceof ListGroupCommand);
+    }
+
+    @Test
+    public void parseCommand_findGroup() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindGroupCommand command = (FindGroupCommand) parser.parseCommand(
+                FindGroupCommand.COMMAND_WORD + " " + String.join(" ", keywords));
+        assertEquals(new FindGroupCommand(new GroupNameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
