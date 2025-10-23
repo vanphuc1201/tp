@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -16,6 +17,7 @@ public class GroupBuilder {
     private GroupName name;
     private UniqueEventList events;
     private UniquePersonList persons;
+    private RepoLink repoLink;
 
     /**
      * Creates a {@code GroupBuilder} with the default details.
@@ -24,6 +26,7 @@ public class GroupBuilder {
         name = new GroupName(DEFAULT_GROUP_NAME);
         events = new UniqueEventList();
         persons = new UniquePersonList();
+        repoLink = new RepoLink();
     }
 
     /**
@@ -36,6 +39,7 @@ public class GroupBuilder {
         for (Person p : groupToCopy.getPersons()) {
             this.persons.add(new PersonBuilder(p).build());
         }
+        repoLink = groupToCopy.getRepoLink();
     }
 
     /**
@@ -66,7 +70,7 @@ public class GroupBuilder {
     }
 
     public Group build() {
-        return Group.fromStorage(name, events, persons);
+        return Group.fromStorage(name, events, persons, repoLink);
     }
 
 }
