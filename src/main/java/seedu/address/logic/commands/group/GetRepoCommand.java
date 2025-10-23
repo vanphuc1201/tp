@@ -25,7 +25,7 @@ public class GetRepoCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Retrieves the repository link of the group identified"
-            + " by the index number in the displayed group list.\n"
+            + " by the index number in the displayed group list. "
             + "The retrieved link is copied to your clipboard.\n"
             + "Parameters: GROUP_INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
