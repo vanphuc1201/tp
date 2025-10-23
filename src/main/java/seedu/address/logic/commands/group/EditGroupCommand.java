@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
-import static seedu.address.model.group.Group.editGroup;
 
 import java.util.List;
 import java.util.Objects;
@@ -91,7 +90,7 @@ public class EditGroupCommand extends Command {
 
         GroupName updatedName = editGroupDescriptor.getName().orElse(groupToEdit.getName());
 
-        return editGroup(groupToEdit, updatedName);
+        return groupToEdit.withUpdatedName(updatedName);
     }
 
     @Override

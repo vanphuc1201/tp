@@ -60,12 +60,11 @@ public class Group {
     }
 
     /**
-     * Static method to edit Group's name.
-     **/
-    public static Group editGroup(Group original, GroupName newName) {
-        requireNonNull(original);
+     * Returns a new Group with updated name.
+     */
+    public Group withUpdatedName(GroupName newName) {
         requireNonNull(newName);
-        return new Group(newName, original.events, original.persons, original.repoLink);
+        return new Group(newName, events, persons, repoLink);
     }
 
     public GroupName getName() {
