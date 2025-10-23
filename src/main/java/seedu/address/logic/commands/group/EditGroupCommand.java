@@ -18,10 +18,8 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
-import seedu.address.model.person.Person;
 
 /**
  * Edits the details of an existing group in the address book.
