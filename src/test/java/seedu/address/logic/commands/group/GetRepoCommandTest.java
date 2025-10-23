@@ -35,7 +35,7 @@ public class GetRepoCommandTest {
     }
 
     @Test
-    public void execute_inValidIndex_success() throws CommandException {
+    public void execute_inValidIndex_success() {
         GetRepoCommand getRepoCommand =
                 new GetRepoCommand(Index.fromZeroBased(model.getFilteredGroupList().size() + 1));
 
@@ -43,7 +43,7 @@ public class GetRepoCommandTest {
     }
 
     @Test
-    public void execute_defaultRepo_success() throws CommandException {
+    public void execute_defaultRepo_success() {
         Group groupToRetrieve = model.getFilteredGroupList().get(INDEX_FIRST_GROUP.getZeroBased());
         GetRepoCommand getRepoCommand = new GetRepoCommand(INDEX_FIRST_GROUP);
 
