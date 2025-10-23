@@ -23,7 +23,7 @@ import seedu.address.model.group.Group;
  */
 public class EditEventCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete-event";
+    public static final String COMMAND_WORD = "edit-event";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an event from the group identified "
             + "by the index number used in the displayed groups list."
