@@ -79,6 +79,10 @@ public class Group {
         persons.add(toAdd);
     }
 
+    public void setEvent(Event target, Event editedEvent) {
+        events.setEvent(target, editedEvent);
+    }
+
     public void removeEvent(Event toRemove) {
         events.remove(toRemove);
     }
