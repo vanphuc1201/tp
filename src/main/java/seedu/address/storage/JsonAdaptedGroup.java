@@ -23,6 +23,7 @@ class JsonAdaptedGroup {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Group's %s field is missing!";
     public static final String MESSAGE_DUPLICATE_PERSON = "Group %s contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_EVENT = "Group %s contains duplicate event(s).";
+    public static final String MESSAGE_INVALID_GROUP_REPO = "Group %s repository link is broken.";
 
     private final String groupName;
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
@@ -63,7 +64,7 @@ class JsonAdaptedGroup {
     public Group toModelType() throws IllegalValueException {
         if (groupName == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                                            GroupName.class.getSimpleName()));
+                    GroupName.class.getSimpleName()));
         }
         if (!GroupName.isValidName(groupName)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
@@ -87,6 +88,10 @@ class JsonAdaptedGroup {
                 throw new IllegalValueException(String.format(MESSAGE_DUPLICATE_EVENT, groupName));
             }
             group.addEvent(event);
+        }
+
+        if (repoLink != "None" && !RepoLink.isValidName(repoLink)) {
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_GROUP_REPO, groupName));
         }
 
         return group.setRepoLink(RepoLink.fromStorage(repoLink));
