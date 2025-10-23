@@ -82,8 +82,7 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
-     * Removes the specified person from the specified group.
-     * The group must exist in the list.
+     * Removes the specified person from all groups.
      */
     public void removePersonFromAllGroups(Person toRemove) {
         requireAllNonNull(toRemove);

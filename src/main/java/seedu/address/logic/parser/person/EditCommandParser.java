@@ -3,8 +3,14 @@ package seedu.address.logic.parser.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.person.EditCommand;
@@ -28,7 +34,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_GROUP_INDEX);
 
         Index index;
 
@@ -52,11 +58,28 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
 
+        parseGroupsForEdit(argMultimap.getAllValues(PREFIX_GROUP_INDEX)).ifPresent(editPersonDescriptor::setGroups);
+
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
         return new EditCommand(index, editPersonDescriptor);
+    }
+
+    /**
+     * Parses {@code Collection<String> groups} into a {@code Set<Index>} if {@code groups} is non-empty.
+     * If {@code groups} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Index>} containing zero groups.
+     */
+    private Optional<Set<Index>> parseGroupsForEdit(Collection<String> groups) throws ParseException {
+        assert groups != null;
+
+        if (groups.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> groupSet = groups.size() == 1 && groups.contains("") ? Collections.emptySet() : groups;
+        return Optional.of(ParserUtil.parseIndexes(groupSet));
     }
 
 }

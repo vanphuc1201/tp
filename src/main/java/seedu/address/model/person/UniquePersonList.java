@@ -50,6 +50,21 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Returns the size of the list
+     */
+    public int size() {
+        return internalList.size();
+    }
+
+    /**
+     * Gets the person in the list at the specified {@code index}
+     * The {@code index} must not exceed the size of the list
+     */
+    public Person get(int index) {
+        return internalList.get(index);
+    }
+
+    /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the list.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
