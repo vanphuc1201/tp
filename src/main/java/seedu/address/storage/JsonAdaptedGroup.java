@@ -44,9 +44,9 @@ class JsonAdaptedGroup {
      */
     public JsonAdaptedGroup(Group source) {
         groupName = source.getName().fullName;
-        persons.addAll(source.getPersons().asUnmodifiableObservableList()
+        persons.addAll(source.getPersons()
                 .stream().map(JsonAdaptedPerson::new).toList());
-        events.addAll(source.getEvents().asUnmodifiableObservableList()
+        events.addAll(source.getEvents()
                 .stream().map(JsonAdaptedEvent::new).toList());
     }
 

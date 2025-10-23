@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
@@ -31,7 +32,11 @@ public class GroupBuilder {
      */
     public GroupBuilder(Group groupToCopy) {
         name = groupToCopy.getName();
-        events = groupToCopy.getEvents();
+        events = new UniqueEventList();
+        for (Event event : groupToCopy.getEvents()) {
+            // OK for now since Events are immutable.
+            this.events.add(event);
+        }
         this.persons = new UniquePersonList();
         for (Person p : groupToCopy.getPersons()) {
             this.persons.add(new PersonBuilder(p).build());
