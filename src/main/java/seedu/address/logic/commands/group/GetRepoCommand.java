@@ -7,6 +7,7 @@ import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -60,12 +61,36 @@ public class GetRepoCommand extends Command {
 
         Group targetGroup = lastShownGroupList.get(targetIndex.getZeroBased());
         RepoLink repoLink = targetGroup.getRepoLink();
+
         if (!repoLink.isRepoSet()) {
             throw new CommandException(String.format(MESSAGE_GET_REPO_NOT_SET, targetGroup.getName()));
         }
+
         Toolkit.getDefaultToolkit()
                 .getSystemClipboard()
                 .setContents(new StringSelection(repoLink.toString()), null);
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetGroup.getName(), repoLink));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof GetRepoCommand)) {
+            return false;
+        }
+
+        GetRepoCommand otherGetRepoCommand = (GetRepoCommand) other;
+        return targetIndex.equals(otherGetRepoCommand.targetIndex);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("targetIndex", targetIndex)
+                .toString();
     }
 }
