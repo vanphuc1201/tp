@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.event.DeleteEventCommandParserTest.VALID_DELETE_EVENT_COMMAND_ARGS;
 import static seedu.address.model.event.DescriptionTest.VALID_DESCRIPTION_STRING;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -12,7 +13,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +20,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
+import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
@@ -76,7 +77,7 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindCommand.COMMAND_WORD + " " + String.join(" ", keywords));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
@@ -96,6 +97,12 @@ public class AddressBookParserTest {
     public void parseCommand_addEvent() throws Exception {
         final String validInput = AddEventCommand.COMMAND_WORD + " 1 " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_STRING;
         assertTrue(parser.parseCommand(validInput) instanceof AddEventCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteEvent() throws Exception {
+        final String validInput = DeleteEventCommand.COMMAND_WORD + " " + VALID_DELETE_EVENT_COMMAND_ARGS;
+        assertTrue(parser.parseCommand(validInput) instanceof DeleteEventCommand);
     }
 
     @Test

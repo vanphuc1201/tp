@@ -79,6 +79,10 @@ public class Group {
         persons.add(toAdd);
     }
 
+    public void removeEvent(Event toRemove) {
+        events.remove(toRemove);
+    }
+
     public void removePerson(Person toRemove) {
         persons.remove(toRemove);
     }

@@ -58,8 +58,11 @@ public class GroupBuilder {
     /**
      * Sets the {@code GroupEvent} of the {@code Group} that we are building.
      */
-    public GroupBuilder withEvents(UniqueEventList events) {
-        this.events = events;
+    public GroupBuilder withEvents(Event... events) {
+        this.events = new UniqueEventList();
+        for (Event event : events) {
+            this.events.add(event);
+        }
         return this;
     }
 
