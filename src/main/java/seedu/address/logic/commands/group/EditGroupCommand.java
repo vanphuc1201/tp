@@ -90,7 +90,7 @@ public class EditGroupCommand extends Command {
 
         GroupName updatedName = editGroupDescriptor.getName().orElse(groupToEdit.getName());
 
-        return new Group(updatedName);
+        return groupToEdit.withUpdatedName(updatedName);
     }
 
     @Override

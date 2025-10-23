@@ -59,6 +59,14 @@ public class Group {
         return new Group(name, events, persons, repoLink);
     }
 
+    /**
+     * Returns a new Group with updated name.
+     */
+    public Group withUpdatedName(GroupName newName) {
+        requireNonNull(newName);
+        return new Group(newName, events, persons, repoLink);
+    }
+
     public GroupName getName() {
         return name;
     }
