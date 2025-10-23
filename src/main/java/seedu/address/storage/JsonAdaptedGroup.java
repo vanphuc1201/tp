@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.group.RepoLink;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.storage.event.JsonAdaptedEvent;
@@ -26,6 +27,7 @@ class JsonAdaptedGroup {
     private final String groupName;
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedEvent> events = new ArrayList<>();
+    private final String repoLink;
 
     /**
      * Constructs a {@code JsonAdaptedGroup} with the given group details.
@@ -33,10 +35,12 @@ class JsonAdaptedGroup {
     @JsonCreator
     public JsonAdaptedGroup(@JsonProperty("name") String groupName,
                             @JsonProperty("persons") List<JsonAdaptedPerson> persons,
-                            @JsonProperty("events") List<JsonAdaptedEvent> events) {
+                            @JsonProperty("events") List<JsonAdaptedEvent> events,
+                            @JsonProperty("repoLink") String repoLink) {
         this.groupName = groupName;
         this.persons.addAll(persons);
         this.events.addAll(events);
+        this.repoLink = repoLink;
     }
 
     /**
@@ -48,6 +52,7 @@ class JsonAdaptedGroup {
                 .stream().map(JsonAdaptedPerson::new).toList());
         events.addAll(source.getEvents().asUnmodifiableObservableList()
                 .stream().map(JsonAdaptedEvent::new).toList());
+        repoLink = source.getRepoLink().toString();
     }
 
     /**
@@ -84,6 +89,6 @@ class JsonAdaptedGroup {
             group.addEvent(event);
         }
 
-        return group;
+        return group.setRepoLink(RepoLink.fromStorage(repoLink));
     }
 }
