@@ -1,8 +1,9 @@
 package seedu.address.logic.commands.group;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTACT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +21,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing group in the address book.
  */
 public class EditGroupCommand extends Command {
 
@@ -30,9 +31,11 @@ public class EditGroupCommand extends Command {
             + "by the index number used in the displayed group list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME]\n"
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_CONTACT_INDEX + "PERSON INDEX]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + "is1108 ca1 ";
+            + PREFIX_NAME + "is1108 ca1 "
+            + PREFIX_CONTACT_INDEX + "2 ";
 
     public static final String MESSAGE_EDIT_GROUP_SUCCESS = "Edited Group: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -42,8 +45,8 @@ public class EditGroupCommand extends Command {
     private final EditGroupDescriptor editGroupDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editGroupDescriptor details to edit the person with
+     * @param index of the group in the filtered group list to edit
+     * @param editGroupDescriptor details to edit the group with
      */
     public EditGroupCommand(Index index, EditGroupDescriptor editGroupDescriptor) {
         requireNonNull(index);
@@ -56,21 +59,26 @@ public class EditGroupCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Group> lastShownList = model.getFilteredGroupList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        // Retrieve current data
+        List<Group> lastShownGroupList = model.getFilteredGroupList();
+
+        // Validate group index
+        if (index.getZeroBased() >= lastShownGroupList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Group groupToEdit = lastShownList.get(index.getZeroBased());
+        Group groupToEdit = lastShownGroupList.get(index.getZeroBased());
         Group editedGroup = createEditedGroup(groupToEdit, editGroupDescriptor);
 
+        // Check for group duplicates
         if (!groupToEdit.isSameGroup(editedGroup) && model.hasGroup(editedGroup)) {
             throw new CommandException(MESSAGE_DUPLICATE_GROUP);
         }
 
+        // Apply edits
         model.setGroup(groupToEdit, editedGroup);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
         return new CommandResult(String.format(MESSAGE_EDIT_GROUP_SUCCESS, Messages.format(editedGroup)));
     }
 
@@ -97,22 +105,22 @@ public class EditGroupCommand extends Command {
             return false;
         }
 
-        EditGroupCommand otherEditCommand = (EditGroupCommand) other;
-        return index.equals(otherEditCommand.index)
-                && editGroupDescriptor.equals(otherEditCommand.editGroupDescriptor);
+        EditGroupCommand otherEditGroupCommand = (EditGroupCommand) other;
+        return index.equals(otherEditGroupCommand.index)
+                && editGroupDescriptor.equals(otherEditGroupCommand.editGroupDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editPersonDescriptor", editGroupDescriptor)
+                .add("editGroupDescriptor", editGroupDescriptor)
                 .toString();
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the group with. Each non-empty field value will replace the
+     * corresponding field value of the group.
      */
     public static class EditGroupDescriptor {
         private GroupName name;
