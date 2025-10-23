@@ -16,10 +16,12 @@ import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.group.AddGroupCommand;
 import seedu.address.logic.commands.group.AddMemberCommand;
 import seedu.address.logic.commands.group.DeleteGroupCommand;
+import seedu.address.logic.commands.group.EditGroupCommand;
 import seedu.address.logic.commands.group.FindGroupCommand;
 import seedu.address.logic.commands.group.ListGroupCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
+import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.parser.event.AddEventCommandParser;
@@ -27,9 +29,11 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.group.AddGroupCommandParser;
 import seedu.address.logic.parser.group.AddMemberCommandParser;
 import seedu.address.logic.parser.group.DeleteGroupCommandParser;
+import seedu.address.logic.parser.group.EditGroupCommandParser;
 import seedu.address.logic.parser.group.FindGroupCommandParser;
 import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
+import seedu.address.logic.parser.person.EditCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
 
 /**
@@ -66,11 +70,23 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+            return new ListCommand();
+
+        case FindCommand.COMMAND_WORD:
+            return new FindCommandParser().parse(arguments);
+
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
 
         case AddGroupCommand.COMMAND_WORD:
             return new AddGroupCommandParser().parse(arguments);
@@ -78,32 +94,26 @@ public class AddressBookParser {
         case DeleteGroupCommand.COMMAND_WORD:
             return new DeleteGroupCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
-
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
-        case AddMemberCommand.COMMAND_WORD:
-            return new AddMemberCommandParser().parse(arguments);
-
-        case AddEventCommand.COMMAND_WORD:
-            return new AddEventCommandParser().parse(arguments);
-
         case ListGroupCommand.COMMAND_WORD:
             return new ListGroupCommand();
 
         case FindGroupCommand.COMMAND_WORD:
             return new FindGroupCommandParser().parse(arguments);
+
+        case EditGroupCommand.COMMAND_WORD:
+            return new EditGroupCommandParser().parse(arguments);
+
+        case AddMemberCommand.COMMAND_WORD:
+            return new AddMemberCommandParser().parse(arguments);
+
+        case ClearCommand.COMMAND_WORD:
+            return new ClearCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case AddEventCommand.COMMAND_WORD:
+            return new AddEventCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
