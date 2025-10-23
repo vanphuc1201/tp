@@ -10,21 +10,16 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.UniqueGroupList;
 import seedu.address.testutil.GroupBuilder;
 
 public class AddEventCommandTest {
-    private final Model modelStubWithGroupList = new ModelStubWithGroupList();
-
-    private final Group groupZero = modelStubWithGroupList.getFilteredGroupList().get(0);
+    private final Group groupZero = new GroupBuilder().build();
+    private final Model modelStubWithGroupList = new ModelStubWithGroupList().withGroups(groupZero);
     private final Index indexZero = Index.fromZeroBased(0);
     private final Index indexOne = Index.fromZeroBased(1);
 
@@ -98,27 +93,5 @@ public class AddEventCommandTest {
         String expected = AddEventCommand.class.getCanonicalName() + "{groupIndex=" + indexZero
                 + ", toAdd=" + VALID_EVENT + "}";
         assertEquals(expected, command.toString());
-    }
-
-
-    /**
-     * A default model stub that has all methods failing except getFilteredGroupList.
-     */
-    private class ModelStubWithGroupList extends ModelStub {
-        // empty group list
-        private final FilteredList<Group> filteredGroups;
-
-        public ModelStubWithGroupList() {
-            //TODO: Should probably define this somewhere else
-            UniqueGroupList typicalGroupList = new UniqueGroupList();
-            typicalGroupList.add(new GroupBuilder().build());
-            filteredGroups = new FilteredList<>(typicalGroupList
-                    .asUnmodifiableObservableList());
-        }
-
-        @Override
-        public ObservableList<Group> getFilteredGroupList() {
-            return filteredGroups;
-        }
     }
 }

@@ -6,17 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.model.event.EventTest.VALID_EVENT;
 import static seedu.address.testutil.Assert.assertThrows;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
@@ -98,24 +92,5 @@ public class DeleteEventCommandTest {
         String expected = DeleteEventCommand.class.getCanonicalName() + "{groupIndex=" + indexZero
                 + ", eventIndex=" + indexOne + "}";
         assertEquals(expected, command.toString());
-    }
-
-    // TODO: Can probably extract this out somewhere
-    /**
-     * A default model stub that has all methods failing except getFilteredGroupList.
-     */
-    private static class ModelStubWithGroupList extends ModelStub {
-        // empty group list
-        private final ObservableList<Group> groupList = FXCollections.observableArrayList();
-
-        public ModelStub withGroups(Group... groups) {
-            groupList.addAll(Arrays.asList(groups));
-            return this;
-        }
-
-        @Override
-        public ObservableList<Group> getFilteredGroupList() {
-            return new FilteredList<>(groupList);
-        }
     }
 }
