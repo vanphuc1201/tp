@@ -24,7 +24,7 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
      */
     public EditEventCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_INDEX);
+                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_INDEX, PREFIX_DESCRIPTION);
 
         Index groupIndex;
         Index eventIndex;
