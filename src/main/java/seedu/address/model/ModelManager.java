@@ -174,6 +174,7 @@ public class ModelManager implements Model {
         addressBook.removePersonFromAllGroups(toRemove);
     }
 
+    @Override
     public void setGroupRepo(Group group, RepoLink repoLink) {
         requireAllNonNull(group, repoLink);
         addressBook.setGroup(group, group.setRepoLink(repoLink));
