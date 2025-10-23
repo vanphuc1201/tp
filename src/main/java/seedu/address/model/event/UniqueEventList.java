@@ -41,17 +41,6 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
-     * Removes an {@code Event} from the list.
-     * The {@code Event} must already exist in the list.
-     */
-    public void remove(Event toRemove) {
-        requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
-            throw new EventNotFoundException();
-        }
-    }
-
-    /**
      * Replaces the event {@code target} in the list with {@code edited}.
      * {@code target} must exist in the list.
      * The event identity of {@code edited} must not be the same as another existing event in the list.
@@ -69,6 +58,17 @@ public class UniqueEventList implements Iterable<Event> {
         }
 
         internalList.set(index, edited);
+    }
+
+    /**
+     * Removes an {@code Event} from the list.
+     * The {@code Event} must already exist in the list.
+     */
+    public void remove(Event toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new EventNotFoundException();
+        }
     }
 
     /**
