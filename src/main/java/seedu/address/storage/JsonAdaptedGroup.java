@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -90,7 +91,7 @@ class JsonAdaptedGroup {
             group.addEvent(event);
         }
 
-        if (repoLink != "None" && !RepoLink.isValidName(repoLink)) {
+        if (!Objects.equals(repoLink, "none") && !RepoLink.isValidName(repoLink)) {
             throw new IllegalValueException(String.format(MESSAGE_INVALID_GROUP_REPO, groupName));
         }
 
