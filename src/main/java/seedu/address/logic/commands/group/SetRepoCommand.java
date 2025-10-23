@@ -50,7 +50,7 @@ public class SetRepoCommand extends Command {
 
         List<Group> lastShownGroupList = model.getFilteredGroupList();
 
-        if(groupIndex.getZeroBased() >= lastShownGroupList.size()) {
+        if (groupIndex.getZeroBased() >= lastShownGroupList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
@@ -79,8 +79,8 @@ public class SetRepoCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("groupIndex",groupIndex)
-                .add("repoLink",repoLink)
+                .add("groupIndex", groupIndex)
+                .add("repoLink", repoLink)
                 .toString();
     }
 }

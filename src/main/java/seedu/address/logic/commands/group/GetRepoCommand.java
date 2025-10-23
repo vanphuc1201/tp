@@ -2,7 +2,7 @@ package seedu.address.logic.commands.group;
 
 import static java.util.Objects.requireNonNull;
 
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
@@ -60,6 +60,6 @@ public class GetRepoCommand extends Command {
         Toolkit.getDefaultToolkit()
                 .getSystemClipboard()
                 .setContents(new StringSelection(repoLink.toString()), null);
-        return  new CommandResult(String.format(MESSAGE_GET_REPO_SUCCESS, targetGroup.getName(), repoLink));
+        return new CommandResult(String.format(MESSAGE_GET_REPO_SUCCESS, targetGroup.getName(), repoLink));
     }
 }

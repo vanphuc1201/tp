@@ -41,11 +41,19 @@ public class RepoLink {
      */
     private RepoLink(String link, boolean isStorageDefault) {
         requireNonNull(link);
-        if(!isStorageDefault) {
+        if (!isStorageDefault) {
             checkArgument(isValidName(link), MESSAGE_CONSTRAINTS);
         }
         repolink = link;
     }
+
+    /**
+     * Constructs a {@code RepoLink} with default values
+     */
+    public RepoLink() {
+        repolink = "none";
+    }
+
 
     /**
      * Static method to create RepoLink from storage or external data.
@@ -54,13 +62,6 @@ public class RepoLink {
         requireNonNull(link);
         boolean isStorageDefault = link.equals("none");
         return new RepoLink(link, isStorageDefault);
-    }
-
-    /**
-     * Constructs a {@code RepoLink} with default values
-     */
-    public RepoLink() {
-        repolink = "none";
     }
 
     /**

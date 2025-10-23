@@ -8,6 +8,9 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new GetRepoCommand object
+ */
 public class GetRepoCommandParser implements Parser<GetRepoCommand> {
 
     /**

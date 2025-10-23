@@ -8,26 +8,17 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalGroups.CS2101_CA2;
 import static seedu.address.testutil.TypicalGroups.CS2103T;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Set;
-import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.ObservableList;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ModelStub;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.group.Group;
-import seedu.address.model.person.Person;
 import seedu.address.testutil.GroupBuilder;
 
 public class AddGroupCommandTest {

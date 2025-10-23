@@ -105,7 +105,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void setGroupRepo(Group group, RepoLink repoLink){
+    public void setGroupRepo(Group group, RepoLink repoLink) {
         throw new AssertionError("This method should not be called.");
     }
 

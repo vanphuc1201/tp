@@ -77,7 +77,7 @@ public class GroupTest {
         String expected = Group.class.getCanonicalName() + "{name=" + CS2103T.getName()
                 + ", events=" + CS2103T.getEvents()
                 + ", persons=" + CS2103T.getPersons()
-                + ", repo-link=" + CS2103T.getRepoLink()+"}";
+                + ", repo-link=" + CS2103T.getRepoLink() + "}";
         assertEquals(expected, CS2103T.toString());
     }
 }

@@ -163,7 +163,7 @@ public class ModelManager implements Model {
 
     public void setGroupRepo(Group group, RepoLink repoLink) {
         requireAllNonNull(group, repoLink);
-        addressBook.setGroup(group,group.setRepoLink(repoLink));
+        addressBook.setGroup(group, group.setRepoLink(repoLink));
     }
 
     //=========== Filtered Person List Accessors =============================================================

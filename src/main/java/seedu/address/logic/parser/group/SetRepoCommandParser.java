@@ -13,7 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.RepoLink;
 
 /**
- * Parses input arguments and creates a new SetRepoCommandParser object
+ * Parses input arguments and creates a new SetRepoCommand object
  */
 public class SetRepoCommandParser implements Parser<SetRepoCommand> {
 
@@ -24,7 +24,7 @@ public class SetRepoCommandParser implements Parser<SetRepoCommand> {
         Index groupIndex;
         try {
             groupIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
-        }catch (ParseException pe) {
+        } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRepoCommand.MESSAGE_USAGE), pe);
         }
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_REPO)) {
