@@ -59,6 +59,7 @@
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
     "events" : [ ],
+    "repoLink" : "none",
     "groupName" : "CS2103T"
   }, {
     "persons" : [ {
@@ -68,6 +69,7 @@
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA2" ]
     } ],
     "events" : [ ],
+    "repoLink" : "none",
     "groupName" : "CS2101 CA2"
   }, {
     "persons" : [ {
@@ -92,6 +94,7 @@
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
     "events" : [ ],
+    "repoLink" : "none",
     "groupName" : "CS2101 CA3"
   }, {
     "persons" : [ {
@@ -116,6 +119,7 @@
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
     "events" : [ ],
+    "repoLink" : "none",
     "groupName" : "IS1108"
   } ]
 }
