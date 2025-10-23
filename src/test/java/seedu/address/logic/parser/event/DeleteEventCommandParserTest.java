@@ -14,6 +14,8 @@ import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 public class DeleteEventCommandParserTest {
+    public static final String VALID_DELETE_EVENT_COMMAND_ARGS = "1 " + PREFIX_EVENT_INDEX + "1";
+
     private final DeleteEventCommandParser parser = new DeleteEventCommandParser();
     private final String validIndex = "1";
     private final DeleteEventCommand validCommand = new DeleteEventCommand(Index.fromOneBased(1),
@@ -23,7 +25,7 @@ public class DeleteEventCommandParserTest {
 
     @Test
     public void parse_validInput_givesCorrectCommand() throws Exception {
-        DeleteEventCommand command = parser.parse(validIndex + " " + PREFIX_EVENT_INDEX + validIndex);
+        DeleteEventCommand command = parser.parse(VALID_DELETE_EVENT_COMMAND_ARGS);
         assertEquals(command, validCommand);
     }
 
