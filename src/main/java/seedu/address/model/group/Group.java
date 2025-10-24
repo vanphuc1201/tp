@@ -25,6 +25,7 @@ public class Group {
     // Data fields
     private final UniqueEventList events;
     private final UniquePersonList persons;
+    private final Dashboard dashboard;
 
     //quick link fields
     private final RepoLink repoLink;
@@ -37,6 +38,7 @@ public class Group {
         this.events = events;
         this.persons = persons;
         this.repoLink = repoLink;
+        this.dashboard = new Dashboard(this);
     }
 
     /**
@@ -48,6 +50,7 @@ public class Group {
         events = new UniqueEventList();
         persons = new UniquePersonList();
         repoLink = new RepoLink();
+        dashboard = new Dashboard(this);
     }
 
     /**
