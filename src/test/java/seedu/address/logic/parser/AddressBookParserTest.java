@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.ClearCommand;
@@ -123,7 +122,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    @Disabled("temp")
     public void parseCommand_editGroup() throws Exception {
         Group group = new GroupBuilder().build();
         EditGroupDescriptor descriptor = new EditGroupDescriptorBuilder(group).build();

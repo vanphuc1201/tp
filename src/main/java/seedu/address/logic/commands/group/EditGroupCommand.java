@@ -19,6 +19,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
+import seedu.address.model.person.Person;
 
 /**
  * Edits the details of an existing group in the address book.
@@ -77,8 +78,21 @@ public class EditGroupCommand extends Command {
 
         // Apply edits
         model.setGroup(groupToEdit, editedGroup);
+        syncPersonWithEditedGroup(groupToEdit.getName(), model, editedGroup);
         model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
         return new CommandResult(String.format(MESSAGE_EDIT_GROUP_SUCCESS, Messages.format(editedGroup)));
+    }
+
+    /**
+     * Updates all persons who are in the edited group to reflect the new group name.
+     */
+    private void syncPersonWithEditedGroup(GroupName nameOfGroupToEdit, Model model, Group editedGroup) {
+        for (Person person : editedGroup.getPersons()) {
+            Person editedPerson = person
+                    .removeGroup(nameOfGroupToEdit)
+                    .addGroup(editedGroup.getName());
+            model.setPerson(person, editedPerson);
+        }
     }
 
     /**

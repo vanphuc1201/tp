@@ -64,6 +64,7 @@ public class Group {
      */
     public Group withUpdatedName(GroupName newName) {
         requireNonNull(newName);
+
         return new Group(newName, events, persons, repoLink);
     }
 
