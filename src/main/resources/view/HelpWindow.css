@@ -1,19 +1,36 @@
-#copyButton, #helpMessage {
+.text-area {
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+    -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
+    -fx-font-size: 12px;
+}
+
+.text-area:focused {
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 2px;
+}
+
+.button {
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 3px;
+    -fx-cursor: hand;
+}
+
+#saveNotesButton {
+    -fx-background-color: #4CAF50;
     -fx-text-fill: white;
 }
 
-#copyButton {
-    -fx-background-color: dimgray;
+#saveNotesButton:hover {
+    -fx-background-color: #45a049;
 }
 
-#copyButton:hover {
-    -fx-background-color: gray;
+#clearNotesButton {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
 }
 
-#copyButton:armed {
-    -fx-background-color: darkgray;
-}
-
-#helpMessageContainer {
-    -fx-background-color: derive(#1d1d1d, 20%);
+#clearNotesButton:hover {
+    -fx-background-color: #da190b;
 }

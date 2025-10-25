@@ -8,24 +8,16 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
-import seedu.address.model.group.GroupName;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 public class ShowDashboardCommand extends Command {
     public static final String COMMAND_WORD = "show-dashboard";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the group identified by the index number used in the displayed group list.\n"
+            + ": Brings up the dashboard for the group specified by index number\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -49,9 +41,10 @@ public class ShowDashboardCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
-        Group targetGroup = lastShownGroupList.get(targetIndex.getZeroBased());
+        Group groupToShow = lastShownGroupList.get(targetIndex.getZeroBased());
 
-        return new CommandResult(String.format(MESSAGE_SHOW_DASHBOARD_SUCCESS, targetGroup.getNameAsString()));
+        return new CommandResult(String.format(MESSAGE_SHOW_DASHBOARD_SUCCESS, groupToShow.getNameAsString()),
+                true, groupToShow);
     }
 
     @Override

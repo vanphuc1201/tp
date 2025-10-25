@@ -1,7 +1,6 @@
 package seedu.address.logic.parser.group;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.group.DeleteGroupCommand;
 import seedu.address.logic.commands.group.ShowDashboardCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;

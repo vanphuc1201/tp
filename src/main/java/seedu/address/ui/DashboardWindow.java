@@ -1,98 +1,379 @@
 package seedu.address.ui;
 
-import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Separator;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.event.Event;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
 
 import java.util.logging.Logger;
 
+/**
+ * Controller for a dashboard page
+ */
 public class DashboardWindow {
-    public static final String USERGUIDE_URL = "https://ay2526s1-cs2103t-f12-1.github.io/tp/UserGuide.html#quick-start";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
+    private static final Logger logger = LogsCenter.getLogger(DashboardWindow.class);
 
-    private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
-    private static final String FXML = "HelpWindow.fxml";
-
-    @javafx.fxml.FXML
-    private Button copyButton;
-
-    @FXML
-    private Label helpMessage;
-
-    /**
-     * Creates a new HelpWindow.
-     *
-     * @param root Stage to use as the root of the HelpWindow.
-     */
-    public DashboardWindow(Stage root) {
-        super(FXML, root);
-        helpMessage.setText(HELP_MESSAGE);
-    }
+    private Stage root;
+    private Label groupNameLabel;
+    private Label repoLinkLabel;
+    private Label courseLinkLabel;
+    private TextArea notesTextArea;
+    private ListView<String> memberList;
+    private ListView<String> eventList;
+    private Group group;
+    private Button copyRepoButton;
 
     /**
-     * Creates a new HelpWindow.
+     * Creates a new DashboardWindow.
      */
     public DashboardWindow() {
-        this(new Stage());
+        initialize();
     }
 
     /**
-     * Shows the help window.
-     * @throws IllegalStateException
-     *     <ul>
-     *         <li>
-     *             if this method is called on a thread other than the JavaFX Application Thread.
-     *         </li>
-     *         <li>
-     *             if this method is called during animation or layout processing.
-     *         </li>
-     *         <li>
-     *             if this method is called on the primary stage.
-     *         </li>
-     *         <li>
-     *             if {@code dialogStage} is already showing.
-     *         </li>
-     *     </ul>
+     * Initializes the dashboard window programmatically.
      */
-    public void show() {
-        logger.fine("Showing help page about the application.");
-        getRoot().show();
-        getRoot().centerOnScreen();
+    private void initialize() {
+        root = new Stage();
+        root.setTitle("Group Dashboard");
+        root.setMinWidth(800);
+        root.setMinHeight(700);
+
+        HBox mainContainer = new HBox();
+        mainContainer.setSpacing(20);
+        mainContainer.setPadding(new Insets(20));
+        mainContainer.setStyle("-fx-background-color: #4f4f4f;");
+        mainContainer.setPrefSize(900, 750);
+
+        VBox leftPanel = new VBox();
+        leftPanel.setSpacing(15);
+        leftPanel.setPrefWidth(400);
+
+        VBox rightPanel = new VBox();
+        rightPanel.setSpacing(15);
+        rightPanel.setPrefWidth(400);
+
+        HBox.setHgrow(leftPanel, Priority.ALWAYS);
+        HBox.setHgrow(rightPanel, Priority.ALWAYS);
+
+        Label titleLabel = new Label("Group Dashboard");
+        titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white; "
+                + "-fx-font-family: Verdana;");
+
+        groupNameLabel = new Label("Group: Not selected");
+        groupNameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
+                + "-fx-font-family: Verdana;");
+        Label repoTitleLabel = new Label("Repository Link:");
+        repoTitleLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white; "
+                + "-fx-font-family: Verdana;");
+
+        repoLinkLabel = new Label("No repository link set");
+        repoLinkLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white; -fx-font-family: Verdana;");
+
+
+        copyRepoButton = new Button("Copy");
+        copyRepoButton.setMinWidth(50);
+        copyRepoButton.setPrefWidth(50);
+        copyRepoButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 4 8; "
+                + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px;");
+        copyRepoButton.setOnAction(e -> handleCopyRepoLink());
+        copyRepoButton.setDisable(true);
+
+        HBox repoLinkContainer = new HBox();
+        repoLinkContainer.setSpacing(10);
+        repoLinkContainer.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(repoLinkLabel, Priority.ALWAYS);
+        repoLinkContainer.getChildren().addAll(repoLinkLabel, copyRepoButton);
+
+        VBox repoSection = new VBox();
+        repoSection.setSpacing(5);
+        repoSection.getChildren().addAll(repoTitleLabel, repoLinkContainer);
+
+        Label notesLabel = new Label("Notes:");
+        notesLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
+                + "-fx-font-family: Verdana;");
+
+        notesTextArea = new TextArea();
+        notesTextArea.setPromptText("Enter your notes here...");
+        notesTextArea.setWrapText(true);
+        notesTextArea.setPrefRowCount(8);
+        notesTextArea.setStyle(
+                "-fx-background-color: #3d3d3d;"
+                        + "-fx-text-fill: white;"
+                        + "-fx-border-color: #cccccc;"
+                        + "-fx-border-radius: 5;"
+                        + "-fx-background-radius: 5;"
+                        + "-fx-padding: 10;"
+                        + "-fx-font-size: 14px;"
+                        + "-fx-font-family: Verdana;"
+                        + "-fx-control-inner-background: #3d3d3d;"
+                        + "-fx-prompt-text-fill: rgba(255,255,255,0.6);"
+                        + "-fx-focus-color: transparent;"
+                        + "-fx-faint-focus-color: transparent;"
+        );
+        VBox.setVgrow(notesTextArea, Priority.ALWAYS);
+
+        HBox notesButtonContainer = new HBox();
+        notesButtonContainer.setSpacing(12);
+        notesButtonContainer.setAlignment(Pos.CENTER_RIGHT);
+
+        Button saveNotesButton = new Button("Save Notes");
+        saveNotesButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 8 16; "
+                + "-fx-font-weight: bold; -fx-font-family: Verdana;");
+        saveNotesButton.setOnAction(e -> handleSaveNotes());
+
+        Button clearNotesButton = new Button("Clear Notes");
+        clearNotesButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-padding: 8 16; "
+                + "-fx-font-weight: bold; -fx-font-family: Verdana;");
+        clearNotesButton.setOnAction(e -> handleClearNotes());
+
+        notesButtonContainer.getChildren().addAll(saveNotesButton, clearNotesButton);
+
+        leftPanel.getChildren().addAll(
+                titleLabel,
+                new Separator(),
+                groupNameLabel,
+                repoSection,
+                new Separator(),
+                notesLabel,
+                notesTextArea,
+                notesButtonContainer
+        );
+
+        Label membersLabel = new Label("Members:");
+        membersLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
+                + "-fx-font-family: Verdana;");
+
+        memberList = new ListView<>();
+        Label memberPlaceholder = new Label("No members in this group");
+        memberPlaceholder.setStyle("-fx-text-fill: white; -fx-font-family: Verdana; -fx-font-size: 16px;");
+        memberList.setPlaceholder(memberPlaceholder);
+        memberList.setStyle(
+                "-fx-background-color: #3d3d3d;"
+                        + "-fx-text-fill: white;"
+                        + "-fx-border-color: #cccccc;"
+                        + "-fx-border-radius: 5;"
+                        + "-fx-background-radius: 5;"
+                        + "-fx-padding: 5;"
+                        + "-fx-font-family: Verdana;"
+                        + "-fx-control-inner-background: #3d3d3d;"
+        );
+        VBox.setVgrow(memberList, Priority.ALWAYS);
+
+        Label eventsLabel = new Label("Events:");
+        eventsLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
+                + "-fx-font-family: Verdana;");
+
+        eventList = new ListView<>();
+        Label eventPlaceholder = new Label("No events in this group");
+        eventPlaceholder.setStyle("-fx-text-fill: white; -fx-font-family: Verdana; -fx-font-size: 16px;");
+        eventList.setPlaceholder(eventPlaceholder);
+        eventList.setStyle(
+                "-fx-background-color: #3d3d3d;"
+                        + "-fx-text-fill: white;"
+                        + "-fx-border-color: #cccccc;"
+                        + "-fx-border-radius: 5;"
+                        + "-fx-background-radius: 5;"
+                        + "-fx-padding: 5;"
+                        + "-fx-font-family: Verdana;"
+                        + "-fx-control-inner-background: #3d3d3d;"
+                        + ""
+
+        );
+
+        VBox.setVgrow(eventList, Priority.ALWAYS);
+
+        rightPanel.getChildren().addAll(
+                membersLabel,
+                memberList,
+                eventsLabel,
+                eventList
+        );
+
+        mainContainer.getChildren().addAll(leftPanel, rightPanel);
+
+        Scene scene = new Scene(mainContainer);
+        root.setScene(scene);
     }
 
     /**
-     * Returns true if the help window is currently being shown.
+     * Shows the dashboard window with the specified group data.
+     */
+    public void show(Group group) {
+        if (group == null) {
+            logger.warning("Attempted to show dashboard with null group");
+            return;
+        }
+
+        if (root != null && root.isShowing()) {
+
+        }
+
+        root = new Stage();
+        initialize();
+
+        this.group = group;
+        updateDashboardContent();
+        updateMemberAndEventList();
+        loadNotes();
+        logger.fine("Showing dashboard for group: " + group.getName());
+
+        root.show();
+        root.centerOnScreen();
+        root.requestFocus();
+    }
+
+    /**
+     * Updates the dashboard content with the current group data.
+     */
+    private void updateDashboardContent() {
+        if (group != null) {
+            groupNameLabel.setText("Group: " + group.getName());
+            String repoLink = group.getRepoLink().toString();
+
+            if (group.getRepoLink() != null && !repoLink.isEmpty() && !repoLink.equals("none")) {
+                repoLinkLabel.setText(repoLink);
+                repoLinkLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white; -fx-font-family: Verdana; "
+                        + "-fx-text-overrun: ellipsis; -fx-wrap-text: false;");
+                copyRepoButton.setDisable(false);
+                copyRepoButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 4 8; "
+                        + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px;");
+            } else {
+                repoLinkLabel.setText("No repository link set");
+                repoLinkLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #B0BEC5; -fx-font-family: Verdana;");
+                copyRepoButton.setDisable(true);
+                copyRepoButton.setStyle("-fx-background-color: #757575; -fx-text-fill: #cccccc; -fx-padding: 4 8; "
+                        + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 12px;");
+            }
+
+            root.setTitle("Dashboard - " + group.getName());
+        }
+    }
+
+    /**
+     * Copies a group's repository link to the user's clipboard
+     */
+    private void handleCopyRepoLink() {
+        if (group != null && group.getRepoLink() != null && !group.getRepoLink().toString().isEmpty()) {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(group.getRepoLink().toString());
+            clipboard.setContent(content);
+        }
+    }
+
+    /**
+     * Updates the member and event lists with the current group data.
+     */
+    private void updateMemberAndEventList() {
+        if (group != null) {
+            memberList.getItems().clear();
+            eventList.getItems().clear();
+            int currentMemberIndex = 1;
+            int currentEventIndex = 1;
+
+            for (Person person : group.getPersons()) {
+                String name = currentMemberIndex + ") " + person.getNameAsString() + " (" + person.getEmail() + ")";
+                memberList.getItems().add(name);
+                currentMemberIndex++;
+            }
+
+            for (Event event : group.getEvents()) {
+                String description = currentEventIndex + ") " + event.toString();
+                eventList.getItems().add(description);
+                currentEventIndex++;
+            }
+
+        }
+    }
+
+    /**
+     * Loads saved notes for the current group.
+     */
+    private void loadNotes() {
+        if (group != null && group.getDashboard() != null) {
+            String savedNotes = group.getDashboard().getNotes();
+            notesTextArea.setText(savedNotes != null ? savedNotes : "");
+        }
+    }
+
+    /**
+     * Handles saving of notes.
+     */
+    private void handleSaveNotes() {
+        if (group != null && group.getDashboard() != null) {
+            String notes = notesTextArea.getText();
+            group.getDashboard().setNotes(notes);
+
+            showAlert(Alert.AlertType.INFORMATION, "Notes Saved",
+                    "Notes have been saved for " + group.getName());
+            logger.info("Notes saved for group: " + group.getName());
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Error", "Cannot save notes - no group selected");
+        }
+    }
+
+    /**
+     * Handles clearing of notes.
+     */
+    private void handleClearNotes() {
+        notesTextArea.clear();
+        if (group != null) {
+            logger.info("Notes cleared for group: " + group.getName());
+        }
+    }
+
+    /**
+     * Shows an alert dialog.
+     */
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Returns true if the dashboard window is currently being shown.
      */
     public boolean isShowing() {
-        return getRoot().isShowing();
+        return root.isShowing();
     }
 
     /**
-     * Hides the help window.
+     * Hides the dashboard window.
      */
     public void hide() {
-        getRoot().hide();
+        root.hide();
     }
 
     /**
-     * Focuses on the help window.
+     * Focuses on the dashboard window.
      */
     public void focus() {
-        getRoot().requestFocus();
+        root.requestFocus();
     }
 
     /**
-     * Copies the URL to the user guide to the clipboard.
+     * Returns the stage.
      */
-    @FXML
-    private void copyUrl() {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent url = new ClipboardContent();
-        url.putString(USERGUIDE_URL);
-        clipboard.setContent(url);
+    public Stage getRoot() {
+        return root;
     }
 }

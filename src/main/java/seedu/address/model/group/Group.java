@@ -33,12 +33,22 @@ public class Group {
 
     // To be used only by the factory method
     private Group(GroupName name, UniqueEventList events, UniquePersonList persons, RepoLink repoLink) {
-        requireAllNonNull(name, events, persons);
+        requireAllNonNull(name, events, persons, repoLink);
         this.name = name;
         this.events = events;
         this.persons = persons;
         this.repoLink = repoLink;
-        this.dashboard = new Dashboard(this);
+        this.dashboard = new Dashboard(this, "");
+    }
+
+    private Group(GroupName name, UniqueEventList events, UniquePersonList persons, RepoLink repoLink,
+                  Dashboard dashboard) {
+        requireAllNonNull(name, events, persons, repoLink, dashboard);
+        this.name = name;
+        this.events = events;
+        this.persons = persons;
+        this.repoLink = repoLink;
+        this.dashboard = dashboard;
     }
 
     /**
@@ -57,9 +67,11 @@ public class Group {
      * Static method to create Group from storage or external data.
      **/
     public static Group fromStorage(GroupName name, UniqueEventList events, UniquePersonList persons,
-                                    RepoLink repoLink) {
+                                    RepoLink repoLink, String dashboardNotes) {
         requireAllNonNull(name, events, persons, repoLink);
-        return new Group(name, events, persons, repoLink);
+        Group toReturn = new Group(name, events, persons, repoLink);
+        toReturn.dashboard.setNotes(dashboardNotes);
+        return toReturn;
     }
 
     /**
@@ -80,6 +92,10 @@ public class Group {
 
     public ObservableList<Person> getPersons() {
         return persons.asUnmodifiableObservableList();
+    }
+
+    public Dashboard getDashboard() {
+        return dashboard;
     }
 
     public void addEvent(Event event) {
@@ -114,10 +130,14 @@ public class Group {
         persons.setPersons(replacement);
     }
 
+    public void setDashboard(String dashboardNotes) {
+        this.dashboard.setNotes(dashboardNotes);
+    }
+
     public Group setRepoLink(RepoLink repoLink) {
         requireNonNull(repoLink);
 
-        return new Group(name, events, persons, repoLink);
+        return new Group(name, events, persons, repoLink, dashboard);
     }
 
     public RepoLink getRepoLink() {

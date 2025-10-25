@@ -25,11 +25,14 @@ class JsonAdaptedGroup {
     public static final String MESSAGE_DUPLICATE_PERSON = "Group %s contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_EVENT = "Group %s contains duplicate event(s).";
     public static final String MESSAGE_INVALID_GROUP_REPO = "Group %s repository link is broken.";
+    public static final String MESSAGE_INVALID_GROUP_DASHBOARD = "Group %s dashboard notes should not be null.";
 
     private final String groupName;
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedEvent> events = new ArrayList<>();
     private final String repoLink;
+    private final String dashboardNotes;
+
 
     /**
      * Constructs a {@code JsonAdaptedGroup} with the given group details.
@@ -38,11 +41,13 @@ class JsonAdaptedGroup {
     public JsonAdaptedGroup(@JsonProperty("name") String groupName,
                             @JsonProperty("persons") List<JsonAdaptedPerson> persons,
                             @JsonProperty("events") List<JsonAdaptedEvent> events,
-                            @JsonProperty("repoLink") String repoLink) {
+                            @JsonProperty("repoLink") String repoLink,
+                            @JsonProperty("dashboardNotes") String dashboardNotes) {
         this.groupName = groupName;
         this.persons.addAll(persons);
         this.events.addAll(events);
         this.repoLink = repoLink;
+        this.dashboardNotes = dashboardNotes;
     }
 
     /**
@@ -55,6 +60,7 @@ class JsonAdaptedGroup {
         events.addAll(source.getEvents()
                 .stream().map(JsonAdaptedEvent::new).toList());
         repoLink = source.getRepoLink().toString();
+        dashboardNotes = source.getDashboard().getNotes();
     }
 
     /**
@@ -90,6 +96,12 @@ class JsonAdaptedGroup {
             }
             group.addEvent(event);
         }
+
+        if (dashboardNotes == null) {
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_GROUP_DASHBOARD, groupName));
+        }
+
+        group.setDashboard(dashboardNotes);
 
         if (!Objects.equals(repoLink, "none") && !RepoLink.isValidName(repoLink)) {
             throw new IllegalValueException(String.format(MESSAGE_INVALID_GROUP_REPO, groupName));
