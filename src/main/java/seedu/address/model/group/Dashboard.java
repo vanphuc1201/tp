@@ -28,15 +28,8 @@ public class Dashboard {
         this.notes = notes != null ? notes : "";
     }
 
-    public String getMetricsSummary() {
-        return String.format("Group: %s\nMembers: %d\nEvents: %d",
-                groupAttachedTo.getName(),
-                groupAttachedTo.getPersons().size(),
-                groupAttachedTo.getEvents().size());
-    }
-
     @Override
     public String toString() {
-        return getMetricsSummary();
+        return notes;
     }
 }

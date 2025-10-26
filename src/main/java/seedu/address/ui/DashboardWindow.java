@@ -103,6 +103,21 @@ public class DashboardWindow {
                         + "-fx-cursor: hand;");
             }
         });
+        copyRepoButton.setOnMousePressed(e -> {
+            if (!copyRepoButton.isDisabled()) {
+                copyRepoButton.setStyle("-fx-background-color: #0D47A1; -fx-text-fill: white; -fx-padding: 4 8; "
+                        + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px; "
+                        + "-fx-cursor: hand;");
+            }
+        });
+
+        copyRepoButton.setOnMouseReleased(e -> {
+            if (!copyRepoButton.isDisabled()) {
+                copyRepoButton.setStyle("-fx-background-color: #1976D2; -fx-text-fill: white; -fx-padding: 4 8; "
+                        + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px; "
+                        + "-fx-cursor: hand;");
+            }
+        });
         copyRepoButton.setOnAction(e -> handleCopyRepoLink());
         copyRepoButton.setDisable(true);
 
@@ -125,18 +140,16 @@ public class DashboardWindow {
         notesTextArea.setWrapText(true);
         notesTextArea.setPrefRowCount(8);
         notesTextArea.setStyle(
-                "-fx-background-color: #2b2b2b;"
-                        + "-fx-text-fill: white;"
+                "-fx-background-color: white;"
+                        + "-fx-text-fill: black;"
                         + "-fx-border-color: #cccccc;"
                         + "-fx-border-radius: 5;"
                         + "-fx-background-radius: 5;"
                         + "-fx-padding: 10;"
                         + "-fx-font-size: 14px;"
                         + "-fx-font-family: Verdana;"
-                        + "-fx-control-inner-background: #2b2b2b;"
-                        + "-fx-prompt-text-fill: rgba(255,255,255,0.6);"
-                        + "-fx-focus-color: transparent;"
-                        + "-fx-faint-focus-color: transparent;"
+                        + "-fx-control-inner-background: white;"
+                        + "-fx-prompt-text-fill: #888888;"
         );
 
         notesTextArea.textProperty()
@@ -344,31 +357,5 @@ public class DashboardWindow {
         }
     }
 
-    /**
-     * Returns true if the dashboard window is currently being shown.
-     */
-    public boolean isShowing() {
-        return root.isShowing();
-    }
-
-    /**
-     * Hides the dashboard window.
-     */
-    public void hide() {
-        root.hide();
-    }
-
-    /**
-     * Focuses on the dashboard window.
-     */
-    public void focus() {
-        root.requestFocus();
-    }
-
-    /**
-     * Returns the stage.
-     */
-    public Stage getRoot() {
-        return root;
-    }
 }
+
