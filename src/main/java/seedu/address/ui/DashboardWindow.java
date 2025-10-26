@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -31,7 +30,6 @@ public class DashboardWindow {
     private Stage root;
     private Label groupNameLabel;
     private Label repoLinkLabel;
-    private Label courseLinkLabel;
     private TextArea notesTextArea;
     private ListView<String> memberList;
     private ListView<String> eventList;
@@ -57,7 +55,7 @@ public class DashboardWindow {
         HBox mainContainer = new HBox();
         mainContainer.setSpacing(20);
         mainContainer.setPadding(new Insets(20));
-        mainContainer.setStyle("-fx-background-color: #4f4f4f;");
+        mainContainer.setStyle("-fx-background-color: #383838;");
         mainContainer.setPrefSize(900, 750);
 
         VBox leftPanel = new VBox();
@@ -90,7 +88,21 @@ public class DashboardWindow {
         copyRepoButton.setMinWidth(50);
         copyRepoButton.setPrefWidth(50);
         copyRepoButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 4 8; "
-                + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px;");
+                + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px; -fx-cursor: hand;");
+        copyRepoButton.setOnMouseEntered(e -> {
+            if (!copyRepoButton.isDisabled()) {
+                copyRepoButton.setStyle("-fx-background-color: #1976D2; -fx-text-fill: white; -fx-padding: 4 8; "
+                        + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px; "
+                        + "-fx-cursor: hand;");
+            }
+        });
+        copyRepoButton.setOnMouseExited(e -> {
+            if (!copyRepoButton.isDisabled()) {
+                copyRepoButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 4 8; "
+                        + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px; "
+                        + "-fx-cursor: hand;");
+            }
+        });
         copyRepoButton.setOnAction(e -> handleCopyRepoLink());
         copyRepoButton.setDisable(true);
 
@@ -113,7 +125,7 @@ public class DashboardWindow {
         notesTextArea.setWrapText(true);
         notesTextArea.setPrefRowCount(8);
         notesTextArea.setStyle(
-                "-fx-background-color: #3d3d3d;"
+                "-fx-background-color: #2b2b2b;"
                         + "-fx-text-fill: white;"
                         + "-fx-border-color: #cccccc;"
                         + "-fx-border-radius: 5;"
@@ -121,28 +133,26 @@ public class DashboardWindow {
                         + "-fx-padding: 10;"
                         + "-fx-font-size: 14px;"
                         + "-fx-font-family: Verdana;"
-                        + "-fx-control-inner-background: #3d3d3d;"
+                        + "-fx-control-inner-background: #2b2b2b;"
                         + "-fx-prompt-text-fill: rgba(255,255,255,0.6);"
                         + "-fx-focus-color: transparent;"
                         + "-fx-faint-focus-color: transparent;"
         );
+
+        notesTextArea.textProperty()
+                .addListener(((observable, oldValue, newValue) -> handleSaveNotes()));
         VBox.setVgrow(notesTextArea, Priority.ALWAYS);
 
         HBox notesButtonContainer = new HBox();
         notesButtonContainer.setSpacing(12);
         notesButtonContainer.setAlignment(Pos.CENTER_RIGHT);
 
-        Button saveNotesButton = new Button("Save Notes");
-        saveNotesButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 8 16; "
-                + "-fx-font-weight: bold; -fx-font-family: Verdana;");
-        saveNotesButton.setOnAction(e -> handleSaveNotes());
-
         Button clearNotesButton = new Button("Clear Notes");
         clearNotesButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-padding: 8 16; "
                 + "-fx-font-weight: bold; -fx-font-family: Verdana;");
         clearNotesButton.setOnAction(e -> handleClearNotes());
 
-        notesButtonContainer.getChildren().addAll(saveNotesButton, clearNotesButton);
+        notesButtonContainer.getChildren().addAll(clearNotesButton);
 
         leftPanel.getChildren().addAll(
                 titleLabel,
@@ -164,14 +174,14 @@ public class DashboardWindow {
         memberPlaceholder.setStyle("-fx-text-fill: white; -fx-font-family: Verdana; -fx-font-size: 16px;");
         memberList.setPlaceholder(memberPlaceholder);
         memberList.setStyle(
-                "-fx-background-color: #3d3d3d;"
+                "-fx-background-color: #2b2b2b;"
                         + "-fx-text-fill: white;"
                         + "-fx-border-color: #cccccc;"
                         + "-fx-border-radius: 5;"
                         + "-fx-background-radius: 5;"
                         + "-fx-padding: 5;"
                         + "-fx-font-family: Verdana;"
-                        + "-fx-control-inner-background: #3d3d3d;"
+                        + "-fx-control-inner-background: #2b2b2b;"
         );
         VBox.setVgrow(memberList, Priority.ALWAYS);
 
@@ -184,15 +194,14 @@ public class DashboardWindow {
         eventPlaceholder.setStyle("-fx-text-fill: white; -fx-font-family: Verdana; -fx-font-size: 16px;");
         eventList.setPlaceholder(eventPlaceholder);
         eventList.setStyle(
-                "-fx-background-color: #3d3d3d;"
+                "-fx-background-color: #2b2b2b;"
                         + "-fx-text-fill: white;"
                         + "-fx-border-color: #cccccc;"
                         + "-fx-border-radius: 5;"
                         + "-fx-background-radius: 5;"
                         + "-fx-padding: 5;"
                         + "-fx-font-family: Verdana;"
-                        + "-fx-control-inner-background: #3d3d3d;"
-                        + ""
+                        + "-fx-control-inner-background: #2b2b2b;"
 
         );
 
@@ -220,8 +229,8 @@ public class DashboardWindow {
             return;
         }
 
-        if (root != null && root.isShowing()) {
-
+        if (root.isShowing()) {
+            root.close();
         }
 
         root = new Stage();
@@ -236,6 +245,7 @@ public class DashboardWindow {
         root.show();
         root.centerOnScreen();
         root.requestFocus();
+        root.setTitle("Dashboard - " + group.getName());
     }
 
     /**
@@ -320,11 +330,7 @@ public class DashboardWindow {
             String notes = notesTextArea.getText();
             group.getDashboard().setNotes(notes);
 
-            showAlert(Alert.AlertType.INFORMATION, "Notes Saved",
-                    "Notes have been saved for " + group.getName());
             logger.info("Notes saved for group: " + group.getName());
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Cannot save notes - no group selected");
         }
     }
 
@@ -336,17 +342,6 @@ public class DashboardWindow {
         if (group != null) {
             logger.info("Notes cleared for group: " + group.getName());
         }
-    }
-
-    /**
-     * Shows an alert dialog.
-     */
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     /**

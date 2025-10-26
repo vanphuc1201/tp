@@ -178,11 +178,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleDashboard(Group group) {
-        if (!dashboardWindow.isShowing()) {
-            dashboardWindow.show(group);
-        } else {
-            dashboardWindow.focus();
-        }
+        dashboardWindow.show(group);
     }
 
     public PersonListPanel getPersonListPanel() {
