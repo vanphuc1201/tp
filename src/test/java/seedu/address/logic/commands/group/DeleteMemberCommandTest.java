@@ -35,15 +35,15 @@ import seedu.address.testutil.GroupBuilder;
 
 
 public class DeleteMemberCommandTest {
-    private static final Group CS2103T_WA = new GroupBuilder().withName("CS2103T")
+    private final Group CS2103T_WA = new GroupBuilder().withName("CS2103T")
             .withPersons(BENSON)
             .build();
 
-    private static final Group CS2103T = new GroupBuilder().withName("CS2103T")
+    private final Group CS2103T = new GroupBuilder().withName("CS2103T")
             .withPersons(ALICE, BENSON)
             .build();
 
-    private static final Group CS2103T_EMPTY = new GroupBuilder().withName("CS2103T")
+    private final Group CS2103T_EMPTY = new GroupBuilder().withName("CS2103T")
             .withPersons()
             .build();
 
