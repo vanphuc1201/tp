@@ -51,7 +51,6 @@ public class CommandResult {
     }
 
     /**
-     *
      * Constructs a {@code CommandResult} with the specified {@code feedbackToUser}, {@code showDashboard}
      * and {@code groupToShow} and other fields set to their default value.
      */

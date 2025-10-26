@@ -4,9 +4,12 @@ package seedu.address.model.group;
  * Represents a Dashboard for a Group with various metrics and notes.
  */
 public class Dashboard {
-    Group groupAttachedTo;
-    String notes;
+    private Group groupAttachedTo;
+    private String notes;
 
+    /**
+     * Creates a dashboard with no notes
+     */
     public Dashboard(Group groupAttachedTo) {
         this.groupAttachedTo = groupAttachedTo;
         this.notes = "";

@@ -12,6 +12,7 @@
     "persons" : [ ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "CS2103"
+    "groupName" : "CS2103",
+    "dashboardNotes" : ""
   } ]
 }

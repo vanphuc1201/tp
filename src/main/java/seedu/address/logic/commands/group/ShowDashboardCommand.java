@@ -1,5 +1,9 @@
 package seedu.address.logic.commands.group;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -9,10 +13,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.group.Group;
 
-import java.util.List;
 
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Shows the user the dashboard of a specified group
+ */
 public class ShowDashboardCommand extends Command {
     public static final String COMMAND_WORD = "show-dashboard";
 
