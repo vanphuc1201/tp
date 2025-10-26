@@ -35,15 +35,15 @@ import seedu.address.testutil.GroupBuilder;
 
 
 public class DeleteMemberCommandTest {
-    private final Group CS2103T_WA = new GroupBuilder().withName("CS2103T")
+    private final Group cs2103tWithoutAlice = new GroupBuilder().withName("CS2103T")
             .withPersons(BENSON)
             .build();
 
-    private final Group CS2103T = new GroupBuilder().withName("CS2103T")
+    private final Group cs2103t = new GroupBuilder().withName("CS2103T")
             .withPersons(ALICE, BENSON)
             .build();
 
-    private final Group CS2103T_EMPTY = new GroupBuilder().withName("CS2103T")
+    private final Group cs2103tEmpty = new GroupBuilder().withName("CS2103T")
             .withPersons()
             .build();
 
@@ -103,7 +103,7 @@ public class DeleteMemberCommandTest {
                 targetGroup.getPersons().get(0).getNameAsString(),
                 targetGroup.getName()), cmd.execute(modelStub).getFeedbackToUser());
 
-        assertEquals(CS2103T_WA, modelStub.getFilteredGroupList().get(0));
+        assertEquals(cs2103tWithoutAlice, modelStub.getFilteredGroupList().get(0));
 
     }
 
@@ -124,7 +124,7 @@ public class DeleteMemberCommandTest {
                 personListAsString.stream().collect(Collectors.joining(", ")),
                 targetGroup.getName()), cmd.execute(modelStub).getFeedbackToUser());
 
-        assertEquals(CS2103T_EMPTY, modelStub.getFilteredGroupList().get(0));
+        assertEquals(cs2103tEmpty, modelStub.getFilteredGroupList().get(0));
 
     }
 
@@ -165,7 +165,7 @@ public class DeleteMemberCommandTest {
 
     private class ModelStubWithPersonAndGroup extends ModelStub {
         private final List<Person> persons = new ArrayList<>(List.of(ALICE));
-        private final List<Group> groups = new ArrayList<>(List.of(CS2103T));
+        private final List<Group> groups = new ArrayList<>(List.of(cs2103t));
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
@@ -179,7 +179,7 @@ public class DeleteMemberCommandTest {
     }
 
     private class ModelStubAcceptingDeleteMember extends ModelStubWithPersonAndGroup {
-        private final List<Group> groups = new ArrayList<>(List.of(CS2103T));
+        private final List<Group> groups = new ArrayList<>(List.of(cs2103t));
 
         @Override
         public void setPerson(Person target, Person editedPerson) {

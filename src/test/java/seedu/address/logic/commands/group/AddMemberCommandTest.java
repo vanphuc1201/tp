@@ -41,11 +41,11 @@ import seedu.address.testutil.GroupBuilder;
 
 
 public class AddMemberCommandTest {
-    public final Group CS2103T_WG = new GroupBuilder().withName("CS2103T")
+    public final Group cs2103tWithGeorge = new GroupBuilder().withName("CS2103T")
             .withPersons(ALICE, BENSON, DANIEL, CARL, FIONA, GEORGE_WITH_GROUP)
             .build();
 
-    public final Group CS2103T = new GroupBuilder().withName("CS2103T")
+    public final Group cs2103t = new GroupBuilder().withName("CS2103T")
             .withPersons(ALICE, BENSON, DANIEL, CARL, FIONA)
             .build();
 
@@ -115,7 +115,7 @@ public class AddMemberCommandTest {
                 modelStub.getFilteredPersonList().get(1).getNameAsString(),
                 targetGroupName), cmd.execute(modelStub).getFeedbackToUser());
 
-        assertEquals(CS2103T_WG, modelStub.getFilteredGroupList().get(0));
+        assertEquals(cs2103tWithGeorge, modelStub.getFilteredGroupList().get(0));
 
     }
 
@@ -155,7 +155,7 @@ public class AddMemberCommandTest {
 
     private class ModelStubWithPersonAndGroup extends ModelStub {
         private final List<Person> persons = new ArrayList<>(List.of(ALICE, GEORGE));
-        private final List<Group> groups = new ArrayList<>(List.of(CS2103T));
+        private final List<Group> groups = new ArrayList<>(List.of(cs2103t));
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
