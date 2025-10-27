@@ -104,8 +104,8 @@ Format: `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​`
 </box>
 
 Examples:
-* `add-contact n/John Doe p/98765432 e/johnd@example.com` adds a contact name: John Doe, phone: 98765432, email: johnd@example.com to the contact list.
-* `add-contact n/Betsy Crowe g/1 e/betsycrowe@example.com p/1234567 g/2` adds a contact name: Betsy Crowe, phone: 1234567, email: betsycrowe@example.com to the contact list and add Betsy Crowe to group 1, 2.
+* `add-contact n/John Doe p/98765432 e/johnd@example.com` adds a contact with name: John Doe, phone: 98765432, email: johnd@example.com to the contact list.
+* `add-contact n/Betsy Crowe g/1 e/betsycrowe@example.com p/1234567 g/2` adds a contact with name: Betsy Crowe, phone: 1234567, email: betsycrowe@example.com to the contact list and add Betsy Crowe to group 1, 2.
 
 ### Deleting a contact : `delete-contact`
 Deletes the specified contact from the StudyCircle contact list.
