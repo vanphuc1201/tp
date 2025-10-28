@@ -86,7 +86,7 @@ public class GroupBuilder {
     }
 
     public Group build() {
-        return Group.fromStorage(name, events, persons, repoLink);
+        return Group.fromStorage(name, events, persons, repoLink, null);
     }
 
 }

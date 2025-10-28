@@ -60,7 +60,8 @@
     } ],
     "events" : [ ],
     "repoLink" : "abc.com",
-    "groupName" : "CS2103T"
+    "groupName" : "CS2103T",
+    "dashboardNotes" : ""
   }, {
     "persons" : [ {
       "name" : "Carl Kurz",
@@ -70,7 +71,8 @@
     } ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "CS2101 CA2"
+    "groupName" : "CS2101 CA2",
+    "dashboardNotes" : ""
   }, {
     "persons" : [ {
       "name" : "Benson Meier",
@@ -95,7 +97,8 @@
     } ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "CS2101 CA3"
+    "groupName" : "CS2101 CA3",
+    "dashboardNotes" : ""
   }, {
     "persons" : [ {
       "name" : "Benson Meier",
@@ -120,6 +123,7 @@
     } ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "IS1108"
+    "groupName" : "IS1108",
+    "dashboardNotes" : ""
   } ]
 }
