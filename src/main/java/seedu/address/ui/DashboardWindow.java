@@ -45,7 +45,7 @@ public class DashboardWindow {
     }
 
     /**
-     * Initializes the dashboard window programmatically.
+     * Initializes the dashboard window.
      */
     private void initialize() {
         root = new Stage();
@@ -53,22 +53,38 @@ public class DashboardWindow {
         root.setMinWidth(800);
         root.setMinHeight(700);
 
+        HBox mainContainer = createMainContainer();
+        Scene scene = new Scene(mainContainer);
+        root.setScene(scene);
+    }
+
+    /**
+     * Creates the MainContainer for the dashboard window.
+     */
+    private HBox createMainContainer() {
         HBox mainContainer = new HBox();
         mainContainer.setSpacing(20);
         mainContainer.setPadding(new Insets(20));
         mainContainer.setStyle("-fx-background-color: #383838;");
         mainContainer.setPrefSize(900, 750);
 
-        VBox leftPanel = new VBox();
-        leftPanel.setSpacing(15);
-        leftPanel.setPrefWidth(400);
-
-        VBox rightPanel = new VBox();
-        rightPanel.setSpacing(15);
-        rightPanel.setPrefWidth(400);
+        VBox leftPanel = createLeftPanel();
+        VBox rightPanel = createRightPanel();
 
         HBox.setHgrow(leftPanel, Priority.ALWAYS);
         HBox.setHgrow(rightPanel, Priority.ALWAYS);
+
+        mainContainer.getChildren().addAll(leftPanel, rightPanel);
+        return mainContainer;
+    }
+
+    /**
+     * Creates the left panel for the dashboard window, containing the group name, repo section and notes section
+     */
+    private VBox createLeftPanel() {
+        VBox leftPanel = new VBox();
+        leftPanel.setSpacing(15);
+        leftPanel.setPrefWidth(400);
 
         Label titleLabel = new Label("Group Dashboard");
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white; "
@@ -77,19 +93,114 @@ public class DashboardWindow {
         groupNameLabel = new Label("Group: Not selected");
         groupNameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
                 + "-fx-font-family: Verdana;");
+
+        VBox repoSection = createRepoLinkSection();
+        VBox notesSection = createNotesArea();
+        HBox clearNotesButtonContainer = createClearNotesButton();
+
+        VBox.setVgrow(notesSection, Priority.ALWAYS);
+
+        leftPanel.getChildren().addAll(
+                titleLabel,
+                new Separator(),
+                groupNameLabel,
+                repoSection,
+                new Separator(),
+                notesSection,
+                clearNotesButtonContainer
+        );
+
+        return leftPanel;
+    }
+
+    /**
+     * Creates the editable notes area for the left panel of the dashboard
+     */
+    private VBox createNotesArea() {
+        VBox notesAreaSection = new VBox();
+
+        Label notesLabel = new Label("Notes:");
+        notesLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
+                + "-fx-font-family: Verdana;");
+
+        notesTextArea = new TextArea();
+        notesTextArea.setPromptText("Enter your notes here...");
+        notesTextArea.setWrapText(true);
+        notesTextArea.setPrefRowCount(8);
+        notesTextArea.setStyle(
+                "-fx-background-color: white;"
+                        + "-fx-text-fill: black;"
+                        + "-fx-border-color: #cccccc;"
+                        + "-fx-border-radius: 5;"
+                        + "-fx-background-radius: 5;"
+                        + "-fx-padding: 10;"
+                        + "-fx-font-size: 14px;"
+                        + "-fx-font-family: Verdana;"
+                        + "-fx-control-inner-background: white;"
+                        + "-fx-prompt-text-fill: #888888;"
+        );
+
+        notesTextArea.textProperty()
+                .addListener(((observable, oldValue, newValue) -> handleSaveNotes()));
+        VBox.setVgrow(notesTextArea, Priority.ALWAYS);
+        notesAreaSection.getChildren().addAll(notesLabel, notesTextArea);
+        return notesAreaSection;
+    }
+
+    /**
+     * Creates the clear notes button for the left panel of the dashboard
+     */
+    private HBox createClearNotesButton() {
+        HBox notesButtonContainer = new HBox();
+        notesButtonContainer.setSpacing(12);
+        notesButtonContainer.setAlignment(Pos.CENTER_RIGHT);
+
+        Button clearNotesButton = new Button("Clear Notes");
+        clearNotesButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-padding: 8 16; "
+                + "-fx-font-weight: bold; -fx-font-family: Verdana;");
+        clearNotesButton.setOnAction(e -> handleClearNotes());
+
+        notesButtonContainer.getChildren().addAll(clearNotesButton);
+        return notesButtonContainer;
+    }
+
+    /**
+     * Creates the repo link section for the left panel of the dashboard
+     */
+    private VBox createRepoLinkSection() {
         Label repoTitleLabel = new Label("Repository Link:");
         repoTitleLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white; "
                 + "-fx-font-family: Verdana;");
 
         repoLinkLabel = new Label("No repository link set");
-        repoLinkLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white; -fx-font-family: Verdana;");
+        repoLinkLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #B0BEC5; -fx-font-family: Verdana;");
 
+        copyRepoButton = createCopyRepoButton();
 
+        HBox repoLinkContainer = new HBox();
+        repoLinkContainer.setSpacing(10);
+        repoLinkContainer.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(repoLinkLabel, Priority.ALWAYS);
+        repoLinkContainer.getChildren().addAll(repoLinkLabel, copyRepoButton);
+
+        VBox repoSection = new VBox();
+        repoSection.setSpacing(5);
+        repoSection.getChildren().addAll(repoTitleLabel, repoLinkContainer);
+
+        return repoSection;
+    }
+
+    /**
+     * Creates the copy button for the repo link section of the dashboard
+     */
+    private Button createCopyRepoButton() {
         copyRepoButton = new Button("Copy");
         copyRepoButton.setMinWidth(50);
         copyRepoButton.setPrefWidth(50);
-        copyRepoButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 4 8; "
-                + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px; -fx-cursor: hand;");
+
+        copyRepoButton.setStyle("-fx-background-color: #757575; -fx-text-fill: #cccccc; -fx-padding: 4 8; "
+                + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 12px;");
+
         copyRepoButton.setOnMouseEntered(e -> {
             if (!copyRepoButton.isDisabled()) {
                 copyRepoButton.setStyle("-fx-background-color: #1976D2; -fx-text-fill: white; -fx-padding: 4 8; "
@@ -119,65 +230,36 @@ public class DashboardWindow {
                         + "-fx-cursor: hand;");
             }
         });
+
         copyRepoButton.setOnAction(e -> handleCopyRepoLink());
         copyRepoButton.setDisable(true);
+        return copyRepoButton;
+    }
 
-        HBox repoLinkContainer = new HBox();
-        repoLinkContainer.setSpacing(10);
-        repoLinkContainer.setAlignment(Pos.CENTER_LEFT);
-        HBox.setHgrow(repoLinkLabel, Priority.ALWAYS);
-        repoLinkContainer.getChildren().addAll(repoLinkLabel, copyRepoButton);
+    /**
+     * Creates the right panel for the dashboard window, containing the group member list and event list
+     */
+    private VBox createRightPanel() {
+        VBox rightPanel = new VBox();
+        rightPanel.setSpacing(15);
+        rightPanel.setPrefWidth(400);
 
-        VBox repoSection = new VBox();
-        repoSection.setSpacing(5);
-        repoSection.getChildren().addAll(repoTitleLabel, repoLinkContainer);
+        VBox memberListSection = createMemberListSection();
+        VBox eventListSection = createEventListSection();
 
-        Label notesLabel = new Label("Notes:");
-        notesLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
-                + "-fx-font-family: Verdana;");
-
-        notesTextArea = new TextArea();
-        notesTextArea.setPromptText("Enter your notes here...");
-        notesTextArea.setWrapText(true);
-        notesTextArea.setPrefRowCount(8);
-        notesTextArea.setStyle(
-                "-fx-background-color: white;"
-                        + "-fx-text-fill: black;"
-                        + "-fx-border-color: #cccccc;"
-                        + "-fx-border-radius: 5;"
-                        + "-fx-background-radius: 5;"
-                        + "-fx-padding: 10;"
-                        + "-fx-font-size: 14px;"
-                        + "-fx-font-family: Verdana;"
-                        + "-fx-control-inner-background: white;"
-                        + "-fx-prompt-text-fill: #888888;"
+        rightPanel.getChildren().addAll(
+                memberListSection,
+                eventListSection
         );
 
-        notesTextArea.textProperty()
-                .addListener(((observable, oldValue, newValue) -> handleSaveNotes()));
-        VBox.setVgrow(notesTextArea, Priority.ALWAYS);
+        return rightPanel;
+    }
 
-        HBox notesButtonContainer = new HBox();
-        notesButtonContainer.setSpacing(12);
-        notesButtonContainer.setAlignment(Pos.CENTER_RIGHT);
-
-        Button clearNotesButton = new Button("Clear Notes");
-        clearNotesButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-padding: 8 16; "
-                + "-fx-font-weight: bold; -fx-font-family: Verdana;");
-        clearNotesButton.setOnAction(e -> handleClearNotes());
-
-        notesButtonContainer.getChildren().addAll(clearNotesButton);
-
-        leftPanel.getChildren().addAll(
-                titleLabel,
-                new Separator(),
-                groupNameLabel,
-                repoSection,
-                new Separator(),
-                notesLabel,
-                notesTextArea,
-                notesButtonContainer
-        );
+    /**
+     * Creates the member list section for the right panel of the dashboard
+     */
+    private VBox createMemberListSection() {
+        VBox memberListContainer = new VBox();
 
         Label membersLabel = new Label("Members:");
         membersLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
@@ -197,7 +279,17 @@ public class DashboardWindow {
                         + "-fx-font-family: Verdana;"
                         + "-fx-control-inner-background: #2b2b2b;"
         );
+
         VBox.setVgrow(memberList, Priority.ALWAYS);
+        memberListContainer.getChildren().addAll(membersLabel, memberList);
+        return memberListContainer;
+    }
+
+    /**
+     * Creates the event list section for the right panel of the dashboard
+     */
+    private VBox createEventListSection() {
+        VBox eventListContainer = new VBox();
 
         Label eventsLabel = new Label("Events:");
         eventsLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; "
@@ -220,18 +312,8 @@ public class DashboardWindow {
         );
 
         VBox.setVgrow(eventList, Priority.ALWAYS);
-
-        rightPanel.getChildren().addAll(
-                membersLabel,
-                memberList,
-                eventsLabel,
-                eventList
-        );
-
-        mainContainer.getChildren().addAll(leftPanel, rightPanel);
-
-        Scene scene = new Scene(mainContainer);
-        root.setScene(scene);
+        eventListContainer.getChildren().addAll(eventsLabel, eventList);
+        return eventListContainer;
     }
 
     /**
@@ -263,7 +345,7 @@ public class DashboardWindow {
     }
 
     /**
-     * Updates the dashboard content with the current group data.
+     * Updates the dashboard content with the current group name and its repo link.
      */
     private void updateDashboardContent() {
         if (group != null) {
@@ -277,12 +359,6 @@ public class DashboardWindow {
                 copyRepoButton.setDisable(false);
                 copyRepoButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-padding: 4 8; "
                         + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 11px;");
-            } else {
-                repoLinkLabel.setText("No repository link set");
-                repoLinkLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #B0BEC5; -fx-font-family: Verdana;");
-                copyRepoButton.setDisable(true);
-                copyRepoButton.setStyle("-fx-background-color: #757575; -fx-text-fill: #cccccc; -fx-padding: 4 8; "
-                        + "-fx-font-weight: bold; -fx-font-family: Verdana; -fx-font-size: 12px;");
             }
 
             root.setTitle("Dashboard - " + group.getName());
