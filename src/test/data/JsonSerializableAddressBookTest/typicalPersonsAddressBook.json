@@ -22,17 +22,17 @@
     "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
   }, {
     "name" : "Elle Meyer",
-    "phone" : "9482224",
+    "phone" : "94822241",
     "email" : "werner@example.com",
     "groupNames" : [ "CS2101 CA3" ]
   }, {
     "name" : "Fiona Kunz",
-    "phone" : "9482427",
+    "phone" : "94824271",
     "email" : "lydia@example.com",
     "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
   }, {
     "name" : "George Best",
-    "phone" : "9482442",
+    "phone" : "94824421",
     "email" : "anna@example.com",
     "groupNames" : [ ]
   } ],
@@ -54,7 +54,7 @@
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Fiona Kunz",
-      "phone" : "9482427",
+      "phone" : "94824271",
       "email" : "lydia@example.com",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
@@ -86,12 +86,12 @@
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Elle Meyer",
-      "phone" : "9482224",
+      "phone" : "94822241",
       "email" : "werner@example.com",
       "groupNames" : [ "CS2101 CA3" ]
     }, {
       "name" : "Fiona Kunz",
-      "phone" : "9482427",
+      "phone" : "94824271",
       "email" : "lydia@example.com",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
@@ -117,7 +117,7 @@
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Fiona Kunz",
-      "phone" : "9482427",
+      "phone" : "94824271",
       "email" : "lydia@example.com",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
