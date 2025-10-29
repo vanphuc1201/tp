@@ -10,7 +10,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class GroupName {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should only contain alphanumeric characters, spaces, and the characters '-', '_' or '/'. \n"
+                    + "They must not be blank.";
+
 
     /*
      * The first character of the address must not be a whitespace,
