@@ -10,13 +10,22 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names is case insensitive, should not be blank and should only contain:\n"
+                    + "- max 50 characters\n"
+                    + "- alphanumeric characters\n"
+                    + "- spaces\n"
+                    + "- s/o or - d/o (optional)(must be between two names.)\n"
+                    + "- trailing spaces will be auto removed";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * Name have following constrain:
+     * should not be blank " " (a blank string)
+     * allow for alphanumeric characters, spaces, s/o or d/o (optional)(must be between two names.)
+     * max 50 characters
+     * do not allow trailing spaces
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX =
+            "^(?=.{1,50}$)(?:[A-Za-z0-9]+(?:\\s+[A-Za-z0-9]+)*(?:\\s+[sd]\\/o\\s+[A-Za-z0-9]+(?:\\s+[A-Za-z0-9]+)*)?)$";
 
     public final String fullName;
 
