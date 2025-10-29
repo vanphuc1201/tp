@@ -34,14 +34,14 @@ public class AddCommand extends Command {
             + "[" + PREFIX_GROUP_INDEX + "GROUPS]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_PHONE + "12345678 "
+            + PREFIX_EMAIL + "e1234567@u.nus.edu "
             + PREFIX_GROUP_INDEX + "1 "
             + PREFIX_GROUP_INDEX + "2 ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person's name or phone or email "
-            +"already exists in the address book";
+            + "already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON_IN_GROUP =
             "This person is already in one of the specified groups";
     private final Set<Index> groupsIndexes;

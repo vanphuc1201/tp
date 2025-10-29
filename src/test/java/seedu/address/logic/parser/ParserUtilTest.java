@@ -21,7 +21,7 @@ public class ParserUtilTest {
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "12345678";
-    private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_EMAIL = "e1134567@u.nus.edu";
 
     private static final String WHITESPACE = " \t\r\n";
 

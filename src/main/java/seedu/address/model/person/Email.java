@@ -9,11 +9,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Email {
 
-    public static final String MESSAGE_CONSTRAINTS = "Emails should follow these constraints:\n" +
-            "- Must start with 'e'\n" +
-            "- Follow by 7 digit\n" +
-            "- Must end with @u.nus.edu\n" +
-            "example: e1234567@u.nus.edu";
+    public static final String MESSAGE_CONSTRAINTS = "Emails should follow these constraints:\n"
+            + "- is case sensitive \n"
+            + "- Must start with 'e'\n"
+            + "- Follow by 7 digit\n"
+            + "- Must end with @u.nus.edu\n"
+            + "example: e1234567@u.nus.edu";
 
     // must start with e
     // follow by 7 digit
