@@ -77,8 +77,8 @@ public class EditGroupCommand extends Command {
         }
 
         // Apply edits
+        syncPersonWithEditedGroup(groupToEdit, model, editedGroup);
         model.setGroup(groupToEdit, editedGroup);
-        syncPersonWithEditedGroup(groupToEdit.getName(), model, editedGroup);
         model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
         return new CommandResult(String.format(MESSAGE_EDIT_GROUP_SUCCESS, Messages.format(editedGroup)));
     }
@@ -86,10 +86,10 @@ public class EditGroupCommand extends Command {
     /**
      * Updates all persons who are in the edited group to reflect the new group name.
      */
-    private void syncPersonWithEditedGroup(GroupName nameOfGroupToEdit, Model model, Group editedGroup) {
+    private void syncPersonWithEditedGroup(Group groupToEdit, Model model, Group editedGroup) {
         for (Person person : editedGroup.getPersons()) {
             Person editedPerson = person
-                    .removeGroup(nameOfGroupToEdit)
+                    .removeGroup(groupToEdit.getName())
                     .addGroup(editedGroup.getName());
             model.setPerson(person, editedPerson);
         }
