@@ -100,7 +100,7 @@ public class Group {
         persons.remove(toRemove);
     }
 
-    public void updatePersons(Person target, Person editedPerson) {
+    public void updatePerson(Person target, Person editedPerson) {
         persons.setPerson(target, editedPerson);
     }
 
