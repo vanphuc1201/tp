@@ -98,16 +98,13 @@ public class Person {
             return true;
         }
 
-        if(otherPerson.getPhone().equals(getPhone())) {
-            return true;
+        if (otherPerson == null) {
+            return false;
         }
 
-        if(otherPerson.getEmail().equals(getEmail())) {
-            return true;
-        }
-
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        return otherPerson.getName().equals(getName())
+                || otherPerson.getPhone().equals(getPhone())
+                || otherPerson.getEmail().equals(getEmail());
     }
 
     /**
