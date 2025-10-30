@@ -742,6 +742,14 @@ testers are expected to do more *exploratory* testing.
 
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+### Adding a contact
+
+1. Add a contact 
+
+    1. Prerequisites: none
+
+    1. Test case: `add-contact n/John Doe p/98765432 e/e1235557@u.nus.edu`<br>
+       Expected: Contact name John should appear in the contact list
 
 ### Listing all contacts
 
@@ -818,6 +826,42 @@ testers are expected to do more *exploratory* testing.
 
     1. Other incorrect delete commands to try: `delete-group`, `delete-group x`, `...` (where x is larger than the group list size)<br>
        Expected: Similar to previous.
+
+### Editing a contact
+
+1. Edit a contact while all contacts are being shown
+
+    1. Prerequisites: must have at least one contact in the contact list
+
+    1. Test case: `edit-contact 1 n/mary`<br>
+       Expected: Fist contact name in the contact list should change to mary
+
+### Setting repository link for a group
+
+1. Setting repository link for a group
+
+    1. Prerequisites: must have at least one group in the group list
+
+    1. Test case: `set-repo 1 r/https://github.com/AY2526S1-CS2103T-F12-1/tp`<br>
+       Expected: You should see a green `repo link` appear in the first group.
+
+### Getting repository link from a group
+
+1. Getting repository link from a group
+
+    1. Prerequisites: must have at least one group in the group list with repo link set successfully 
+
+    1. Test case: `get-repo 1`<br>
+       Expected: you should see a success message saying that "This link is copied to your clipboard, you can paste it now". you should be able to paste that link in a browser.
+
+### Deleting a repository link from a group
+
+1. Deleting a repository link from a group
+
+    1. Prerequisites: must have at least one group in the group list with repo link set successfully
+
+     1. Test case: `delete-repo 1`<br>
+       Expected: You should see the green `repo link` disappear in the first group.
 
 ### Saving data
 
