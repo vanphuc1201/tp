@@ -742,7 +742,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-### Add a contact
+### Adding a contact
 
 1. Add a contact 
 
@@ -766,14 +766,50 @@ testers are expected to do more *exploratory* testing.
     1. Other incorrect delete-contact commands to try: `delete-contact`, `delete-contact x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
-### Edit a contact
+### Editing a contact
 
 1. Edit a contact while all contacts are being shown
 
-    1. Prerequisites: must have at list one contact in the contact list
+    1. Prerequisites: must have at least one contact in the contact list
 
     1. Test case: `edit-contact 1 n/mary`<br>
-       Expected: Fist contact name should change to mary
+       Expected: Fist contact name in the contact list should change to mary
+
+### Finding a contact
+
+1. Find a contact
+
+    1. Prerequisites: must have at least one contact in the contact list if not may not see any difference
+
+    1. Test case: `find-contact rob`<br>
+       Expected: Should display the contact list with all people whose name contains `rob`, nothing will be display on contact list panel.
+
+### Setting repository link for a group
+
+1. Setting repository link for a group
+
+    1. Prerequisites: must have at least one group in the group list
+
+    1. Test case: `set-repo 1 r/https://github.com/AY2526S1-CS2103T-F12-1/tp`<br>
+       Expected: You should see a green `repo link` appear in the first group.
+
+### Getting repository link from a group
+
+1. Getting repository link from a group
+
+    1. Prerequisites: must have at least one group in the group list with repo link set successfully 
+
+    1. Test case: `get-repo 1`<br>
+       Expected: you should see a success message saying that "This link is copied to your clipboard, you can paste it now". you should be able to paste that link in a browser.
+
+### Deleting a repository link from a group
+
+1. Deleting a repository link from a group
+
+    1. Prerequisites: must have at least one group in the group list with repo link set successfully
+
+     1. Test case: `delete-repo 1`<br>
+       Expected: You should see the green `repo link` disappear in the first group.
 
 ### Saving data
 
