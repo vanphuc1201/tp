@@ -34,7 +34,7 @@ public class ParserUtil {
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
-        return parseIndex(oneBasedIndex, MESSAGE_INVALID_INDEX);
+        return parseIndexWithMessage(oneBasedIndex, MESSAGE_INVALID_INDEX);
     }
 
     /**
@@ -47,7 +47,7 @@ public class ParserUtil {
      * @return an {@code Index} object corresponding to the parsed value
      * @throws ParseException if the input is not a valid non-zero unsigned integer
      */
-    public static Index parseIndex(String oneBasedIndex, String errorMessage) throws ParseException {
+    public static Index parseIndexWithMessage(String oneBasedIndex, String errorMessage) throws ParseException {
         String trimmedIndex = oneBasedIndex.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new ParseException(errorMessage);
@@ -61,14 +61,14 @@ public class ParserUtil {
      *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static Set<Index> parseIndexes(Collection<String> oneBasedIndexes, String errorMessage)
+    public static Set<Index> parseIndexesWithMessage(Collection<String> oneBasedIndexes, String errorMessage)
             throws ParseException {
         requireNonNull(oneBasedIndexes);
         // keeps uniqueness
         Set<Index> indexSet = new HashSet<>();
         for (String indexString : oneBasedIndexes) {
             // duplicates automatically ignored
-            indexSet.add(parseIndex(indexString, errorMessage));
+            indexSet.add(parseIndexWithMessage(indexString, errorMessage));
         }
         return indexSet;
     }
@@ -82,7 +82,7 @@ public class ParserUtil {
      */
     public static Set<Index> parseGroupIndexes(Collection<String> oneBasedIndexes) throws ParseException {
         requireNonNull(oneBasedIndexes);
-        return parseIndexes(oneBasedIndexes, MESSAGE_INVALID_GROUP_INDEX);
+        return parseIndexesWithMessage(oneBasedIndexes, MESSAGE_INVALID_GROUP_INDEX);
     }
 
     /**
@@ -94,7 +94,7 @@ public class ParserUtil {
      */
     public static Index parseGroupIndex(String oneBasedIndex) throws ParseException {
         requireNonNull(oneBasedIndex);
-        return parseIndex(oneBasedIndex, MESSAGE_INVALID_GROUP_INDEX);
+        return parseIndexWithMessage(oneBasedIndex, MESSAGE_INVALID_GROUP_INDEX);
     }
 
     /**
@@ -106,7 +106,7 @@ public class ParserUtil {
      */
     public static Set<Index> parseContactIndexes(Collection<String> oneBasedIndexes) throws ParseException {
         requireNonNull(oneBasedIndexes);
-        return parseIndexes(oneBasedIndexes, MESSAGE_INVALID_CONTACT_INDEX);
+        return parseIndexesWithMessage(oneBasedIndexes, MESSAGE_INVALID_CONTACT_INDEX);
     }
 
 
