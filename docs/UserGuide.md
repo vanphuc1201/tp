@@ -298,6 +298,19 @@ Format: `delete-repo GROUP_INDEX`
 Examples:
 * `delete-repo 1` deletes repository link from the 1st group.
 
+### Showing the dashboard of a group: `show-dashboard `
+Shows the dashboard for a group which displays the group's repo link (if any), members and events. The dashboard 
+also allows you to keep track of notes for a group.
+
+Format: `show-dashboard GROUP_INDEX`
+
+* The `GROUP_INDEX` **must be a positive integer** 1, 2, 3, …​
+* The note box on the dashboard panel is editable, and auto-saves your notes on every keystroke
+
+Examples:
+* `show-dashboard 1` shows the dashboard of group 1.
+
+
 ### Clearing the StudyCircle contact book : `clear`
 Clears the contact book of all groups and persons.
 
@@ -371,5 +384,6 @@ Action                | Format, Examples
 **Add members to a group**       | `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `add-member g/1 c/1`, `add-member g/1 c/1 c/2`
 **Delete members from a group**  | `delete-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `delete-member g/1 c/1`, `delete-member g/1 c/1 c/2`
 **Add an event to a group**     | `add-event GROUP_INDEX d/DESCRIPTION`<br> e.g., `add-event 2 d/do project work`
+**Show a group's dsahboard** | `show-dashboard GROUP_INDEX`<br> e.g., `show-dashboard 1`
 **Clear StudyCircle contacts and groups**| `clear`
 **Help**              | `help`
