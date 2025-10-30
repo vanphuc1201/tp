@@ -28,7 +28,7 @@ group management tasks done faster than traditional GUI apps.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar StudyCircle.jar` 
    command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data and following screenshot is with annotations.<br>
+   A GUI similar to the below should appear in a few seconds. The main elements of the interface have been highlighted in the screenshot. Note how the app contains some sample data to help you get oriented.<br>
    ![Ui](images/Ui_withLabel.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -97,11 +97,10 @@ Format: `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​`
 
 `NAME` Constraints:
 * case-insensitive <span style="color:grey">(The system displays names in their original case but treats names like “tom” and “TOM” as the same.)</span>
-* Should not be blank <span style="color:grey">(A string with only spaces is considered blank also)</span>
-* Support max 50 characters
-* Support alphanumeric characters
-* Support spaces <span style="color:grey">(Consecutive space not allow)</span>
-* Support s/o or d/o <span style="color:grey">(An optional segment that must be placed between two names when used)</span>
+* Should not be empty or contain only whitespace
+* Maximum length: 50 characters
+* Alphanumeric characters and spaces allowed <span style="color:grey">(no consecutive spaces)</span>
+* May include _s/o_ or _d/o_ between names
 * Leading and trailing spaces are automatically removed.
 
 `PHONE_NUMBER` Constraints:
@@ -110,13 +109,12 @@ Format: `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​`
 * Maximum 15 digits
 
 `EMAIL` Constraints:
-* is case-sensitive
-* Must start with 'e'
-* Follow by 7 digit
-* Must end with '@u.nus.edu'
+* Case-sensitive
+* Must be an NUS email
+* Must follow the format eXXXXXXX@u.nus.edu <span style="color:grey">(e.g., e0123456@u.nus.edu)</span>
 
 `GROUP_INDEX` Constraints:
-* Must be a positive integer
+* Should match an index in the currently displayed group list
 
 <box type="tip" seamless>
 
@@ -146,7 +144,7 @@ Edits the details of the specified contact's name, phone, email and groups.
 Format: `edit-contact CONTACT_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [g/GROUP INDEX]...`
 
 `CONTACT_INDEX` Constraints:
-* Must be a positive integer
+* Should match an index in the currently displayed contact list
 
 Other parameter are the same as [add-contact](#adding-a-contact-add-contact) command
 
@@ -169,7 +167,7 @@ Shows a list of all contacts with their name, phone number, email and groups (if
 Format: `list-contacts`
 
 ### Finding a contact : `find-contact`
-Finds all contacts whose names contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
+Finds all contacts whose names contain any of the specified keywords and displays them as a list with index numbers.
 
 Format: `find-contact KEYWORD [MORE_KEYWORDS]…​`
 
@@ -192,7 +190,7 @@ Adds a new group to StudyCircle group list.
 Format: `add-group n/GROUP_NAME`
 
 `GROUP_NAME` Constraints:
-* May contain alphanumeric characters, spaces, and the following symbols: -, _, (, )
+* May contain alphanumeric characters, spaces, and the following symbols: `-`, `_`, `(`, `)`
 * Must not be blank
 * Maximum length: 50 characters
 
@@ -258,7 +256,7 @@ Format: `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​`
 
 <box type="tip" seamless>
 
-**Tip:** You can add one or more contacts to a group by specifying each contact with a `c/` prefix, e.g., `c/1` or `c/1 c/2 c/3`.
+**Tip:** You can add more than one contact to a group by specifying each extra contact with a `c/` prefix, e.g., `c/1 c/2 c/3`.
 </box>
 
 <box type="warning" seamless>
@@ -424,10 +422,10 @@ Action                | Format, Examples
 **Add members to a group**       | `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `add-member g/1 c/1`, `add-member g/1 c/1 c/2`
 **Delete members from a group**  | `delete-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `delete-member g/1 c/1`, `delete-member g/1 c/1 c/2`
 **Add an event to a group**     | `add-event GROUP_INDEX d/DESCRIPTION`<br> e.g., `add-event 2 d/do project work`
-**Deleting an event from a group** | `delete-event GROUP_INDEX e/EVENT_INDEX` <br> e.g., `delete-event 1 e/2`
-**Editing an event in a group** | `edit-event GROUP_INDEX e/EVENT_INDEX d/EVENT_DESCRIPTION` <br> e.g., `edit-event 1 e/2 d/MVP Feature Specifications`
-**Setting repository link for a group** | `set-repo GROUP_INDEX r/REPOSITORY_LINK` <br> e.g., `set-repo 2 r/https://github.com/AY2526S1-CS2103T-F12-1/tp`
-**Getting repository link from a group** | `get-repo GROUP_INDEX` <br> e.g., `get-repo 2`
-**Deleting a repository link from a group** | `delete-repo GROUP_INDEX` <br> e.g., `delete-repo 1`
+**Delete an event from a group** | `delete-event GROUP_INDEX e/EVENT_INDEX` <br> e.g., `delete-event 1 e/2`
+**Edit an event in a group** | `edit-event GROUP_INDEX e/EVENT_INDEX d/EVENT_DESCRIPTION` <br> e.g., `edit-event 1 e/2 d/MVP Feature Specifications`
+**Set repository link for a group** | `set-repo GROUP_INDEX r/REPOSITORY_LINK` <br> e.g., `set-repo 2 r/https://github.com/AY2526S1-CS2103T-F12-1/tp`
+**Get repository link from a group** | `get-repo GROUP_INDEX` <br> e.g., `get-repo 2`
+**Delete a repository link from a group** | `delete-repo GROUP_INDEX` <br> e.g., `delete-repo 1`
 **Clear StudyCircle contacts and groups**| `clear`
 **Help**              | `help`

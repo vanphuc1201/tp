@@ -13,8 +13,8 @@ public class Name {
             "Names is case-insensitive, should not be blank and should only contain:\n"
                     + "- Maximum 50 characters\n"
                     + "- alphanumeric characters\n"
-                    + "- spaces (Consecutive space not allow)\n"
-                    + "- s/o or d/o (optional segment that must be placed between two names when used)\n"
+                    + "- spaces (no consecutive spaces)\n"
+                    + "- s/o or d/o (optional, between names)\n"
                     + "- Leading and trailing spaces are automatically removed.";
 
     /*
