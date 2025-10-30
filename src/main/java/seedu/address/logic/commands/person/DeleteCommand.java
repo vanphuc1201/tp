@@ -46,7 +46,6 @@ public class DeleteCommand extends Command {
         //delete person from address book and remove from all groups
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
-        model.removePersonFromAllGroups(personToDelete);
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }
