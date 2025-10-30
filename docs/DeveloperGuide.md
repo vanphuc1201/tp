@@ -743,19 +743,98 @@ testers are expected to do more *exploratory* testing.
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
+### Adding a contact
+
+1. Add a contact 
+
+    1. Prerequisites: none
+
+    1. Test case: `add-contact n/John Doe p/98765432 e/e1235557@u.nus.edu`<br>
+       Expected: Contact name John should appear in the contact list
+
+### Listing all contacts
+
+1. Listing all the contacts
+
+    1. Test case: `list-contacts`<br>
+       Expected: The status message show: `Listed all persons`, all the contacts show on the contact list panel.
+
+### Finding contacts
+
+1. Finding all the contacts contain some specified characters
+
+    1. Test case: `find-contact ab`<br>
+       Expected: The status message show: `x persons listed!` where x is the number of contacts that have the name contains the character `ab`, all the contacts contains the character `ab` show on the contact list panel.
+
+   1. Test case: `find-contact ab cd`<br>
+      Expected: The status message show: `x persons listed!` where x is the number of contacts that have the name contains the character `ab` or `cd`, all the contacts contains the character `ab` or `cd` show on the contact list panel.
+
+   1. Test case: `find-contact aB CD`<br>
+      Expected: The status message show: `x persons listed!` where x is the number of contacts that have the name contains the character `ab` or `cd`, all the contacts contains the character `ab` or `cd` show on the contact list panel.
+
+   1. Test case: `find-contact`<br>
+      Expected: The status message show an error message, the contact list panel remain the same.
+
 ### Deleting a contact
 
 1. Deleting a contact while all contacts are being shown
 
-    1. Prerequisites: List all contacts using the `list-contact` command. Multiple contacts in the list.
+    1. Prerequisites: List all contacts using the `list-contacts` command. Multiple contacts in the list.
 
     1. Test case: `delete-contact 1`<br>
        Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
     1. Test case: `delete-contact 0`<br>
-       Expected: No contact is deleted. Error details shown in the status message. Status bar remains the same.
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-    1. Other incorrect delete-contact commands to try: `delete-contact`, `delete-contact x`, `...` (where x is larger than the list size)<br>
+    1. Other incorrect delete commands to try: `delete-contact`, `delete-contact x`, `...` (where x is larger than the contact list size)<br>
+       Expected: Similar to previous.
+
+### Listing all groups
+
+1. Listing all the groups
+
+    1. Test case: `list-groups`<br>
+       Expected: The status message show: `Listed all groups`, all the groups show on the group list panel.
+
+### Adding a group
+
+1. Add a group
+
+    1. Prerequisites: none
+
+    1. Test case: `add-group n/CS2103T tp`<br>
+       Expected: Group name CS2103T tp should appear in the group list
+
+### Finding groups
+
+1. Finding all the groups contain some specified characters
+
+    1. Test case: `find-group ab`<br>
+       Expected: The status message show: `x groups listed!` where x is the number of groups that have the name contains the character `ab`, all the groups contains the character `ab` show on the group list panel.
+
+    1. Test case: `find-group ab cd`<br>
+       Expected: The status message show: `x groups listed!` where x is the number of groups that have the name contains the character `ab` or `cd`, all the groups contains the character `ab` or `cd` show on the group list panel.
+
+    1. Test case: `find-group aB CD`<br>
+       Expected: The status message show: `x groups listed!` where x is the number of groups that have the name contains the character `ab` or `cd`, all the groups contains the character `ab` or `cd` show on the group list panel.
+
+    1. Test case: `find-group`<br>
+       Expected: The status message show an error message, the group list panel remain the same.
+
+### Deleting a group
+
+1. Deleting a group while all groups are being shown
+
+    1. Prerequisites: List all groups using the `list-groups` command. Multiple groups in the list.
+
+    1. Test case: `delete-group 1`<br>
+       Expected: First group is deleted from the list. Name of the deleted group shown in the status message. Timestamp in the status bar is updated.
+
+    1. Test case: `delete-group 0`<br>
+       Expected: No group is deleted. Error details shown in the status message. Status bar remains the same.
+
+    1. Other incorrect delete commands to try: `delete-group`, `delete-group x`, `...` (where x is larger than the group list size)<br>
        Expected: Similar to previous.
 
 ### Adding a member to a group
@@ -820,6 +899,51 @@ testers are expected to do more *exploratory* testing.
     1. Test case: type "I love computing" into the dashboard panel's white note box <br>
        Expected: The notes typed into the note box will be saved and shown to the user
        Timestamp in the status bar is updated.
+
+### Editing a contact
+
+1. Edit a contact while all contacts are being shown
+
+    1. Prerequisites: must have at least one contact in the contact list
+
+    1. Test case: `edit-contact 1 n/mary`<br>
+       Expected: Fist contact name in the contact list should change to mary
+
+### Editing a group
+
+1. Edit a group while all groups are being shown
+
+    1. Prerequisites: must have at least two groups in the group list
+       
+    1. Test case: `edit-group 2 n/CS2101 CA4`<br>
+       Expected: Second group name in the group list should change to CS2101 CA4
+
+### Setting repository link for a group
+
+1. Setting repository link for a group
+
+    1. Prerequisites: must have at least one group in the group list
+
+    1. Test case: `set-repo 1 r/https://github.com/AY2526S1-CS2103T-F12-1/tp`<br>
+       Expected: You should see a green `repo link` appear in the first group.
+
+### Getting repository link from a group
+
+1. Getting repository link from a group
+
+    1. Prerequisites: must have at least one group in the group list with repo link set successfully 
+
+    1. Test case: `get-repo 1`<br>
+       Expected: you should see a success message saying that "This link is copied to your clipboard, you can paste it now". you should be able to paste that link in a browser.
+
+### Deleting a repository link from a group
+
+1. Deleting a repository link from a group
+
+    1. Prerequisites: must have at least one group in the group list with repo link set successfully
+
+     1. Test case: `delete-repo 1`<br>
+       Expected: You should see the green `repo link` disappear in the first group.
 
 ### Saving data
 
