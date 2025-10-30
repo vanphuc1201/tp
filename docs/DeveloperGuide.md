@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# StudyCircle Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -13,7 +13,9 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -315,6 +317,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | user                                                    | Make a contact a member of multiple groups                                              | I don't have to add the same contact multiple times if I am in multiple groups with the same person |
 | `* *`    | user                                                    | search my groups                                                                        | I can easily find the group I am looking for                                                        |
 | `* *`    | user                                                    | set a profile picture for each of my groups                                             | I can easily find and recognize the group that I am looking for without having to look at the names |
+| `* *`    | user                                                    | show a group's dashboard                                                                | I can easily see all the group's details and make notes about each group                            |
 | `*`      | potential new user                                      | experiment with sample data                                                             | I can see how the app looks and behaves                                                             |
 | `*`      | new user                                                | see various tooltips within the app                                                     | I am able to orientate myself with the app and its uses                                             |
 | `*`      | user                                                    | access important links for my group project                                             | I can easily access my group project materials from one place                                       |
