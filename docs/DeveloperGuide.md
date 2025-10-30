@@ -742,6 +742,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+
 ### Adding a contact
 
 1. Add a contact 
@@ -805,6 +806,15 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `list-groups`<br>
        Expected: The status message show: `Listed all groups`, all the groups show on the group list panel.
 
+### Adding a group
+
+1. Add a group
+
+    1. Prerequisites: none
+
+    1. Test case: `add-group n/CS2103T tp`<br>
+       Expected: Group name CS2103T tp should appear in the group list
+
 ### Finding groups
 
 1. Finding all the groups contain some specified characters
@@ -835,6 +845,87 @@ testers are expected to do more *exploratory* testing.
 
     1. Other incorrect delete commands to try: `delete-group`, `delete-group x`, `...` (where x is larger than the group list size)<br>
        Expected: Similar to previous.
+
+### Adding a member to a group
+
+1. Adding a member to a group while all contacts and groups are being shown
+
+    1. Prerequisites: List all contacts and groups using the `list-contacts` and `list-groups` commands. The contact 
+       you are trying to add must not already be in the group you are adding to. 
+
+    1. Test case: `add-member g/1 c/1`<br>
+       Expected: First contact is added to the group. Name of the contact added to the group will be shown. 
+       Timestamp in the status bar is updated.
+
+    1. Test case: `add-member g/0  c/0`<br>
+       Expected: No member is added to the group. Error details shown in the status message. Status bar remains the 
+       same.
+
+    1. Other incorrect add-member commands to try: `add-member`, `add-member g/1 `, `add-member g/x c/x` (where x is 
+       larger than the list size)<br>
+       Expected: Similar to previous.
+
+### Deleting a member from a group
+
+1. Deleting a member from a group while all contacts and groups are being shown
+
+    1. Prerequisites: List all groups using the `list-groups` commands. The contact you are trying to remove must 
+       already be in the group you are removing from.
+
+   1. Test case: `delete-member g/1 c/1`<br>
+      Expected: First contact is first group's member list is removed from the group. Name of the contact removed from 
+      the group will be shown.
+      Timestamp in the status bar is updated.
+
+   1. Test case: `delete-member g/0  c/0`<br>
+      Expected: No member is added to the group. Error details shown in the status message. Status bar remains the
+      same.
+
+   1. Other incorrect add-member commands to try: `delete-member`, `delete-member g/1 `, `delete-member g/x c/x` (where x is larger than the list size)<br>
+      Expected: Similar to previous.
+
+### Showing and editing a group's dashboard
+
+1. Showing a group's dashboard
+
+    1. Prerequisites: List allgroups using the `list-groups` commands.
+
+    1. Test case: `show-dashboard 1`<br>
+       Expected: The dashboard panel for the selected group is shown to the user.
+       Timestamp in the status bar is updated.
+
+    1. Test case: `show-dashboard`<br>
+       Expected: No member is added to the group. Error details shown in the status message. Status bar remains the
+       same.
+
+    1. Other incorrect add-member commands to try: `show-dashboard x` (where x is larger than the list size)<br>
+       Expected: Similar to previous.
+
+1. Editing a group's dashboard notes
+
+    1. Prerequisites: The group to edit's dashboard is already shown.
+
+    1. Test case: type "I love computing" into the dashboard panel's white note box <br>
+       Expected: The notes typed into the note box will be saved and shown to the user
+       Timestamp in the status bar is updated.
+
+### Editing a contact
+
+1. Edit a contact while all contacts are being shown
+
+    1. Prerequisites: must have at least one contact in the contact list
+
+    1. Test case: `edit-contact 1 n/mary`<br>
+       Expected: Fist contact name in the contact list should change to mary
+
+### Editing a group
+
+1. Edit a group while all groups are being shown
+
+    1. Prerequisites: must have at least two groups in the group list
+       
+    1. Test case: `edit-group 2 n/CS2101 CA4`<br>
+       Expected: Second group name in the group list should change to CS2101 CA4
 
 ### Setting repository link for a group
 
