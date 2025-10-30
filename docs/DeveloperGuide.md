@@ -836,15 +836,6 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `edit-contact 1 n/mary`<br>
        Expected: Fist contact name in the contact list should change to mary
 
-### Finding a contact
-
-1. Find a contact
-
-    1. Prerequisites: must have at least one contact in the contact list if not may not see any difference
-
-    1. Test case: `find-contact rob`<br>
-       Expected: Should display the contact list with all people whose name contains `rob`, nothing will be display on contact list panel.
-
 ### Setting repository link for a group
 
 1. Setting repository link for a group
