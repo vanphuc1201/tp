@@ -6,10 +6,8 @@
 
 # StudyCircle User Guide
 
-StudyCircle (SC) is a **desktop app for *NUS computing students* that helps to manage contacts in your group projects, 
-sort contacts into groups and track your events within those groups, optimized for use via a Command Line Interface** (CLI) while still 
-having the benefits of a Graphical User Interface (GUI). If you can type fast, SC can get your contact and 
-group management tasks done faster than traditional GUI apps.
+StudyCircle (SC) is a **desktop app for *NUS computing students* that helps you keep track of your project groups.** It helps you manage your contacts, sort them into groups, and track events within those groups.<br>
+SC is optimised for use via a Command Line Interface (CLI) while still allowing you to see your changes in real time through a Graphical User Interface (GUI). If you can type fast, SC can get your contact and group management tasks done faster than traditional GUI-only apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
