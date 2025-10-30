@@ -10,12 +10,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names is case insensitive, should not be blank and should only contain:\n"
-                    + "- max 50 characters\n"
+            "Names is case-insensitive, should not be blank and should only contain:\n"
+                    + "- Maximum 50 characters\n"
                     + "- alphanumeric characters\n"
-                    + "- spaces\n"
-                    + "- s/o or - d/o (optional)(must be between two names.)\n"
-                    + "- trailing spaces will be auto removed";
+                    + "- spaces (no consecutive spaces)\n"
+                    + "- s/o or d/o (optional, between names)\n"
+                    + "- Leading and trailing spaces are automatically removed.";
 
     /*
      * Name have following constrain:
@@ -25,7 +25,7 @@ public class Name {
      * do not allow trailing spaces
      */
     public static final String VALIDATION_REGEX =
-            "^(?=.{1,50}$)(?:[A-Za-z0-9]+(?:\\s+[A-Za-z0-9]+)*(?:\\s+[sd]\\/o\\s+[A-Za-z0-9]+(?:\\s+[A-Za-z0-9]+)*)?)$";
+            "^(?=.{1,50}$)[A-Za-z0-9]+(?: [A-Za-z0-9]+)*(?: [sd]\\/o [A-Za-z0-9]+(?: [A-Za-z0-9]+)*)?$";
 
     public final String fullName;
 
