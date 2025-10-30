@@ -742,6 +742,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+
 ### Adding a contact
 
 1. Add a contact 
@@ -796,6 +797,15 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `list-groups`<br>
        Expected: The status message show: `Listed all groups`, all the groups show on the group list panel.
 
+### Adding a group
+
+1. Add a group
+
+    1. Prerequisites: none
+
+    1. Test case: `add-group n/CS2103T tp`<br>
+       Expected: Group name CS2103T tp should appear in the group list
+
 ### Finding groups
 
 1. Finding all the groups contain some specified characters
@@ -835,6 +845,15 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `edit-contact 1 n/mary`<br>
        Expected: Fist contact name in the contact list should change to mary
+
+### Editing a group
+
+1. Edit a group while all groups are being shown
+
+    1. Prerequisites: must have at least two groups in the group list
+       
+    1. Test case: `edit-group 2 n/CS2101 CA4`<br>
+       Expected: Second group name in the group list should change to CS2101 CA4
 
 ### Setting repository link for a group
 
