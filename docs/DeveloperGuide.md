@@ -160,6 +160,44 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Edit Contact feature
+
+The edit contact command is newly added feature in StudyCircle, extended from the original AB3 application. It supports editing various fields of the specified contact:
+
+* `Name` — The name of the contact.
+* `Phone` — The phone number of the contact.
+* `Email` — The email of the contact.
+* `Group names` — The group names of the groups which the contact is in.
+
+The fields can be edited when the user use the following prefixes: `n/`, `e/`, `p/` and `g/` respectively. Additionally, the prefix `g/` can be use multiple times in a single command to add the contact into multiple groups at a time.
+
+<box type="info" seamless>
+
+**Note:** The prefix `g/` for editing groups when used will remove the contact from all the original groups and add the new groups based on the given command. 
+
+</box>
+
+Given below is an example usage scenario and how the edit-contact command behaves at each step.
+
+Step 1. The user initiates the app with several groups:
+
+1. CS2103T
+2. CS2101 CA1
+3. CS2101 CA2
+
+and several contacts with their following information:
+
+1. Bob - 80324084 - e1234567@u.nus.edu - groups: CS2101 CA1
+2. Mary - 32404140 - e3224335@u.nus.edu - groups: CS2103T, CS2101 CA1
+
+Step 2. The user executes the command `edit-contact 1 n/Bobby e/e7654321@u.nus.edu g/1 g/3` to change Bob's name into Bobby, email to e7654321@u.nus.edu and change Bob's groups to CS2103T and CS2101 CA2.
+
+The command parse through each prefix to have the edited fields. The `edit-contact` command then create a new contact with the new name, email and groups fields. Sync the internal list of the groups and the contacts. Then the command sets Bob's contact to the newly created one. 
+
+The following sequence diagram shows how an edit-contact operations goes through the `Logic` component:
+
+<puml src="diagrams/EditContactSequenceDiagram.puml" alt="EditContactSequenceDiagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -250,12 +288,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   itself.
     * Pros: Will use less memory (e.g. for `delete`, just save the contact being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
