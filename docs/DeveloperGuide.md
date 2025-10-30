@@ -112,7 +112,7 @@ How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a contact).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -160,6 +160,44 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Edit Contact feature
+
+The edit contact command is newly added feature in StudyCircle, extended from the original AB3 application. It supports editing various fields of the specified contact:
+
+* `Name` — The name of the contact.
+* `Phone` — The phone number of the contact.
+* `Email` — The email of the contact.
+* `Group names` — The group names of the groups which the contact is in.
+
+The fields can be edited when the user use the following prefixes: `n/`, `e/`, `p/` and `g/` respectively. Additionally, the prefix `g/` can be use multiple times in a single command to add the contact into multiple groups at a time.
+
+<box type="info" seamless>
+
+**Note:** The prefix `g/` for editing groups when used will remove the contact from all the original groups and add the new groups based on the given command. 
+
+</box>
+
+Given below is an example usage scenario and how the edit-contact command behaves at each step.
+
+Step 1. The user initiates the app with several groups:
+
+1. CS2103T
+2. CS2101 CA1
+3. CS2101 CA2
+
+and several contacts with their following information:
+
+1. Bob - 80324084 - e1234567@u.nus.edu - groups: CS2101 CA1
+2. Mary - 32404140 - e3224335@u.nus.edu - groups: CS2103T, CS2101 CA1
+
+Step 2. The user executes the command `edit-contact 1 n/Bobby e/e7654321@u.nus.edu g/1 g/3` to change Bob's name into Bobby, email to e7654321@u.nus.edu and change Bob's groups to CS2103T and CS2101 CA2.
+
+The command parse through each prefix to have the edited fields. The `edit-contact` command then create a new contact with the new name, email and groups fields. Sync the internal list of the groups and the contacts. Then the command sets Bob's contact to the newly created one. 
+
+The following sequence diagram shows how an edit-contact operations goes through the `Logic` component:
+
+<puml src="diagrams/EditContactSequenceDiagram.puml" alt="EditContactSequenceDiagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -178,11 +216,11 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th contact in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new contact. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -192,7 +230,7 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the contact was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
@@ -248,14 +286,8 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Pros: Will use less memory (e.g. for `delete`, just save the contact being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -302,6 +334,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                                    | list contacts                                                                           | I can see all the contacts I have                                                                   |
 | `* * *`  | user                                                    | list groups                                                                             | I can see all the groups I have                                                                     |
 | `* *`    | new user                                                | view a guide                                                                            | I can easily find out what the app can do for me                                                    |
+| `* *`    | expert user                                             | save my GitHub repository link                                                          | I can easily copy and paste later on when I need it                                                 |
 | `* *`    | new user                                                | see a prompt telling how to execute a “help” command                                    | I can find out all the various commands that I can use in the app.                                  |
 | `* *`    | user                                                    | delete old contacts by group                                                            | I do not need to spend too much time deleting users one by one                                      |
 | `* *`    | user                                                    | see a confirmation of the data I added                                                  | I can catch and fix mistakes quickly                                                                |
@@ -663,7 +696,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
 3.  Should be able to hold up to 1000 groups without a noticeable sluggishness in performance for typical usage
 4.  user with above average typing speed for regular English text (i.e. not code, not system admin commands) should
     be able to accomplish most of the tasks faster using commands than using the mouse.
@@ -710,24 +743,20 @@ testers are expected to do more *exploratory* testing.
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Deleting a contact
 
-### Deleting a person
+1. Deleting a contact while all contacts are being shown
 
-1. Deleting a person while all persons are being shown
+    1. Prerequisites: List all contacts using the `list-contact` command. Multiple contacts in the list.
 
-    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
-    1. Test case: `delete 1`<br>
+    1. Test case: `delete-contact 1`<br>
        Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-    1. Test case: `delete 0`<br>
-       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Test case: `delete-contact 0`<br>
+       Expected: No contact is deleted. Error details shown in the status message. Status bar remains the same.
 
-    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+    1. Other incorrect delete-contact commands to try: `delete-contact`, `delete-contact x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
 
 ### Saving data
 
