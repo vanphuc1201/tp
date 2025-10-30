@@ -34,6 +34,7 @@ public class EditEventCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Edited Event: '%1$s' in Group: '%2$s'";
     public static final String MESSAGE_EVENT_NOT_FOUND = "There is no event at that index in the group";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the group";
 
     private final Index groupIndex;
     private final Index eventIndex;
@@ -66,6 +67,11 @@ public class EditEventCommand extends Command {
 
         Event target = group.getEvents().get(eventIndex.getZeroBased());
         Event edited = new Event(description);
+
+        if (group.containsEvent(edited)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        }
+
         group.setEvent(target, edited);
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.toString(), Messages.format(group)));
     }

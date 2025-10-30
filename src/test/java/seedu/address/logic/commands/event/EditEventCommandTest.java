@@ -74,6 +74,15 @@ public class EditEventCommandTest {
     }
 
     @Test
+    public void execute_sameAsExistingEvent_throwsCommandException() {
+        groupWithOneEvent.addEvent(VALID_EVENT_2);
+        EditEventCommand command = new EditEventCommand(indexZero, indexZero, VALID_DESCRIPTION_2);
+
+        assertThrows(CommandException.class,
+                EditEventCommand.MESSAGE_DUPLICATE_EVENT, () -> command.execute(modelStub));
+    }
+
+    @Test
     public void equals() {
         EditEventCommand deleteCommand = new EditEventCommand(indexZero, indexZero, VALID_DESCRIPTION);
 
