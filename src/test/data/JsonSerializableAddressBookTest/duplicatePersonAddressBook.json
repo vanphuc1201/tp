@@ -2,16 +2,17 @@
   "persons": [ {
     "name": "Alice Pauline",
     "phone": "94351253",
-    "email": "alice@example.com"
+    "email": "e0234567@u.nus.edu"
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
-    "email": "pauline@example.com"
+    "email": "e1234567@u.nus.edu"
   } ],
   "groups" : [ {
     "persons" : [ ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "CS2103"
+    "groupName" : "CS2103",
+    "dashboardNotes" : ""
   } ]
 }

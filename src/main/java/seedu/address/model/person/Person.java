@@ -98,8 +98,13 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        if (otherPerson == null) {
+            return false;
+        }
+
+        return otherPerson.getName().equals(getName())
+                || otherPerson.getPhone().equals(getPhone())
+                || otherPerson.getEmail().equals(getEmail());
     }
 
     /**

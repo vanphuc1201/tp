@@ -9,16 +9,31 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class RepoLink {
 
-    public static final String MESSAGE_CONSTRAINTS = "Repository link must include a valid domain (e.g., github.com).\n"
-            + "It can start with 'http://' or 'https://' "
-            + "and may include a path to a repository (e.g., github.com/user123/projectrepo).";
+    public static final String MESSAGE_CONSTRAINTS = "Repository link has three parts: \n"
+            + "- Domain: Must start with https://github.com/ (case-sensitive)\n"
+            + "- Username/Org: Starts with a letter/digit, can include letters, digits, '-', max 39 chars\n"
+            + "- Repository name: Starts with a letter/digit, can include letters, digits, '_', '.', '-', "
+            + "max 100 chars\n"
+            + "Does not allow consecutive '_', '.', or '-'.\n"
+            + "Does not allow Username/Org to end with '-'\n"
+            + "Does not allow repository name to end with '_', '.', '-' or '/'\n"
+            + "Example: https://github.com/user-name/repository-123.repo\n";
 
-    //url need to start with 'http://' or 'https://'
-    //follow by a domain name example 'github.com'
-    //follow by a path starting with '/' example '/user123/repo-name'
-    //no space allow for ending.
-    public static final String VALIDATION_REGEX =
-            "^(?:https?://)?([A-Za-z0-9.-]+\\.[A-Za-z]{2,})(/[\\w.-]+)*/?$";
+    //Must start exactly with 'https://github.com/' Case-sensitive
+    //Follow by a Username/org name constraint:
+    //- Must start with a letter or digit
+    //- May contain letters, digits, or hyphens (-)
+    //- Cannot exceed 39 characters
+    //Must have one / between username and repository name.
+    //Repository name constraints:
+    //-Must start with a letter or digit
+    //-Must have at least one character
+    //- Can contain letters (upper/lower), digits, _, . or -
+    //- No slash /
+
+    public static final String VALIDATION_REGEX = "^https://github\\.com/"
+            + "[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}/"
+            + "[A-Za-z0-9](?:[A-Za-z0-9]|[_.-](?=[A-Za-z0-9])){0,99}$";
 
     public final String repolink;
 

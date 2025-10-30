@@ -3,123 +3,127 @@
   "persons" : [ {
     "name" : "Alice Pauline",
     "phone" : "94351253",
-    "email" : "alice@example.com",
+    "email" : "e1234567@u.nus.edu",
     "groupNames" : [ ]
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
-    "email" : "johnd@example.com",
+    "email" : "e0234567@u.nus.edu",
     "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
-    "email" : "heinz@example.com",
+    "email" : "e1034567@u.nus.edu",
     "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA2" ]
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
-    "email" : "cornelia@example.com",
+    "email" : "e1204567@u.nus.edu",
     "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
   }, {
     "name" : "Elle Meyer",
-    "phone" : "9482224",
-    "email" : "werner@example.com",
+    "phone" : "94822241",
+    "email" : "e1230567@u.nus.edu",
     "groupNames" : [ "CS2101 CA3" ]
   }, {
     "name" : "Fiona Kunz",
-    "phone" : "9482427",
-    "email" : "lydia@example.com",
+    "phone" : "94824271",
+    "email" : "e1234067@u.nus.edu",
     "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
   }, {
     "name" : "George Best",
-    "phone" : "9482442",
-    "email" : "anna@example.com",
+    "phone" : "94824421",
+    "email" : "e1234507@u.nus.edu",
     "groupNames" : [ ]
   } ],
   "groups" : [ {
     "persons" : [ {
       "name" : "Benson Meier",
       "phone" : "98765432",
-      "email" : "johnd@example.com",
+      "email" : "e0234567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Carl Kurz",
       "phone" : "95352563",
-      "email" : "heinz@example.com",
+      "email" : "e1034567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA2" ]
     }, {
       "name" : "Daniel Meier",
       "phone" : "87652533",
-      "email" : "cornelia@example.com",
+      "email" : "e1204567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Fiona Kunz",
-      "phone" : "9482427",
-      "email" : "lydia@example.com",
+      "phone" : "94824271",
+      "email" : "e1234067@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
     "events" : [ ],
-    "repoLink" : "abc.com",
-    "groupName" : "CS2103T"
+    "repoLink" : "https://github.com/user-name/repository-123.repo",
+    "groupName" : "CS2103T",
+    "dashboardNotes" : ""
   }, {
     "persons" : [ {
       "name" : "Carl Kurz",
       "phone" : "95352563",
-      "email" : "heinz@example.com",
+      "email" : "e1034567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA2" ]
     } ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "CS2101 CA2"
+    "groupName" : "CS2101 CA2",
+    "dashboardNotes" : ""
   }, {
     "persons" : [ {
       "name" : "Benson Meier",
       "phone" : "98765432",
-      "email" : "johnd@example.com",
+      "email" : "e0234567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Daniel Meier",
       "phone" : "87652533",
-      "email" : "cornelia@example.com",
+      "email" : "e1204567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Elle Meyer",
-      "phone" : "9482224",
-      "email" : "werner@example.com",
+      "phone" : "94822241",
+      "email" : "e1230567@u.nus.edu",
       "groupNames" : [ "CS2101 CA3" ]
     }, {
       "name" : "Fiona Kunz",
-      "phone" : "9482427",
-      "email" : "lydia@example.com",
+      "phone" : "94824271",
+      "email" : "e1234067@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "CS2101 CA3"
+    "groupName" : "CS2101 CA3",
+    "dashboardNotes" : ""
   }, {
     "persons" : [ {
       "name" : "Benson Meier",
       "phone" : "98765432",
-      "email" : "johnd@example.com",
+      "email" : "e0234567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Carl Kurz",
       "phone" : "95352563",
-      "email" : "heinz@example.com",
+      "email" : "e1034567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA2" ]
     }, {
       "name" : "Daniel Meier",
       "phone" : "87652533",
-      "email" : "cornelia@example.com",
+      "email" : "e1204567@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     }, {
       "name" : "Fiona Kunz",
-      "phone" : "9482427",
-      "email" : "lydia@example.com",
+      "phone" : "94824271",
+      "email" : "e1234067@u.nus.edu",
       "groupNames" : [ "IS1108", "CS2103T", "CS2101 CA3" ]
     } ],
     "events" : [ ],
     "repoLink" : "none",
-    "groupName" : "IS1108"
+    "groupName" : "IS1108",
+    "dashboardNotes" : ""
   } ]
 }

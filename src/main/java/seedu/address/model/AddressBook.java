@@ -109,7 +109,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             if (targetGroups.contains(group.getName())) {
                 assert group.containsPerson(target) : String.format(MESSAGE_UNSYNC_CASE, group.getName(),
                         target.getName());
-                group.updatePersons(target, editedPerson);
+                group.updatePerson(target, editedPerson);
             }
         }
     }

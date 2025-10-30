@@ -25,6 +25,7 @@ import seedu.address.logic.commands.group.FindGroupCommand;
 import seedu.address.logic.commands.group.GetRepoCommand;
 import seedu.address.logic.commands.group.ListGroupCommand;
 import seedu.address.logic.commands.group.SetRepoCommand;
+import seedu.address.logic.commands.group.ShowDashboardCommand;
 import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
@@ -43,6 +44,7 @@ import seedu.address.logic.parser.group.EditGroupCommandParser;
 import seedu.address.logic.parser.group.FindGroupCommandParser;
 import seedu.address.logic.parser.group.GetRepoCommandParser;
 import seedu.address.logic.parser.group.SetRepoCommandParser;
+import seedu.address.logic.parser.group.ShowDashboardCommandParser;
 import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
 import seedu.address.logic.parser.person.EditCommandParser;
@@ -144,6 +146,9 @@ public class AddressBookParser {
 
         case DeleteRepoCommand.COMMAND_WORD:
             return new DeleteRepoCommandParser().parse(arguments);
+
+        case ShowDashboardCommand.COMMAND_WORD:
+            return new ShowDashboardCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

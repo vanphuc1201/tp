@@ -25,6 +25,7 @@ public class Group {
     // Data fields
     private final UniqueEventList events;
     private final UniquePersonList persons;
+    private final Dashboard dashboard;
 
     //quick link fields
     private final RepoLink repoLink;
@@ -32,11 +33,22 @@ public class Group {
 
     // To be used only by the factory method
     private Group(GroupName name, UniqueEventList events, UniquePersonList persons, RepoLink repoLink) {
-        requireAllNonNull(name, events, persons);
+        requireAllNonNull(name, events, persons, repoLink);
         this.name = name;
         this.events = events;
         this.persons = persons;
         this.repoLink = repoLink;
+        this.dashboard = new Dashboard(this, "");
+    }
+
+    private Group(GroupName name, UniqueEventList events, UniquePersonList persons, RepoLink repoLink,
+                  Dashboard dashboard) {
+        requireAllNonNull(name, events, persons, repoLink, dashboard);
+        this.name = name;
+        this.events = events;
+        this.persons = persons;
+        this.repoLink = repoLink;
+        this.dashboard = dashboard;
     }
 
     /**
@@ -48,15 +60,18 @@ public class Group {
         events = new UniqueEventList();
         persons = new UniquePersonList();
         repoLink = new RepoLink();
+        dashboard = new Dashboard(this);
     }
 
     /**
      * Static method to create Group from storage or external data.
      **/
     public static Group fromStorage(GroupName name, UniqueEventList events, UniquePersonList persons,
-                                    RepoLink repoLink) {
+                                    RepoLink repoLink, String dashboardNotes) {
         requireAllNonNull(name, events, persons, repoLink);
-        return new Group(name, events, persons, repoLink);
+        Group toReturn = new Group(name, events, persons, repoLink);
+        toReturn.dashboard.setNotes(dashboardNotes);
+        return toReturn;
     }
 
     /**
@@ -80,6 +95,10 @@ public class Group {
         return persons.asUnmodifiableObservableList();
     }
 
+    public Dashboard getDashboard() {
+        return dashboard;
+    }
+
     public void addEvent(Event event) {
         events.add(event);
     }
@@ -100,7 +119,7 @@ public class Group {
         persons.remove(toRemove);
     }
 
-    public void updatePersons(Person target, Person editedPerson) {
+    public void updatePerson(Person target, Person editedPerson) {
         persons.setPerson(target, editedPerson);
     }
 
@@ -112,10 +131,14 @@ public class Group {
         persons.setPersons(replacement);
     }
 
+    public void setDashboard(String dashboardNotes) {
+        this.dashboard.setNotes(dashboardNotes);
+    }
+
     public Group setRepoLink(RepoLink repoLink) {
         requireNonNull(repoLink);
 
-        return new Group(name, events, persons, repoLink);
+        return new Group(name, events, persons, repoLink, dashboard);
     }
 
     public RepoLink getRepoLink() {

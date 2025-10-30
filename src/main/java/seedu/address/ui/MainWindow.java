@@ -16,6 +16,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.group.Group;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -35,6 +36,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private DashboardWindow dashboardWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -70,6 +72,7 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+        dashboardWindow = new DashboardWindow();
     }
 
     public Stage getPrimaryStage() {
@@ -162,12 +165,20 @@ public class MainWindow extends UiPart<Stage> {
      * Closes the application.
      */
     @FXML
-    private void handleExit() {
+    public void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
+    }
+
+    /**
+     * Opens the dashboard window or focuses on it if it's already opened.
+     */
+    @FXML
+    private void handleDashboard(Group group) {
+        dashboardWindow.show(group);
     }
 
     public PersonListPanel getPersonListPanel() {
@@ -195,6 +206,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isShowDashboard()) {
+                handleDashboard(commandResult.getGroupToShow());
             }
 
             return commandResult;
