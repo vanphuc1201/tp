@@ -138,15 +138,31 @@ public class DeleteMemberCommandTest {
         persons3.add(INDEX_THIRD_PERSON);
         DeleteMemberCommand cmd1 = new DeleteMemberCommand(INDEX_FIRST_GROUP, persons2);
         DeleteMemberCommand cmd2 = new DeleteMemberCommand(INDEX_FIRST_GROUP, persons2);
-        DeleteMemberCommand cmd3 = new DeleteMemberCommand(INDEX_SECOND_GROUP, persons1);
-        DeleteMemberCommand cmd4 = new DeleteMemberCommand(INDEX_FIRST_GROUP, persons3);
 
 
+
+        // same values -> return true
         assertTrue(cmd1.equals(cmd2));
+
+        // same object -> returns true
         assertTrue(cmd1.equals(cmd1));
+
+        // different group and person index values -> returns false
+        DeleteMemberCommand cmd3 = new DeleteMemberCommand(INDEX_SECOND_GROUP, persons1);
         assertFalse(cmd1.equals(cmd3));
+
+        // different person index value only -> returns false
+        DeleteMemberCommand cmd4 = new DeleteMemberCommand(INDEX_FIRST_GROUP, persons3);
         assertFalse(cmd1.equals(cmd4));
+
+        //different group index value only -> returns false
+        DeleteMemberCommand cmd5 = new DeleteMemberCommand(INDEX_FIRST_GROUP, persons1);
+        assertFalse(cmd3.equals(cmd5));
+
+        // null -> returns false
         assertFalse(cmd1.equals(null));
+
+        // different types -> returns false
         assertFalse(cmd1.equals(1));
     }
 

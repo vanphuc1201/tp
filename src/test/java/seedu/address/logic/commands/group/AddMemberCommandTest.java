@@ -129,14 +129,29 @@ public class AddMemberCommandTest {
         persons3.add(INDEX_THIRD_PERSON);
         AddMemberCommand cmd1 = new AddMemberCommand(INDEX_FIRST_GROUP, persons2);
         AddMemberCommand cmd2 = new AddMemberCommand(INDEX_FIRST_GROUP, persons2);
-        AddMemberCommand cmd3 = new AddMemberCommand(INDEX_SECOND_GROUP, persons1);
-        AddMemberCommand cmd4 = new AddMemberCommand(INDEX_FIRST_GROUP, persons3);
 
+        // same values -> return true
         assertTrue(cmd1.equals(cmd2));
+
+        // same object -> returns true
         assertTrue(cmd1.equals(cmd1));
+
+        // different group and person index values -> returns false
+        AddMemberCommand cmd3 = new AddMemberCommand(INDEX_SECOND_GROUP, persons1);
         assertFalse(cmd1.equals(cmd3));
+
+        // different person index value only -> returns false
+        AddMemberCommand cmd4 = new AddMemberCommand(INDEX_FIRST_GROUP, persons3);
         assertFalse(cmd1.equals(cmd4));
+
+        //different group index value only -> returns false
+        AddMemberCommand cmd5 = new AddMemberCommand(INDEX_FIRST_GROUP, persons1);
+        assertFalse(cmd3.equals(cmd5));
+
+        // null -> returns false
         assertFalse(cmd1.equals(null));
+
+        // different types -> returns false
         assertFalse(cmd1.equals(1));
     }
 
