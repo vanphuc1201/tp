@@ -79,7 +79,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             return Optional.empty();
         }
         Collection<String> groupSet = groups.size() == 1 && groups.contains("") ? Collections.emptySet() : groups;
-        return Optional.of(ParserUtil.parseIndexes(groupSet));
+        return Optional.of(ParserUtil.parseGroupIndexes(groupSet));
     }
 
 }
