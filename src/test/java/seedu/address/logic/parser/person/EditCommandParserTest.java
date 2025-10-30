@@ -81,15 +81,15 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_GROUP_INDEX_DESC,
-                ParserUtil.MESSAGE_INVALID_INDEX); // invalid email
+                ParserUtil.MESSAGE_INVALID_GROUP_INDEX); // invalid group
 
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_GROUP_INDEX} alone will reset the groups of the {@code Person} being edited,
-        // parsing it together with a valid tag results in error
+        // parsing it together with a valid group index results in error
         assertParseFailure(parser, "1" + GROUP_DESC_FIRST_INDEX + GROUP_EMPTY,
-                ParserUtil.MESSAGE_INVALID_INDEX);
+                ParserUtil.MESSAGE_INVALID_GROUP_INDEX);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_PHONE_AMY,
