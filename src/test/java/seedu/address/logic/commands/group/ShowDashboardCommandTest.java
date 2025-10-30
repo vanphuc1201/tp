@@ -35,7 +35,7 @@ public class ShowDashboardCommandTest {
     }
 
     @Test
-    public void execute_showDashboard_invalidGroupIndex_throwsCommandException() {
+    public void execute_invalidGroupIndex_throwsCommandException() {
         ShowDashboardCommand cmd = new ShowDashboardCommand(INDEX_SECOND_GROUP);
 
         assertThrows(CommandException.class,
