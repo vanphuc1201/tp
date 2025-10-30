@@ -212,6 +212,17 @@ Format: `delete-group GROUP_INDEX`
 Examples:
 * `delete-group 1` deletes the 1st group in the current displayed group list.
 
+### Edit a group : `edit-group`
+Edit the specified group from StudyCircle group list.
+
+Format: `edit-group GROUP_INDEX n/GROUP_NAME`
+
+* The `GROUP_INDEX` **must be a positive integer** 1, 2, 3, …​
+* `GROUP_NAME` Constraint is same as [add-group](#adding-a-group-add-group) command
+
+Examples:
+* `edit-group 1 n/cs2103 team 1` deletes the 1st group in the current displayed group list.
+
 ### Listing all groups : `list-groups`
 Shows a list of all groups with their members and events in the current displayed group list.
 
@@ -407,6 +418,7 @@ Action                | Format, Examples
 **List contacts**     | `list-contacts`
 **Add group**       | `add-group n/NAME` <br> e.g., `add-group n/2103T`
 **Delete group**    | `delete-group GROUP_INDEX`<br> e.g., `delete-group 3`
+**Edit group** | `edit-group GROUP_INDEX n/GROUP_NAME`<br> e.g., `edit-group 1 n/cs2103 team 1`
 **Find group**      | `find-group KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find-group CA1 CA2`
 **List groups**     | `list-groups`
 **Add members to a group**       | `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `add-member g/1 c/1`, `add-member g/1 c/1 c/2`
