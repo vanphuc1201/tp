@@ -24,6 +24,8 @@ import seedu.address.model.person.Phone;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_GROUP_INDEX = "Group index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_CONTACT_INDEX = "Contact index is not a non-zero unsigned integer.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -32,9 +34,23 @@ public class ParserUtil {
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
+        return parseIndexWithMessage(oneBasedIndex, MESSAGE_INVALID_INDEX);
+    }
+
+    /**
+     * Parses the given {@code oneBasedIndex} string into an {@code Index} object, using a custom error message.
+     * <p>
+     * Leading and trailing whitespaces are trimmed before parsing.
+     *
+     * @param oneBasedIndex the string representing a one-based index
+     * @param errorMessage the error message to include in the {@link ParseException} if parsing fails
+     * @return an {@code Index} object corresponding to the parsed value
+     * @throws ParseException if the input is not a valid non-zero unsigned integer
+     */
+    private static Index parseIndexWithMessage(String oneBasedIndex, String errorMessage) throws ParseException {
         String trimmedIndex = oneBasedIndex.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
+            throw new ParseException(errorMessage);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
@@ -45,15 +61,52 @@ public class ParserUtil {
      *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static Set<Index> parseIndexes(Collection<String> oneBasedIndexes) throws ParseException {
+    private static Set<Index> parseIndexesWithMessage(Collection<String> oneBasedIndexes, String errorMessage)
+            throws ParseException {
         requireNonNull(oneBasedIndexes);
         // keeps uniqueness
         Set<Index> indexSet = new HashSet<>();
         for (String indexString : oneBasedIndexes) {
             // duplicates automatically ignored
-            indexSet.add(parseIndex(indexString));
+            indexSet.add(parseIndexWithMessage(indexString, errorMessage));
         }
         return indexSet;
+    }
+
+    /**
+     * Parses a collection of one-based group index strings into a set of {@code Index} objects for groups.
+     *
+     * @param oneBasedIndexes the collection of strings representing one-based indexes
+     * @return a set of {@code Index} objects corresponding to the parsed values
+     * @throws ParseException if any of the indexes are invalid
+     */
+    public static Set<Index> parseGroupIndexes(Collection<String> oneBasedIndexes) throws ParseException {
+        requireNonNull(oneBasedIndexes);
+        return parseIndexesWithMessage(oneBasedIndexes, MESSAGE_INVALID_GROUP_INDEX);
+    }
+
+    /**
+     * Parses a single one-based group index string into an {@code Index} object for a group.
+     *
+     * @param oneBasedIndex the string representing a one-based index
+     * @return an {@code Index} object corresponding to the parsed value
+     * @throws ParseException if the index is invalid
+     */
+    public static Index parseGroupIndex(String oneBasedIndex) throws ParseException {
+        requireNonNull(oneBasedIndex);
+        return parseIndexWithMessage(oneBasedIndex, MESSAGE_INVALID_GROUP_INDEX);
+    }
+
+    /**
+     * Parses a collection of one-based contact index strings into a set of {@code Index} objects for contacts.
+     *
+     * @param oneBasedIndexes the collection of strings representing one-based indexes
+     * @return a set of {@code Index} objects corresponding to the parsed values
+     * @throws ParseException if any of the indexes are invalid
+     */
+    public static Set<Index> parseContactIndexes(Collection<String> oneBasedIndexes) throws ParseException {
+        requireNonNull(oneBasedIndexes);
+        return parseIndexesWithMessage(oneBasedIndexes, MESSAGE_INVALID_CONTACT_INDEX);
     }
 
 

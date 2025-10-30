@@ -6,10 +6,8 @@
 
 # StudyCircle User Guide
 
-StudyCircle (SC) is a **desktop app for *NUS computing students* that helps to manage contacts in your group projects, 
-sort contacts into groups and track your events within those groups, optimized for use via a Command Line Interface** (CLI) while still 
-having the benefits of a Graphical User Interface (GUI). If you can type fast, SC can get your contact and 
-group management tasks done faster than traditional GUI apps.
+StudyCircle (SC) is a **desktop app for *NUS computing students* that helps you keep track of your project groups.** It helps you manage your contacts, sort them into groups, and track events within those groups.<br>
+SC is optimised for use via a Command Line Interface (CLI) while still allowing you to see your changes in real time through a Graphical User Interface (GUI). If you can type fast, SC can get your contact and group management tasks done faster than traditional GUI-only apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -347,6 +345,19 @@ Format: `delete-repo GROUP_INDEX`
 Examples:
 * `delete-repo 1` deletes repository link from the 1st group.
 
+### Showing the dashboard of a group: `show-dashboard `
+Shows the dashboard for a group which displays the group's repo link (if any), members and events. The dashboard 
+also allows you to keep track of notes for a group.
+
+Format: `show-dashboard GROUP_INDEX`
+
+* The `GROUP_INDEX` **must be a positive integer** 1, 2, 3, …​
+* The note box on the dashboard panel is editable, and auto-saves your notes on every keystroke
+
+Examples:
+* `show-dashboard 1` shows the dashboard of group 1.
+
+
 ### Clearing the StudyCircle contact book : `clear`
 Clears the contact book of all groups and contacts.
 
@@ -427,5 +438,6 @@ Action                | Format, Examples
 **Set repository link for a group** | `set-repo GROUP_INDEX r/REPOSITORY_LINK` <br> e.g., `set-repo 2 r/https://github.com/AY2526S1-CS2103T-F12-1/tp`
 **Get repository link from a group** | `get-repo GROUP_INDEX` <br> e.g., `get-repo 2`
 **Delete a repository link from a group** | `delete-repo GROUP_INDEX` <br> e.g., `delete-repo 1`
+**Show a group's dsahboard** | `show-dashboard GROUP_INDEX`<br> e.g., `show-dashboard 1`
 **Clear StudyCircle contacts and groups**| `clear`
 **Help**              | `help`

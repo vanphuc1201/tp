@@ -37,8 +37,8 @@ public class DeleteMemberCommandParser implements Parser<DeleteMemberCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_GROUP_INDEX);
-        groupIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_GROUP_INDEX).get());
-        personIndexes = ParserUtil.parseIndexes(argMultimap.getAllValues(PREFIX_CONTACT_INDEX));
+        groupIndex = ParserUtil.parseGroupIndex(argMultimap.getValue(PREFIX_GROUP_INDEX).get());
+        personIndexes = ParserUtil.parseContactIndexes(argMultimap.getAllValues(PREFIX_CONTACT_INDEX));
 
 
         return new DeleteMemberCommand(groupIndex, personIndexes);
