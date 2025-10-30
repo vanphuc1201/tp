@@ -185,10 +185,10 @@ Step 1. The user initiates the app with several groups:
 
 and several contacts with their following information:
 
-1. Bob - 80324084 - bob@gmail.com - groups: CS2101 CA1
-2. Mary - 32404140 - mary@gmail.com - groups: CS2103T, CS2101 CA1
+1. Bob - 80324084 - e1234567@u.nus.edu - groups: CS2101 CA1
+2. Mary - 32404140 - e3224335@u.nus.edu - groups: CS2103T, CS2101 CA1
 
-Step 2. The user executes the command `edit-contact 1 n/Bobby e/bobby@gmail.com g/1 g/3` to change Bob's name into Bobby, email to bobby@gmail.com and change Bob's groups to CS2103T and CS2101 CA2.
+Step 2. The user executes the command `edit-contact 1 n/Bobby e/e7654321@u.nus.edu g/1 g/3` to change Bob's name into Bobby, email to bobby@gmail.com and change Bob's groups to CS2103T and CS2101 CA2.
 
 The command parse through each prefix to have the edited fields. The `edit-contact` command then create a new contact with the new name, email and groups fields. Sync the internal list of the groups and the contacts. Then the command sets Bob's contact to the newly created one. 
 
