@@ -46,7 +46,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
 
-        Set<Index> groupsIndex = ParserUtil.parseIndexes(argMultimap.getAllValues(PREFIX_GROUP_INDEX));
+        Set<Index> groupsIndex = ParserUtil.parseGroupIndexes(argMultimap.getAllValues(PREFIX_GROUP_INDEX));
 
         Person person = new Person(name, phone, email, new HashSet<>());
 
