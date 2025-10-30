@@ -47,7 +47,7 @@ public class ParserUtil {
      * @return an {@code Index} object corresponding to the parsed value
      * @throws ParseException if the input is not a valid non-zero unsigned integer
      */
-    public static Index parseIndexWithMessage(String oneBasedIndex, String errorMessage) throws ParseException {
+    private static Index parseIndexWithMessage(String oneBasedIndex, String errorMessage) throws ParseException {
         String trimmedIndex = oneBasedIndex.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new ParseException(errorMessage);
@@ -61,7 +61,7 @@ public class ParserUtil {
      *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static Set<Index> parseIndexesWithMessage(Collection<String> oneBasedIndexes, String errorMessage)
+    private static Set<Index> parseIndexesWithMessage(Collection<String> oneBasedIndexes, String errorMessage)
             throws ParseException {
         requireNonNull(oneBasedIndexes);
         // keeps uniqueness
