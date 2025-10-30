@@ -778,7 +778,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a contact while all contacts are being shown
 
-    1. Prerequisites: List all contacts using the `list-contacts` command. Multiple contacts in the list.
+    1. Prerequisites: List all contacts using the `list-contacts` command. Multiple contacts in the contact list.
 
     1. Test case: `delete-contact 1`<br>
        Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -788,6 +788,15 @@ testers are expected to do more *exploratory* testing.
 
     1. Other incorrect delete commands to try: `delete-contact`, `delete-contact x`, `...` (where x is larger than the contact list size)<br>
        Expected: Similar to previous.
+
+### Editing a contact
+
+1. Edit a contact while all contacts are being shown
+
+    1. Prerequisites: must have at least one contact in the contact list
+
+    1. Test case: `edit-contact 1 n/mary`<br>
+       Expected: Fist contact name in the contact list should change to mary
 
 ### Listing all groups
 
@@ -816,7 +825,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a group while all groups are being shown
 
-    1. Prerequisites: List all groups using the `list-groups` command. Multiple groups in the list.
+    1. Prerequisites: List all groups using the `list-groups` command. Multiple groups in the group list.
 
     1. Test case: `delete-group 1`<br>
        Expected: First group is deleted from the list. Name of the deleted group shown in the status message. Timestamp in the status bar is updated.
@@ -826,15 +835,6 @@ testers are expected to do more *exploratory* testing.
 
     1. Other incorrect delete commands to try: `delete-group`, `delete-group x`, `...` (where x is larger than the group list size)<br>
        Expected: Similar to previous.
-
-### Editing a contact
-
-1. Edit a contact while all contacts are being shown
-
-    1. Prerequisites: must have at least one contact in the contact list
-
-    1. Test case: `edit-contact 1 n/mary`<br>
-       Expected: Fist contact name in the contact list should change to mary
 
 ### Setting repository link for a group
 
@@ -862,6 +862,33 @@ testers are expected to do more *exploratory* testing.
 
      1. Test case: `delete-repo 1`<br>
        Expected: You should see the green `repo link` disappear in the first group.
+
+### Adding an event
+
+1. Add an event to a specified group
+
+    1. Prerequisites 1: List all groups using the `list-groups` command. Multiple groups in the group list.
+
+    1. Test case: `add-event 1 d/abc`<br>
+       Expected: The status message show: `New event: 'abc' added to group: <1st GROUP NAME>`, an event `abc` appear in the group card of the 1st group.
+
+### Deleting an event
+
+1. Delete a specified event from a specified group
+
+    1. Prerequisites 1: List all groups using the `list-groups` command. Multiple groups in the group list.
+
+    1. Test case: `delete-event 1 e/1`<br>
+       Expected: The status message show: `Event: '<1st EVENT DESCRIPTION>' deleted from group: <1st GROUP NAME>`, the first event disappeared in the group card of the 1st group.
+
+### Editing an event
+
+1. Edit a specified event in a specified group
+
+    1. Prerequisites 1: List all groups using the `list-groups` command. Multiple groups in the group list.
+
+    1. Test case: `edit-event 1 e/1 d/efg`<br>
+       Expected: The status message show: `Edited Event: '<1st EVENT DESCRIPTION>' in Group: <1st GROUP NAME>`, the first event change to `efg` in the group card of the 1st group.
 
 ### Saving data
 
