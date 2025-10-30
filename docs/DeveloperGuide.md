@@ -742,6 +742,14 @@ testers are expected to do more *exploratory* testing.
 
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+### Add a contact
+
+1. Add a contact 
+
+    1. Prerequisites: none
+
+    1. Test case: `add-contact n/John Doe p/98765432 e/e1235557@u.nus.edu`<br>
+       Expected: Contact name John should appear in the contact list
 
 ### Deleting a contact
 
@@ -757,6 +765,15 @@ testers are expected to do more *exploratory* testing.
 
     1. Other incorrect delete-contact commands to try: `delete-contact`, `delete-contact x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
+
+### Edit a contact
+
+1. Edit a contact while all contacts are being shown
+
+    1. Prerequisites: must have at list one contact in the contact list
+
+    1. Test case: `edit-contact 1 n/mary`<br>
+       Expected: Fist contact name should change to mary
 
 ### Saving data
 
