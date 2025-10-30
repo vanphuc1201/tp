@@ -26,8 +26,8 @@ SC is optimised for use via a Command Line Interface (CLI) while still allowing 
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar StudyCircle.jar` 
    command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+   A GUI similar to the below should appear in a few seconds. The main elements of the interface have been highlighted in the screenshot. Note how the app contains some sample data to help you get oriented.<br>
+   ![Ui](images/Ui_withLabel.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -73,8 +73,6 @@ SC is optimised for use via a Command Line Interface (CLI) while still allowing 
 
 * All commands are case sensitive. <br>
   e.g. `list-contacts` is not the same as `List-Contacts`
-### UI
-![Ui](images/Ui_withLabel.png)
 </box>
 
 <div style="page-break-after: always;"></div>
@@ -88,22 +86,42 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 ## Contact related commands
+---
 ### Adding a contact: `add-contact`
 
-Adds a person to the StudyCircle contact list.
+Adds a contact to the StudyCircle contact list.
 
 Format: `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​`
 
-* The contact name must be unique (case-insensitive comparison).
+`NAME` Constraints:
+* case-insensitive <span style="color:grey">(The system displays names in their original case but treats names like “tom” and “TOM” as the same.)</span>
+* Should not be empty or contain only whitespace
+* Maximum length: 50 characters
+* Alphanumeric characters and spaces allowed <span style="color:grey">(no consecutive spaces)</span>
+* May include _s/o_ or _d/o_ between names
+* Leading and trailing spaces are automatically removed.
+
+`PHONE_NUMBER` Constraints:
+* Must contain only digits
+* Minimum 8 digits
+* Maximum 15 digits
+
+`EMAIL` Constraints:
+* Case-sensitive
+* Must be an NUS email
+* Must follow the format eXXXXXXX@u.nus.edu <span style="color:grey">(e.g., e0123456@u.nus.edu)</span>
+
+`GROUP_INDEX` Constraints:
+* Should match an index in the currently displayed group list
 
 <box type="tip" seamless>
 
-**Tip:** A person can be added to multiple groups at once by specifying multiple `g/` prefixes
+**Tip:** A contact can be added to multiple groups at once by specifying multiple `g/` prefixes
 </box>
 
 Examples:
-* `add-contact n/John Doe p/98765432 e/johnd@example.com` adds a contact with name: John Doe, phone: 98765432, email: johnd@example.com to the contact list.
-* `add-contact n/Betsy Crowe g/1 e/betsycrowe@example.com p/1234567 g/2` adds a contact with name: Betsy Crowe, phone: 1234567, email: betsycrowe@example.com to the contact list and add Betsy Crowe to group 1, 2.
+* `add-contact n/John Doe p/98765432 e/e1234567@u.nus.edu` adds a contact with name: John Doe, phone: 98765432, email: e1234567@u.nus.edu to the contact list.
+* `add-contact n/Betsy Crowe g/1 e/e1232567@u.nus.edu p/12345678 g/2` adds a contact with name: Betsy Crowe, phone: 12345678, email: e1232567@u.nus.edu to the contact list and add Betsy Crowe to group 1, 2.
 
 ### Deleting a contact : `delete-contact`
 Deletes the specified contact from the StudyCircle contact list.
@@ -111,28 +129,34 @@ Deletes the specified contact from the StudyCircle contact list.
 Format: `delete-contact CONTACT_INDEX`
 
 * Deletes the contact at the specified `CONTACT_INDEX`.
-* The index refers to the index number shown in the displayed contact list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The `CONTACT_INDEX` refers to the index number shown in the displayed contact list.
+* The `CONTACT_INDEX` **must be a positive integer** 1, 2, 3, …​
 
 Examples:
 
 * `delete-contact 1` deletes the 1st contact in the current displayed contact list.
 
 ### Editing a contact : `edit-contact`
-Edits the details of the specified person's name, phone, email and groups.
+Edits the details of the specified contact's name, phone, email and groups.
 
-Format: `edit-contact PERSON_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [g/GROUP INDEX]...`
+Format: `edit-contact CONTACT_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [g/GROUP INDEX]...`
 
-* The contact name must be unique (case-insensitive comparison).
+`CONTACT_INDEX` Constraints:
+* Should match an index in the currently displayed contact list
+
+Other parameter are the same as [add-contact](#adding-a-contact-add-contact) command
 
 <box type="tip" seamless>
 
-**Tip:** A person can be added to multiple groups at once by specifying multiple `g/` prefixes
+**Tip:** A contact can be added to multiple groups at once by specifying multiple `g/` prefixes
 </box>
+<box type="warning" seamless>
 
+**Caution:** Using `edit-contact` with the `g/` prefix will **replace** the contact’s existing groups instead of adding to them.
+</box>
 Examples:
 
-* `edit-contact 1 n/John p/123456 e/John@gmail.com g/1 g/2 g/3` edits the 1st contact in the current displayed contact list to name John, phone 123456, email John@gmail.com and add John to group 1, 2, 3.
+* `edit-contact 1 n/John p/12345678 e/e1234567@u.nus.edu g/1 g/2` edits the 1st contact in the current displayed contact list to name John, phone 123456, email e1234567@u.nus.edu and add John to group 1 and 2.
 
 ### Listing all contacts : `list-contacts`
 
@@ -141,14 +165,14 @@ Shows a list of all contacts with their name, phone number, email and groups (if
 Format: `list-contacts`
 
 ### Finding a contact : `find-contact`
-Finds all persons whose names contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
+Finds all contacts whose names contain any of the specified keywords and displays them as a list with index numbers.
 
 Format: `find-contact KEYWORD [MORE_KEYWORDS]…​`
 
 * `KEYWORD` is case-insensitve <br>
   e.g. finding with `BOB` and `bob` will return the same result
-* One or more keyword can be entered, returning all the persons which contain either of the keywords <br>
-  e.g. `find-contact Bob Alice` will return all persons with either `Bob` or `Alice` in their names
+* One or more keyword can be entered, returning all the contacts which contain either of the keywords <br>
+  e.g. `find-contact Bob Alice` will return all contacts with either `Bob` or `Alice` in their names
 * The search performs partial matches — for example, `find-contact ann` will match names like `Anna`, `Annette`, or `Joanne`.
 
 Examples:
@@ -157,12 +181,16 @@ Examples:
 * `find-contact Aa Da` will match `aaron` or `darren`
 
 ## Group related commands
+---
 ### Adding a group : `add-group`
 Adds a new group to StudyCircle group list.
 
 Format: `add-group n/GROUP_NAME`
 
-* The group name must be unique (case-insensitive comparison).
+`GROUP_NAME` Constraints:
+* May contain alphanumeric characters, spaces, and the following symbols: `-`, `_`, `(`, `)`
+* Must not be blank
+* Maximum length: 50 characters
 
 Examples:
 * `add-group n/CS2103T` adds a group with name `CS2103T` to StudyCircle
@@ -174,11 +202,22 @@ Deletes the specified group from StudyCircle group list.
 Format: `delete-group GROUP_INDEX`
 
 * Deletes the group at the specified `GROUP_INDEX`.
-* The index refers to the index number shown in the displayed group list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The `GROUP_INDEX` refers to the index number shown in the displayed group list.
+* The `GROUP_INDEX` **must be a positive integer** 1, 2, 3, …​
 
 Examples:
 * `delete-group 1` deletes the 1st group in the current displayed group list.
+
+### Edit a group : `edit-group`
+Edit the specified group from StudyCircle group list.
+
+Format: `edit-group GROUP_INDEX n/GROUP_NAME`
+
+* The `GROUP_INDEX` **must be a positive integer** 1, 2, 3, …​
+* `GROUP_NAME` Constraint is same as [add-group](#adding-a-group-add-group) command
+
+Examples:
+* `edit-group 1 n/cs2103 team 1` deletes the 1st group in the current displayed group list.
 
 ### Listing all groups : `list-groups`
 Shows a list of all groups with their members and events in the current displayed group list.
@@ -212,8 +251,16 @@ Format: `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​`
 * Both `GROUP_INDEX` and `CONTACT_INDEXES` **must be positive integers** 1, 2, 3, …​
 * `CONTACT_INDEXES` can be one or multiple contact indexes
 * `CONTACT_INDEXES` are taken from the currently displayed contact list
-* To input more than one index, separate each index with a new prefix c/
-  e.g. `c/1` or `c/1 c/2 c/3`
+
+<box type="tip" seamless>
+
+**Tip:** You can add more than one contact to a group by specifying each extra contact with a `c/` prefix, e.g., `c/1 c/2 c/3`.
+</box>
+
+<box type="warning" seamless>
+
+**Caution:** Editing multiple groups at once is not supported. Specifying multiple `g/` prefixes (e.g., `g/1 g/2`) is not allowed.
+</box>
 
 Examples:
 * `add-member g/1 c/2` adds the 2nd contact to the 1st group.
@@ -224,11 +271,7 @@ Deletes the specified contacts from the specified group.
 
 Format: `delete-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​`
 
-* Both `GROUP_INDEX` and `CONTACT_INDEX` **must be positive integers** 1, 2, 3, …​
-* `CONTACT_INDEX` can be one or multiple contact indexes
-* `CONTACT_INDEX` are taken from the current displayed contact list
-* To input more than one index, separate each index with a new prefix `c/`
-  e.g. `c/1` or `c/1 c/2 c/3`
+* Same as [add-member](#adding-a-member-to-a-group-add-member) command
 
 Examples:
 * `delete-member g/1 c/2` deletes the 2nd contact from the 1st group.
@@ -260,8 +303,7 @@ Edits an event description in the specified group.
 
 Format: `edit-event GROUP_INDEX e/EVENT_INDEX  d/EVENT_DESCRIPTION`
 
-* Both `GROUP_INDEX` and `EVENT_INDEX` **must be positive integers** 1, 2, 3, …​
-* `EVENT_INDEX` are taken from the current displayed event list
+* Same as [delete-event](#deleting-an-event-from-a-group-delete-event) command
 
 Examples:
 * `edit-event 1 e/2 d/MVP Feature Specifications` edits the 2nd event in the 1st group to `MVP Feature Specifications`
@@ -271,9 +313,14 @@ Set repository link for the specified group.
 
 Format: `set-repo GROUP_INDEX r/REPOSITORY_LINK`
 
-* The `GROUP_INDEX` **must be a positive integer** 1, 2, 3, …​
-* The `REPOSITORY_LINK` **must include a valid domain**
-* The `REPOSITORY_LINK` **can start with 'http://' or 'https://' and may include a path to a repository**
+`REPOSITORY_LINK` Constraints:
+* format: \<Domain\>/\<Username or Org\>/\<Repository name\>
+* \<Domain\>: Must start with `https://github.com/` (case-sensitive)
+* \<Username or Org\>: Starts with a letter/digit, can include letters, digits, `-`, **max 39 chars**
+* \<Repository name\>: Starts with a letter/digit, can include letters, digits, `_`, `.`, `-`, **max 100 chars**
+* Does not allow consecutive `_`, `.`, or `-`.
+* Does not allow Username/Org to end with `-`
+* Does not allow repository name to end with `_`, `.`, `-` or `/`
 
 Examples:
 * `set-repo 2 r/https://github.com/AY2526S1-CS2103T-F12-1/tp` sets the repository link in 2nd group to 'https://github.com/AY2526S1-CS2103T-F12-1/tp'
@@ -312,7 +359,7 @@ Examples:
 
 
 ### Clearing the StudyCircle contact book : `clear`
-Clears the contact book of all groups and persons.
+Clears the contact book of all groups and contacts.
 
 Format: `clear`
 
@@ -373,17 +420,24 @@ contains the data of your previous StudyCircle home folder.
 
 Action                | Format, Examples
 ----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add contact**       | `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com g/1 g/2`
+**Add contact**       | `add-contact n/NAME p/PHONE_NUMBER e/EMAIL [g/GROUP_INDEX]…​` <br> e.g., `add-contact n/John Doe p/98765432 e/e1234567@u.nus.edu g/1 g/2`
 **Delete contact**    | `delete-contact CONTACT_INDEX`<br> e.g., `delete-contact 3`
+**Edit contact** | `edit-contact CONTACT_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [g/GROUP INDEX]...` <br> e.g., `edit-contact 1 n/John p/12345678 e/e1234567@u.nus.edu g/1 g/2`
 **Find contact**      | `find-contact KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find-contact James Jake`
 **List contacts**     | `list-contacts`
-**Add group**       | `add-group n/NAME` <br> e.g., `add n/2103T`
+**Add group**       | `add-group n/NAME` <br> e.g., `add-group n/2103T`
 **Delete group**    | `delete-group GROUP_INDEX`<br> e.g., `delete-group 3`
+**Edit group** | `edit-group GROUP_INDEX n/GROUP_NAME`<br> e.g., `edit-group 1 n/cs2103 team 1`
 **Find group**      | `find-group KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find-group CA1 CA2`
 **List groups**     | `list-groups`
 **Add members to a group**       | `add-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `add-member g/1 c/1`, `add-member g/1 c/1 c/2`
 **Delete members from a group**  | `delete-member g/GROUP_INDEX c/CONTACT_INDEX [c/CONTACT_INDEX]…​` <br> e.g., `delete-member g/1 c/1`, `delete-member g/1 c/1 c/2`
 **Add an event to a group**     | `add-event GROUP_INDEX d/DESCRIPTION`<br> e.g., `add-event 2 d/do project work`
+**Delete an event from a group** | `delete-event GROUP_INDEX e/EVENT_INDEX` <br> e.g., `delete-event 1 e/2`
+**Edit an event in a group** | `edit-event GROUP_INDEX e/EVENT_INDEX d/EVENT_DESCRIPTION` <br> e.g., `edit-event 1 e/2 d/MVP Feature Specifications`
+**Set repository link for a group** | `set-repo GROUP_INDEX r/REPOSITORY_LINK` <br> e.g., `set-repo 2 r/https://github.com/AY2526S1-CS2103T-F12-1/tp`
+**Get repository link from a group** | `get-repo GROUP_INDEX` <br> e.g., `get-repo 2`
+**Delete a repository link from a group** | `delete-repo GROUP_INDEX` <br> e.g., `delete-repo 1`
 **Show a group's dsahboard** | `show-dashboard GROUP_INDEX`<br> e.g., `show-dashboard 1`
 **Clear StudyCircle contacts and groups**| `clear`
 **Help**              | `help`
