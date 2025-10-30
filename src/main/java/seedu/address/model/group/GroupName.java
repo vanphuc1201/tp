@@ -18,7 +18,7 @@ public class GroupName {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "^(?=.*[\\p{Alnum}_\\-()])[\\p{Alnum}_\\-() ]{0,49}$";
+    public static final String VALIDATION_REGEX = "^(?=.*[\\p{Alnum}_\\-()])[\\p{Alnum}_\\-() ]{1,50}$";
 
     public final String fullName;
 
